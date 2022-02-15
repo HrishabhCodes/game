@@ -8,23 +8,34 @@
 }
 
 .modes {
-  width: 60%;
-  height: 40vh;
-  /* background-color: antiquewhite; */
+  width: 70%;
+  height: 50vh;
   display: flex;
   justify-content: space-between;
 }
 
+.coming-soon-img {
+  width: 100%;
+}
+
 .modes-card {
-  background-color: azure;
-  width: 30%;
+  border: 1px solid rgba(31, 31, 31, 0.466);
+  box-shadow: 0 0 30px 2px rgba(0, 0, 0, 0.322);
+  width: 27%;
   height: 100%;
+  background-image: cover;
+}
+
+.modes-card:hover {
+  cursor: pointer;
 }
 
 .modes-img {
   width: 100%;
+  background-image: url("../../assets/coming-soon.png");
+  background-position: center;
+  background-size: cover;
   height: 80%;
-  /* background-color: aqua; */
 }
 
 .modes-title {
@@ -34,7 +45,7 @@
   justify-content: center;
   align-items: center;
   font-size: 1.7rem;
-  color: rgba(255, 242, 199, 0.829);
+  color: rgb(255, 242, 199);
 }
 
 .search-btn,
@@ -65,8 +76,10 @@
 
 .create-game:hover {
   background-color: #f8cc65;
+  cursor: pointer;
 }
 
 .search-btn:hover {
   background-color: rgb(45, 177, 238);
+  cursor: pointer;
 }

@@ -26,11 +26,16 @@ const Navbar = () => {
   const [active, setActive] = useState("home");
   const [vol, setVol] = useState(100);
   const handleOpen = () => setOpenModal(true);
+  const handleVolume = (event) => {
+    setVol(event.target.value);
+  };
 
   return (
     <div className="navbar-container">
       <div className="navbar-items">
-        <div className="logo"></div>
+        <div className="logo">
+          {/* <img className="logo-img" src={Logo} alt="" /> */}
+        </div>
         <div className="nav-pages">
           <Link
             onClick={() => setActive("home")}
@@ -56,41 +61,47 @@ const Navbar = () => {
         </div>
         <div onClick={handleOpen} className="volume-container">
           <div className="volume">
-            <i className="fa-solid fa-volume-high"></i>
+            {vol >= 50 ? (
+              <i className="fa-solid fa-volume-high"></i>
+            ) : vol > 0 ? (
+              <i class="fa-solid fa-volume-low"></i>
+            ) : vol === 0 ? (
+              <i class="fa-solid fa-volume-xmark"></i>
+            ) : null}
           </div>
-          <Modal
-            open={openModal}
-            onClose={() => setOpenModal(false)}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box className="modal" sx={style}>
-              <div className="close">
-                <i
-                  onClick={() => setOpenModal(false)}
-                  className="fa-solid fa-xmark"
-                ></i>
-              </div>
-              <Typography
-                className="vol-title"
-                id="modal-modal-title"
-                variant="h6"
-                component="h2"
-              >
-                Volume
-              </Typography>
-
-              <Slider
-                aria-label="Temperature"
-                defaultValue={vol}
-                getAriaValueText={valuetext}
-                onChange={(event) => setVol(event.target.value)}
-                color="warning"
-                className="vol-slider"
-              />
-            </Box>
-          </Modal>
         </div>
+        <Modal
+          open={openModal}
+          onClose={() => setOpenModal(false)}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box className="modal" sx={style}>
+            <div className="close">
+              <i
+                onClick={() => setOpenModal(false)}
+                className="fa-solid fa-xmark"
+              ></i>
+            </div>
+            <Typography
+              className="vol-title"
+              id="modal-modal-title"
+              variant="h6"
+              component="h2"
+            >
+              Volume
+            </Typography>
+
+            <Slider
+              aria-label="Temperature"
+              defaultValue={vol}
+              getAriaValueText={valuetext}
+              onChange={handleVolume}
+              color="warning"
+              className="vol-slider"
+            />
+          </Box>
+        </Modal>
       </div>
     </div>
   );
