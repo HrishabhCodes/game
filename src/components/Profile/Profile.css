@@ -1,0 +1,103 @@
+.profile-page-cont {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 5rem);
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+.avatar-cont {
+  width: 300px;
+  height: 300px;
+  position: relative;
+}
+
+.change-avatar {
+  position: absolute;
+  width: 4rem;
+  height: 4rem;
+  background-color: rgb(255, 208, 0);
+  border: 2px solid black;
+  display: flex;
+  align-items: center;
+  border-radius: 50%;
+  justify-content: center;
+  bottom: 15px;
+  right: 15px;
+}
+
+.fa-arrows-rotate {
+  font-size: 2.5rem;
+}
+
+.avatar-img {
+  border-radius: 50%;
+  border: 2px solid black;
+  width: 300px;
+}
+
+.name-cont {
+  height: 30%;
+}
+
+.user-name-cont {
+  height: 4.5rem;
+  width: 30rem;
+  background-color: rgb(255 199 71 / 75%);
+  display: flex;
+  border: 2px solid rgba(0, 0, 0, 0.445);
+}
+
+.change-icon {
+  height: 100%;
+  width: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fa-pen-to-square {
+  font-size: 2rem;
+  color: rgb(54, 54, 54);
+}
+
+.fa-pen-to-square:hover {
+  cursor: pointer;
+}
+
+.user-name {
+  background-color: rgb(255 199 71 / 75%);
+  height: 100%;
+  width: 85%;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 2.5rem;
+  padding: 1rem 0 1rem 1rem;
+  outline: none;
+  border: none;
+  font-weight: 600;
+  color: rgb(54, 54, 54);
+}
+
+.change-active {
+  background-color: white;
+}
+
+.change-name {
+  height: 3rem;
+  width: 30rem;
+  background-color: rgb(66, 157, 243);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  color: white;
+  padding: 1rem 0;
+  margin-top: 2rem;
+  transition-duration: 500ms;
+}
+
+.change-name:hover {
+  cursor: pointer;
+  background-color: rgb(84, 168, 247);
+}
