@@ -1,0 +1,25 @@
+.gameChat {
+  background-color: rgb(51, 50, 50);
+  color: rgb(255, 255, 255);
+  height: 85vh;
+  margin-top: 10px;
+  /* overflow-x: hidden;
+  overflow-y: scroll; */
+}
+.render-chat {
+  height: 70vh;
+  overflow-x: hidden;
+}
+.message {
+  position: fixed;
+  bottom: 5;
+}
+.users {
+  color: rgb(255, 255, 255);
+  background-color: rgb(51, 50, 50);
+  height: 85vh;
+  margin-top: 10px;
+}
+.userData {
+  display: block;
+}
