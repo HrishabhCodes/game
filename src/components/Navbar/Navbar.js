@@ -15,6 +15,7 @@ const style = {
   boxShadow: 24,
   p: 4,
   outline: "none",
+  backgroundColor: "#000000",
 };
 
 function valuetext(value) {
@@ -97,7 +98,7 @@ const Navbar = () => {
               defaultValue={vol}
               getAriaValueText={valuetext}
               onChange={handleVolume}
-              color="warning"
+              sx={{ color: "#1dd6f2;" }}
               className="vol-slider"
             />
           </Box>

@@ -24,10 +24,12 @@
   width: 27%;
   height: 100%;
   background-image: cover;
+  transition: 0.3s;
 }
 
 .modes-card:hover {
   cursor: pointer;
+  transform: scale(1.1);
 }
 
 .modes-img {
@@ -36,16 +38,18 @@
   background-position: center;
   background-size: cover;
   height: 80%;
+  border-radius: 10px 10px 0px 0px;
 }
 
 .modes-title {
-  background-color: rgb(59, 59, 59);
+  background-color: #1f84c7;
   height: 20%;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 1.7rem;
   color: rgb(255, 242, 199);
+  border-radius: 0px 0px 10px 10px;
 }
 
 .search-btn,
@@ -65,21 +69,34 @@
   font-size: 2rem;
   color: white;
 }
-
-.create-game {
-  height: 8%;
-  background-color: #f6c554;
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
-  border: 2px solid rgba(59, 59, 59, 0.39);
-}
-
-.create-game:hover {
-  background-color: #f8cc65;
-  cursor: pointer;
-}
-
 .search-btn:hover {
   background-color: rgb(45, 177, 238);
   cursor: pointer;
+}
+
+.create-game {
+  background-image: linear-gradient(
+    to right,
+    #da22ff 0%,
+    #86056a 51%,
+    #da22ff 100%
+  );
+}
+.create-game {
+  margin: 10px;
+  padding: 15px 45px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px rgb(0, 0, 0);
+  border-radius: 10px;
+  display: block;
+}
+
+.create-game:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
 }

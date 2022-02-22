@@ -23,14 +23,16 @@
 }
 
 .user-info {
+  color: #e9e3e3;
   width: 75%;
   height: 60%;
-  background-color: antiquewhite;
+  background-color: #1f84c7;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
   border: 1px solid rgba(63, 63, 63, 0.432);
+  border-radius: 10px;
 }
 
 .user-img-cont {
@@ -50,7 +52,7 @@
 .username {
   font-size: 2rem;
   font-weight: bold;
-  color: black;
+  color: #e9e3e3;
 }
 
 .any-word {
@@ -69,11 +71,13 @@
 .game-info {
   width: 85%;
   height: 25%;
-  background-color: #fff;
+  background-color: #2788c9;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  color: #e9e3e3;
+  border-radius: 10px;
 }
 
 .play-icon {
@@ -81,13 +85,28 @@
 }
 
 .play-btn {
-  background-color: rgb(0, 152, 223);
-  border: 2px solid rgb(10, 99, 141);
-  font-size: 2rem;
+  background-image: linear-gradient(
+    to right,
+    #da22ff 0%,
+    #86056a 51%,
+    #da22ff 100%
+  );
+}
+.play-btn {
+  margin: 10px;
+  padding: 15px 45px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
   color: white;
-  width: 85%;
-  height: 30%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  box-shadow: 0 0 20px rgb(0, 0, 0);
+  border-radius: 10px;
+  display: block;
+}
+
+.play-btn:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
 }

@@ -17,7 +17,7 @@
   position: absolute;
   width: 4rem;
   height: 4rem;
-  background-color: rgb(255, 208, 0);
+  background-color: rgb(0, 183, 255);
   border: 2px solid black;
   display: flex;
   align-items: center;
@@ -44,7 +44,7 @@
 .user-name-cont {
   height: 4.5rem;
   width: 30rem;
-  background-color: rgb(255 199 71 / 75%);
+  background-color: rgba(71, 203, 255, 0.75);
   display: flex;
   border: 2px solid rgba(0, 0, 0, 0.445);
 }
@@ -67,7 +67,7 @@
 }
 
 .user-name {
-  background-color: rgb(255 199 71 / 75%);
+  background-color: rgba(92, 229, 253, 0.75);
   height: 100%;
   width: 85%;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
