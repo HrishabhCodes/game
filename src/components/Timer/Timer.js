@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Timer.css";
+import "./timer.css";
 
 function Timer({ sec, socket, gameOver }) {
   const [secs, setTime] = useState(sec);

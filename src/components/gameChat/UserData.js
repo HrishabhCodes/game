@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./GameChat.css";
+import "./gameChat.css";
 const colors1 = [
   "#9ADCFF",
   "#FFF89A",

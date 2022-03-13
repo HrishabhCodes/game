@@ -1,5 +1,5 @@
 import React from "react";
-import "./GameChat.css";
+import "./gameChat.css";
 import UserData from "./UserData";
 import { TextField, Box } from "@mui/material";
 function Lobby({

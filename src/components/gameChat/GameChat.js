@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./GameChat.css";
+import "./gameChat.css";
 import Canvas from "../Canvas/Canvas";
 import { Link } from "react-router-dom";
 import { Tooltip, Zoom } from "@mui/material";
