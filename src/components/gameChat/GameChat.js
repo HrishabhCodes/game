@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./gameChat.css";
 import Canvas from "../Canvas/Canvas";
 import { Link } from "react-router-dom";
@@ -22,14 +22,12 @@ function GameChat({ showGC, Name, Room, socket, modal, setActive }) {
     showGC(false);
     modal(false);
   };
-  useEffect(() => {
-    socket.on("start", (data) => {
-      setShow(true);
-    });
-  }, [socket]);
+  socket.on("start", (data) => {
+    setShow(true);
+  });
   const StartGame = () => {
     setShow(true);
-    socket.emit("start");
+    socket.emit("startGame");
     console.log("start game");
   };
   const changeName = () => {

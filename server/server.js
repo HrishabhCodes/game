@@ -3,8 +3,18 @@ const app = express();
 const http = require("http");
 const cors = require("cors");
 const { Server } = require("socket.io");
-const json = require("./words.json");
-const items = json.items;
+const items = [
+  "dog",
+  "cat",
+  "phone",
+  "table",
+  "tea",
+  "glasses",
+  "pen",
+  "pencil",
+  "paper",
+  "island",
+];
 app.use(cors());
 const server = http.createServer(app);
 //setting up CORS
@@ -15,7 +25,6 @@ const io = new Server(server, {
   },
 });
 const users = [];
-let userTurn = 0;
 //listen for connection
 io.on("connection", (socket) => {
   //Join Room
@@ -30,14 +39,11 @@ io.on("connection", (socket) => {
     //listen for start game
     socket.on("startGame", () => {
       io.in(Data.room).emit("userData", users);
-    });
-    socket.on("start", () => {
       socket.to(Data.room).emit("start");
       io.in(Data.room).emit(
         "word",
         items[Math.floor(Math.random() * items.length)]
       );
-      io.in(Data.room).emit("userData", users);
     });
     socket.on("canvasData", (data) => {
       //console.log("data");
@@ -50,6 +56,10 @@ io.on("connection", (socket) => {
         username: data.username,
       };
       io.in(Data.room).emit("userData", users);
+      socket.to(Data.room).emit("botMessage", {
+        username: "Bot",
+        message: `${Data.username} changed name to ${data}`,
+      });
     });
     //listen for disconnect
     socket.on("disconnect", () => {
@@ -70,17 +80,6 @@ io.on("connection", (socket) => {
       users.splice(users.indexOf(data.id), 1);
       socket.to(data.room).emit("userData", users);
       io.to(socket.id).emit("userData", []);
-    });
-
-    socket.on("roundOver", () => {
-      socket.to(Data.room).emit("roundOver");
-      io.to(users[userTurn].id).emit("turn");
-      console.log(users[userTurn].id);
-      if (userTurn === users.length - 1) {
-        userTurn = 0;
-      } else {
-        userTurn++;
-      }
     });
   });
   //listen for send message

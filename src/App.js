@@ -1,4 +1,3 @@
-import Navbar from "./components/Navbar/Navbar";
 import Play from "./components/PlayPage/Play";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React, { useState } from "react";
