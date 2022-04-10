@@ -18,7 +18,7 @@ function Timer({ sec, socket, gameOver }) {
       setTime(secs - 1);
     }
   };
-  const reset = () => setTime(parseInt(sec));
+  // const reset = () => setTime(parseInt(sec));
 
   React.useEffect(() => {
     const timerId = setInterval(() => tick(), 1000);
