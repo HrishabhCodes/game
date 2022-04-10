@@ -3,6 +3,7 @@ import Menu from "./menu";
 import "./Canvas.css";
 import Chat from "../gameChat/Chat";
 import UserData from "../gameChat/UserData";
+import Timer from "../Timer/Timer";
 
 function Canvas({ socket, username, room }) {
   const canvasRef = useRef(null);
@@ -11,7 +12,8 @@ function Canvas({ socket, username, room }) {
   const [lineWidth, setLineWidth] = useState(5);
   const [lineColor, setLineColor] = useState("black");
   const [lineOpacity, setLineOpacity] = useState(0.5);
-
+  const [turn, setTurn] = useState(false);
+  //const classname="col-2 users";
   // Initialization when the component
   // mounts for the first time
   useEffect(() => {
@@ -25,7 +27,7 @@ function Canvas({ socket, username, room }) {
     ctx.lineWidth = lineWidth;
     ctxRef.current = ctx;
   }, [lineColor, lineOpacity, lineWidth]);
-
+  //console.log(word);
   // Function for starting the drawing
   const startDrawing = (e) => {
     ctxRef.current.beginPath();
@@ -47,17 +49,51 @@ function Canvas({ socket, username, room }) {
     ctxRef.current.stroke();
   };
 
+  const gameOver = () => {
+    var base64ImageData = canvasRef.current.toDataURL("image/png");
+    socket.emit("canvasData", base64ImageData);
+    //console.log(base64ImageData);
+  };
+  setInterval(gameOver, 250);
+  useEffect(() => {
+    socket.on("canvasDraw", (imageData) => {
+      var image = new Image();
+
+      //console.log("image1");
+
+      image.onload = function () {
+        for (let i = 0; i <= 3; i++) {
+          //console.log("image2");
+          ctxRef.current.drawImage(image, 0, 0);
+        }
+      };
+      ctxRef.current.filter = "opacity(100%)";
+      image.src = imageData;
+    });
+    socket.on("roundOver", () => {
+      setTurn(false);
+    });
+    // socket.on("turn", () => {
+    //   setTurn(true);
+    //   console.log("turn");
+    // });
+    //console.log(turn);
+  }, [socket]);
   return (
     <div className="container-fluid">
       <div className="App row " onTouchEnd={endDrawing} onMouseUp={endDrawing}>
-        <UserData socket={socket} room={room} />
-        <div className="draw-area col-7">
+        <UserData classname={"col-2 users"} socket={socket} room={room} />
+        <div
+          className="draw-area col-7 "
+          //className={"draw-area col-7" + (turn ? "" : " disabled")}
+        >
           <div
             onMouseMove={draw}
             onTouchMove={draw}
             onTouchStart={startDrawing}
             onMouseDown={startDrawing}
           >
+            <Timer sec={15} socket={socket} gameOver={gameOver} />
             <canvas
               ref={canvasRef}
               width={window.innerWidth * 0.582}

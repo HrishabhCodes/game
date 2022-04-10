@@ -100,3 +100,10 @@
   color: #fff;
   text-decoration: none;
 }
+.joinGame {
+  height: 40px;
+  width: 262px;
+  background-color: rgb(9, 113, 248);
+  color: black;
+  border-radius: 20px;
+}

@@ -1,52 +1,75 @@
-import React, { useState } from "react";
-import io from "socket.io-client";
+import React, { useState, useEffect } from "react";
 import "./gameChat.css";
 import Canvas from "../Canvas/Canvas";
-const socket = io.connect("http://localhost:3001");
-function GameChat() {
-  const [username, setUsername] = useState("");
-  const [room, setRoom] = useState("");
+import { Link } from "react-router-dom";
+import { Tooltip, Zoom } from "@mui/material";
+import Lobby from "./Lobby";
+import { blue } from "@mui/material/colors";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+var word = "";
+function GameChat({ showGC, Name, Room, socket, modal, setActive }) {
   const [show, setShow] = useState(false);
+  const [username, setUsername] = useState(Name);
+  const [showLobby, setShowLobby] = useState(true);
+
+  const room = Room;
   //check if the user details are entered
-  const joinRoom = () => {
-    if (username !== "" && room !== "") {
-      socket.emit("joinRoom", { room: room, username: username });
-      setShow(true);
-    }
-  };
+
   const leaveroom = () => {
     socket.emit("leave", { room: room, username: username });
     setShow(false);
+    setShowLobby(false);
+    showGC(false);
+    modal(false);
   };
-
+  useEffect(() => {
+    socket.on("start", (data) => {
+      setShow(true);
+    });
+  }, [socket]);
+  const StartGame = () => {
+    setShow(true);
+    socket.emit("start");
+    console.log("start game");
+  };
+  const changeName = () => {
+    socket.emit("changeName", { username: username });
+  };
   return (
     <div
-      className="col-12  "
-      style={{ backgroundColor: "#383838", color: "#ffffff" }}
+      className="col-12 "
+      style={{
+        backgroundColor: "transparent",
+        color: "#ffffff",
+        display: "flex",
+      }}
     >
-      <button onClick={leaveroom}>leave</button>
       {!show ? (
-        <div>
-          <h3>Join a chat</h3>
-          <input
-            type="text"
-            placeholder="Enate nick name"
-            onChange={(event) => {
-              setUsername(event.target.value);
-            }}
-          />
-          <input
-            type="text"
-            placeholder="Room no."
-            onChange={(event) => {
-              setRoom(event.target.value);
-            }}
-          />
-          <button onClick={joinRoom}>Join</button>
-        </div>
+        <Lobby
+          socket={socket}
+          username={username}
+          room={room}
+          setUsername={setUsername}
+          changeName={changeName}
+          showLobby={showLobby}
+          StartGame={StartGame}
+        />
       ) : (
-        <Canvas socket={socket} username={username} room={room} />
+        <Canvas socket={socket} username={username} room={room} word={word} />
       )}
+      <Link to="/play" onClick={() => setActive("play")}>
+        <Tooltip
+          className="leaveButton "
+          title="Leave"
+          TransitionComponent={Zoom}
+          TransitionProps={{ timeout: 300 }}
+          arrow
+        >
+          <button type="submit" onClick={leaveroom}>
+            <CloseRoundedIcon fontSize="large" sx={{ color: blue[50] }} />
+          </button>
+        </Tooltip>
+      </Link>
     </div>
   );
 }

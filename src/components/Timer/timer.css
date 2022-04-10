@@ -1,0 +1,35 @@
+.timer {
+  background-color: rgb(4, 1, 46);
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 50px;
+  height: 50px;
+  border: 2px solid black;
+  z-index: 1;
+  border-radius: 0 0 0 50%;
+  color: white;
+}
+.drawingObj {
+  width: 300px;
+  background-color: rgb(4, 1, 46);
+  margin-left: auto;
+  margin-right: auto;
+  height: 50px;
+  border: 2px solid black;
+  z-index: 1;
+  border-radius: 0 0 10px 10px;
+  color: white;
+}
+.round {
+  background-color: rgb(4, 1, 46);
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 50px;
+  height: 50px;
+  border: 2px solid black;
+  z-index: 1;
+  border-radius: 0 0 50% 0;
+  color: white;
+}

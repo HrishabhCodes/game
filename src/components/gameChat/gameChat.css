@@ -1,8 +1,7 @@
 .gameChat {
-  background-color: rgb(51, 50, 50);
+  backdrop-filter: brightness(60%) blur(5px);
   color: rgb(255, 255, 255);
   height: 85vh;
-  margin-top: 10px;
   /* overflow-x: hidden;
   overflow-y: scroll; */
 }
@@ -13,13 +12,70 @@
 .message {
   position: fixed;
   bottom: 5;
+  display: flex;
 }
 .users {
   color: rgb(255, 255, 255);
-  background-color: rgb(51, 50, 50);
+  /* background-color: rgb(51, 50, 50); */
   height: 85vh;
-  margin-top: 10px;
+  backdrop-filter: brightness(50%) blur(5px);
 }
 .userData {
   display: block;
+  text-indent: 5px;
+  border-radius: 10px;
+}
+.leaveButton {
+  position: absolute;
+  right: 20px;
+  top: 80px;
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  border-radius: 50%;
+  border: 0;
+}
+.sendButton {
+  position: absolute;
+  right: 10px;
+
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  border-radius: 50%;
+  border: 0;
+}
+.list-group-item {
+  background-color: transparent;
+  color: white;
+  border: 5px solid transparent;
+}
+.info {
+  backdrop-filter: brightness(50%) blur(5px);
+}
+.start-game {
+  background-image: linear-gradient(
+    to right,
+    #da22ff 0%,
+    #86056a 51%,
+    #da22ff 100%
+  );
+}
+.start-game {
+  margin: 10px;
+  padding: 15px 45px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px rgb(0, 0, 0);
+  border-radius: 10px;
+  display: block;
+}
+
+.start-game:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
 }

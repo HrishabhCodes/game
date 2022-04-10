@@ -2,8 +2,8 @@ import React, { useState, useRef } from "react";
 import "./Profile.css";
 import UserImage from "../../assets/user-img.jpeg";
 
-const Profile = () => {
-  const [name, setName] = useState("Guest");
+const Profile = ({ name, setName }) => {
+  //const [name, setName] = useState("Blue");
   const [disable, setDisable] = useState(true);
   const [change, setChange] = useState(false);
   const inputRef = useRef();
@@ -18,12 +18,13 @@ const Profile = () => {
   const handleSubmit = () => {
     setDisable(true);
     setChange(false);
+    localStorage.setItem("name", name);
   };
 
   return (
     <div className="profile-page-cont">
       <div className="avatar-cont">
-        <img src={UserImage} className="avatar-img" />
+        <img src={UserImage} className="avatar-img" alt="Avatar" />
         <div className="change-avatar">
           <i className="fa-solid fa-arrows-rotate"></i>
         </div>
@@ -36,6 +37,9 @@ const Profile = () => {
               disabled
               type="text"
               className="user-name"
+              onChange={(event) => {
+                setName(event.target.value);
+              }}
               value={name}
             />
           ) : (

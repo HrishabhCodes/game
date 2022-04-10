@@ -1,4 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
+import { TextField, Box, Tooltip, Zoom } from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
+import { blue } from "@mui/material/colors";
 
 import "./gameChat.css";
 import ScrollToBottom from "react-scroll-to-bottom";
@@ -43,8 +46,8 @@ function Chat({ socket, username, room }) {
 
   return (
     <div className="col-3  gameChat">
-      <div>
-        <h3>GameChat</h3>
+      <div className="mt-2">
+        <h2>GameChat</h2>
       </div>
       <div className="render-chat">
         <ScrollToBottom className="render-chat">
@@ -57,19 +60,45 @@ function Chat({ socket, username, room }) {
           })}
         </ScrollToBottom>
       </div>
-      <div ref={messagesEndRef} className="message">
-        <input
-          type="text"
-          value={currentMessage}
-          placeholder="message"
-          onChange={(event) => {
-            setCurrentMessage(event.target.value);
+      <div ref={messagesEndRef} className="message col-11">
+        {/* <div  style={{ backgroundColor: "#edebeb" }}> */}
+        <Box
+          className="col-9"
+          sx={{
+            "& > :not(style)": {
+              backgroundColor: "#edebeb",
+            },
           }}
-          onKeyPress={(event) => {
-            event.key === "Enter" && sendMessage();
-          }}
-        />
-        <button onClick={sendMessage}>Send</button>
+        >
+          <TextField
+            id="standard-basic"
+            className="col-12"
+            label="Message"
+            variant="standard"
+            type="text"
+            value={currentMessage}
+            placeholder="Message"
+            sx={{ input: { color: "#000000" } }}
+            onChange={(event) => {
+              setCurrentMessage(event.target.value);
+            }}
+            onKeyPress={(event) => {
+              event.key === "Enter" && sendMessage();
+            }}
+          />
+        </Box>
+        <Tooltip
+          className="sendButton"
+          placement="top"
+          title="Send"
+          TransitionComponent={Zoom}
+          TransitionProps={{ timeout: 300 }}
+          arrow
+        >
+          <button onClick={sendMessage} style={{ width: "50px" }}>
+            <SendIcon sx={{ color: blue[500], fontSize: 50 }} />
+          </button>
+        </Tooltip>
       </div>
     </div>
   );

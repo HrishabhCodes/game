@@ -22,9 +22,8 @@ function valuetext(value) {
   return `${value}°C`;
 }
 
-const Navbar = () => {
+const Navbar = ({ active, setActive }) => {
   const [openModal, setOpenModal] = useState(false);
-  const [active, setActive] = useState("home");
   const [vol, setVol] = useState(100);
   const handleOpen = () => setOpenModal(true);
   const handleVolume = (event) => {
@@ -65,9 +64,9 @@ const Navbar = () => {
             {vol >= 50 ? (
               <i className="fa-solid fa-volume-high"></i>
             ) : vol > 0 ? (
-              <i class="fa-solid fa-volume-low"></i>
+              <i className="fa-solid fa-volume-low"></i>
             ) : vol === 0 ? (
-              <i class="fa-solid fa-volume-xmark"></i>
+              <i className="fa-solid fa-volume-xmark"></i>
             ) : null}
           </div>
         </div>

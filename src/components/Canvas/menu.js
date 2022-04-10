@@ -67,18 +67,18 @@ const Menu = ({ setLineColor, setLineWidth, setLineOpacity, ctx, canvas }) => {
         </div>
       </div>
       <div className="menuSilde">
-        <input
-          className="m-2 menuButton"
+        <i
+          className="fa-solid fa-eraser m-2 menuButton"
           type="button"
           value="Earase"
           onClick={(e) => {
             e.target.value = "#ffffff";
             setLineColor(e.target.value);
           }}
-        />
+        ></i>
 
-        <input
-          className="m-2 menuButton"
+        <i
+          className="m-2 menuButton fa-solid fa-trash-can"
           type="button"
           value="Clear"
           onClick={(e) => {
