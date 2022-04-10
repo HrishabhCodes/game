@@ -1,5 +1,6 @@
 import Play from "./components/PlayPage/Play";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar/Navbar";
 import React, { useState } from "react";
 import Home from "./components/HomePage/Home";
 import Profile from "./components/Profile/Profile";
