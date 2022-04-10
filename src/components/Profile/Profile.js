@@ -85,7 +85,7 @@ const Profile = ({ name, setName }) => {
                 src={
                   selAvatar === 2
                     ? Avatar2
-                    : selAvatar === y
+                    : selAvatar === 3
                     ? Avatar3
                     : selAvatar === 4
                     ? Avatar4

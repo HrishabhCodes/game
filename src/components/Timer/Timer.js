@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./timer.css";
+import "./Timer.css";
 
 function Timer({ sec, socket, gameOver }) {
   const [secs, setTime] = useState(sec);
@@ -12,8 +12,9 @@ function Timer({ sec, socket, gameOver }) {
   const tick = () => {
     if (secs === 0) {
       //reset();
-      gameOver();
-      setTime(parseInt(15));
+      //gameOver();
+      socket.emit("roundOver");
+      setTime(parseInt(60));
     } else {
       setTime(secs - 1);
     }
