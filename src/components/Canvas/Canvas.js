@@ -1,11 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import Menu from "./menu";
 import "./Canvas.css";
 import Chat from "../gameChat/Chat";
 import UserData from "../gameChat/UserData";
 import Timer from "../Timer/Timer";
+import SocketContext from "../../context/socketContext";
 
-function Canvas({ socket, username, room }) {
+function Canvas() {
+  const ctx = useContext(SocketContext);
   const canvasRef = useRef(null);
   const ctxRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -49,11 +51,11 @@ function Canvas({ socket, username, room }) {
   };
   const gameOver = () => {
     var base64ImageData = canvasRef.current.toDataURL("image/png");
-    socket.emit("canvasData", base64ImageData);
+    ctx.socket.emit("canvasData", base64ImageData);
     //console.log(base64ImageData);
   };
   useEffect(() => {
-    socket.on("canvasDraw", (imageData) => {
+    ctx.socket.on("canvasDraw", (imageData) => {
       var image = new Image();
       image.src = imageData;
       console.log("image1");
@@ -63,11 +65,11 @@ function Canvas({ socket, username, room }) {
         ctxRef.current.drawImage(image, 0, 0);
       };
     });
-  }, [socket]);
+  }, [ctx.socket]);
   return (
     <div className="container-fluid">
       <div className="App row " onTouchEnd={endDrawing} onMouseUp={endDrawing}>
-        <UserData classname={"col-2 users"} socket={socket} room={room} />
+        <UserData classname={"col-2 users"} />
         <div className="draw-area col-7">
           <div
             onMouseMove={draw}
@@ -75,7 +77,7 @@ function Canvas({ socket, username, room }) {
             onTouchStart={startDrawing}
             onMouseDown={startDrawing}
           >
-            <Timer sec={15} socket={socket} gameOver={gameOver} />
+            <Timer sec={15} gameOver={gameOver} />
             <canvas
               ref={canvasRef}
               width={window.innerWidth * 0.582}
@@ -90,7 +92,7 @@ function Canvas({ socket, username, room }) {
             canvas={canvasRef.current}
           />
         </div>
-        <Chat socket={socket} username={username} room={room} />
+        <Chat />
       </div>
     </div>
   );

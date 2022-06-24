@@ -1,16 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./gameChat.css";
 import UserData from "./UserData";
 import { TextField, Box } from "@mui/material";
-function Lobby({
-  socket,
-  username,
-  room,
-  setUsername,
-  changeName,
-  showLobby,
-  StartGame,
-}) {
+import socketContext from "../../context/socketContext";
+function Lobby({ changeName, showLobby, StartGame }) {
+  const ctx = useContext(socketContext);
   return (
     <div className="joinArea row" style={{ width: "100vw" }}>
       <h3 className="p-0" style={{ textIndent: "50px" }}>
@@ -32,10 +26,10 @@ function Lobby({
           variant="filled"
           type="text"
           placeholder="Enate nick name"
-          value={username}
+          value={ctx.name}
           sx={{ input: { backgroundColor: "#edebeb", color: "#000000" } }}
           onChange={(event) => {
-            setUsername(event.target.value);
+            ctx.setName(event.target.value);
           }}
         />
         <TextField
@@ -47,7 +41,7 @@ function Lobby({
           label="Room ID"
           variant="filled"
           type="text"
-          value={room}
+          value={ctx.RoomId}
           placeholder="Room ID"
           sx={{ input: { backgroundColor: "#edebeb", color: "#000000" } }}
         />
@@ -84,7 +78,7 @@ function Lobby({
                   language: English
                 </li>
                 <li className="list-group-item list-group-item-action">
-                  Room Id: {room}
+                  Room Id: {ctx.RoomId}
                 </li>
               </ul>
             </div>
@@ -96,7 +90,7 @@ function Lobby({
               overflow: "hidden",
             }}
           >
-            <UserData classname={"col-12 users"} socket={socket} room={room} />
+            <UserData classname={"col-12 users"} />
           </div>
           <div className="col-2"></div>
           <button

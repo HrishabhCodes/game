@@ -1,34 +1,34 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { TextField, Box, Tooltip, Zoom } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { blue } from "@mui/material/colors";
-
+import SocketContext from "../../context/socketContext";
 import "./gameChat.css";
 import ScrollToBottom from "react-scroll-to-bottom";
-function Chat({ socket, username, room }) {
+function Chat() {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messagesList, setMessagesList] = useState([]);
   const messagesEndRef = useRef(null);
-
+  const ctx = useContext(SocketContext);
   const sendMessage = () => {
     //check if the message is empty
     if (currentMessage !== "") {
       const messageData = {
-        room: room,
-        username: username,
+        room: ctx.room,
+        username: ctx.name,
         message: currentMessage,
       };
 
-      socket.emit("sendMessage", messageData);
+      ctx.socket.emit("sendMessage", messageData);
       setMessagesList((list) => [...list, messageData]);
       //sending custom message to server
       if (currentMessage === "hi") {
         const BotMsg = {
-          room: room,
+          room: ctx.room,
           username: "Bot",
           message: "Hello",
         };
-        socket.emit("sendMessage", BotMsg);
+        ctx.socket.emit("sendMessage", BotMsg);
         setMessagesList((list) => [...list, BotMsg]);
       }
       setCurrentMessage("");
@@ -36,13 +36,13 @@ function Chat({ socket, username, room }) {
   };
   //update the message list when the server sends a message
   useEffect(() => {
-    socket.on("reciveMessage", (data) => {
+    ctx.socket.on("reciveMessage", (data) => {
       setMessagesList((list) => [...list, data]);
     });
-    socket.on("botMessage", (data) => {
+    ctx.socket.on("botMessage", (data) => {
       setMessagesList((list) => [...list, data]);
     });
-  }, [socket]);
+  }, [ctx.socket]);
 
   return (
     <div className="col-3  gameChat">

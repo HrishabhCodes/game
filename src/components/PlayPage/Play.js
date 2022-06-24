@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import GameChat from "../gameChat/GameChat";
 import "./Play.css";
+import SocketContext from "../../context/socketContext";
 import { TextField, Box, Modal } from "@mui/material";
-const Play = ({ name, socket }) => {
+const Play = () => {
+  const ctx = useContext(SocketContext);
   const [showGameChat, setShowGameChat] = useState(false);
-  const [username, setUsername] = useState(name);
+  const [username, setUsername] = useState(ctx.name);
   const [room, setRoom] = useState("");
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -12,8 +14,8 @@ const Play = ({ name, socket }) => {
 
   const joinRoom = () => {
     if (username !== "" && room !== "") {
-      socket.emit("joinRoom", { room: room, username: username });
-      socket.emit("startGame");
+      ctx.socket.emit("joinRoom", { room: room, username: username });
+      ctx.socket.emit("startGame");
       setShowGameChat(true);
     }
   };
@@ -97,13 +99,7 @@ const Play = ({ name, socket }) => {
           </Modal>
         </div>
       ) : (
-        <GameChat
-          showGC={setShowGameChat}
-          Name={username}
-          Room={room}
-          socket={socket}
-          modal={setOpen}
-        />
+        <GameChat showGC={setShowGameChat} modal={setOpen} />
       )}
     </div>
   );

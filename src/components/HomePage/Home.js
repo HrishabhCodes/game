@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Home.css";
 import UserImage from "../../assets/user-img.jpeg";
 import { Link } from "react-router-dom";
 import GameChat from "../gameChat/GameChat";
-
-const Home = ({ name, socket, setActive }) => {
-  const roomId = "A1";
+import SocketContext from "../../context/socketContext";
+const Home = () => {
   const [showGameChat, setShowGameChat] = useState(false);
+  const ctx = useContext(SocketContext);
+  // console.log("nae", ctx);
   const ShowGc = () => {
     setShowGameChat(true);
 
-    socket.emit("joinRoom", { room: roomId, username: name });
-    socket.emit("startGame");
+    ctx.socket.emit("joinRoom", { room: ctx.RoomId, username: ctx.name });
+    ctx.socket.emit("startGame");
     setShowGameChat(true);
   };
 
@@ -22,18 +23,18 @@ const Home = ({ name, socket, setActive }) => {
           <Link
             to="/profile"
             className="user-info"
-            onClick={() => setActive("profile")}
+            onClick={() => ctx.setActive("profile")}
           >
             <div className="user-img-cont">
               <img className="user-img" src={UserImage} alt="" />
             </div>
-            <div className="username">{name}</div>
+            <div className="username">{ctx.name}</div>
           </Link>
           <div className="quick-play-cont">
             <Link
               to="/play"
               className="game-info"
-              onClick={() => setActive("play")}
+              onClick={() => ctx.setActive("play")}
             >
               <div className="play-icon">
                 <i className="fa-solid fa-play"></i>
@@ -50,14 +51,7 @@ const Home = ({ name, socket, setActive }) => {
           </div>
         </div>
       ) : (
-        <GameChat
-          showGC={setShowGameChat}
-          Name={name}
-          Room={roomId}
-          socket={socket}
-          modal={setShowGameChat}
-          setActive={setActive}
-        />
+        <GameChat showGC={setShowGameChat} modal={setShowGameChat} />
       )}
     </div>
   );

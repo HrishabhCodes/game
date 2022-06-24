@@ -1,5 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import "./Profile.css";
+import SocketContext from "../../context/socketContext";
 import { Box, Modal } from "@mui/material";
 import Avatar1 from "../../assets/avatars/1.png";
 import Avatar2 from "../../assets/avatars/2.png";
@@ -26,8 +27,9 @@ import Avatar22 from "../../assets/avatars/22.png";
 import Avatar23 from "../../assets/avatars/23.png";
 import Avatar24 from "../../assets/avatars/24.png";
 
-const Profile = ({ name, setName }) => {
+const Profile = () => {
   //const [name, setName] = useState("Blue");
+  const ctx = useContext(SocketContext);
   const [open, setOpen] = useState(false);
   const [selAvatar, setSelAvatar] = useState(1);
   const handleOpen = () => setOpen(true);
@@ -62,7 +64,7 @@ const Profile = ({ name, setName }) => {
   const handleSubmit = () => {
     setDisable(true);
     setChange(false);
-    localStorage.setItem("name", name);
+    localStorage.setItem("name", ctx.name);
   };
 
   return (
@@ -293,17 +295,17 @@ const Profile = ({ name, setName }) => {
               type="text"
               className="user-name"
               onChange={(event) => {
-                setName(event.target.value);
+                ctx.setName(event.target.value);
               }}
-              value={name}
+              value={ctx.name}
             />
           ) : (
             <input
               ref={inputRef}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => ctx.setName(e.target.value)}
               type="text"
               className="change-active user-name"
-              value={name}
+              value={ctx.name}
             />
           )}
 
