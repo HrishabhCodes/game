@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./Timer.css";
+import SocketContext from "../../context/socketContext";
 
-function Timer({ sec, socket, gameOver }) {
+function Timer({ sec, gameOver }) {
+  const ctx = useContext(SocketContext);
   const [secs, setTime] = useState(sec);
   const [word, setWord] = useState("");
-  socket.on("word", (data) => {
+  ctx.socket.on("word", (data) => {
     console.log(data);
     setWord(data);
   });
@@ -13,7 +15,7 @@ function Timer({ sec, socket, gameOver }) {
     if (secs === 0) {
       //reset();
       //gameOver();
-      socket.emit("roundOver");
+      ctx.socket.emit("roundOver");
       setTime(parseInt(60));
     } else {
       setTime(secs - 1);

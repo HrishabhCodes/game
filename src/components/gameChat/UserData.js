@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./gameChat.css";
+import SocketContext from "../../context/socketContext";
 const colors1 = [
   "#9ADCFF",
   "#FFF89A",
@@ -12,25 +13,27 @@ const colors1 = [
   "#FF9F45",
   "#F3C5C5",
 ];
-function UserData({ classname, socket, room }) {
+function UserData({ classname }) {
+  const ctx = useContext(SocketContext);
   const [userList, setUserList] = useState([]);
   let List = [];
   //get user data from server and set it to userList
   useEffect(() => {
-    socket.on("userData", (data) => {
+    // console.log("userData");
+    ctx.socket.on("userData", (data) => {
       setUserList((list) => [...data]);
       console.log(data);
     });
-  }, [socket]);
+  }, [ctx.socket]);
   //filr userList to get only users in the same room
   List = userList.filter(function (item) {
-    return item.room === room;
+    return item.room === ctx.RoomId;
   });
 
   return (
     <div className={classname}>
       <h2 className="mt-2">Players</h2>
-      <h5>Room ID: {room}</h5>
+      <h5>Room ID: {ctx.RoomId}</h5>
       <ul className="p-0">
         {List.map((Data, index) => (
           <li
