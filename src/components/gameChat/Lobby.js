@@ -3,7 +3,7 @@ import "./gameChat.css";
 import UserData from "./UserData";
 import { TextField, Box } from "@mui/material";
 import socketContext from "../../context/socketContext";
-function Lobby({ changeName, showLobby, StartGame }) {
+function Lobby({ showLobby, StartGame }) {
   const ctx = useContext(socketContext);
   return (
     <div className="joinArea row" style={{ width: "100vw" }}>
@@ -21,7 +21,7 @@ function Lobby({ changeName, showLobby, StartGame }) {
       >
         <TextField
           className="col-5 rounded-pill"
-          id="filled-input"
+          id="filled-read-only-input"
           label="Nick Name"
           variant="filled"
           type="text"
@@ -45,12 +45,6 @@ function Lobby({ changeName, showLobby, StartGame }) {
           placeholder="Room ID"
           sx={{ input: { backgroundColor: "#edebeb", color: "#000000" } }}
         />
-        <button
-          className="btn btn-primary btn-sm rounded-pill text-light"
-          onClick={changeName}
-        >
-          Change Name
-        </button>
       </Box>
       {showLobby ? (
         <div
@@ -93,13 +87,17 @@ function Lobby({ changeName, showLobby, StartGame }) {
             <UserData classname={"col-12 users"} />
           </div>
           <div className="col-2"></div>
-          <button
-            className="start-game mx-auto col-2"
-            onClick={StartGame}
-            style={{ height: "60px" }}
-          >
-            Start Game
-          </button>
+          {ctx.host ? (
+            <button
+              className="start-game mx-auto col-2"
+              onClick={StartGame}
+              style={{ height: "60px" }}
+            >
+              Start Game
+            </button>
+          ) : (
+            <div></div>
+          )}
         </div>
       ) : (
         <div></div>

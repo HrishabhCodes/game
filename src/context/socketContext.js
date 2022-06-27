@@ -1,37 +1,61 @@
-import io from "socket.io-client";
+// import io from "socket.io-client";
 import React, { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
-const socket = io.connect("http://localhost:4000");
+// const socket = io.connect("http://localhost:4000");
 
 const SocketContext = React.createContext({
-  socket: socket,
   name: "",
   setName: () => {},
   active: "",
   setActive: () => {},
   RoomId: "",
+  setRoom: () => {},
+  avatar: 1,
+  users: [],
+  setUsers: () => {},
+  id: "",
+  host: "",
+  setHost: () => {},
+  start: "",
+  setStart: () => {},
 });
+const uuid = uuidv4();
 export const SocketContextProvider = (props) => {
   // const [name, setName] = useState(localStorage.getItem("name"));
   const [name, setName] = useState("blue");
   const [roomId, setRoomId] = useState("");
   const [active, setActive] = useState("home");
-
+  const [users, setUsers] = useState([]);
+  const [host, setHost] = useState();
+  const [start, setStart] = useState(false);
   useEffect(() => {
     axios.get("http://localhost:4000/").then(function (response) {
-      setRoomId(response.data.roomid);
+      let id = String(response.data.roomid);
+      if (id.length < 6) {
+        id = "0".repeat(6 - id.length) + id;
+      }
+      setRoomId(id);
     });
   }, []);
-  console.log(roomId);
+  // console.log(roomId);
   return (
     <SocketContext.Provider
       value={{
         name: name,
         setName: setName,
-        socket: socket,
         active: active,
         setActive: setActive,
-        RoomId: "A1",
+        RoomId: roomId,
+        setRoom: setRoomId,
+        avatar: 1,
+        users: users,
+        setUsers: setUsers,
+        id: uuid,
+        host: host,
+        setHost: setHost,
+        start: start,
+        setStart: setStart,
       }}
     >
       {props.children}

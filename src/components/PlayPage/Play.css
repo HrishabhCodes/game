@@ -65,9 +65,18 @@
 .search-btn {
   background-color: rgb(0, 152, 223);
   border: 2px solid rgb(10, 99, 141);
-  height: 12%;
-  font-size: 2rem;
+  margin: 20px;
+  padding: 15px 45px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
   color: white;
+  box-shadow: 0 0 20px rgb(0, 0, 0);
+  border-radius: 10px;
+  display: block;
+  margin-left: 0px;
+  width: 100%;
 }
 .search-btn:hover {
   background-color: rgb(45, 177, 238);
@@ -83,7 +92,7 @@
   );
 }
 .create-game {
-  margin: 10px;
+  margin: 20px;
   padding: 15px 45px;
   text-align: center;
   text-transform: uppercase;
@@ -93,6 +102,8 @@
   box-shadow: 0 0 20px rgb(0, 0, 0);
   border-radius: 10px;
   display: block;
+  margin-left: 0px;
+  width: 100%;
 }
 
 .create-game:hover {
@@ -106,4 +117,13 @@
   background-color: rgb(9, 113, 248);
   color: black;
   border-radius: 20px;
+}
+.btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.room-textfield {
+  width: 100%;
 }

@@ -4,45 +4,50 @@ import SendIcon from "@mui/icons-material/Send";
 import { blue } from "@mui/material/colors";
 import SocketContext from "../../context/socketContext";
 import "./gameChat.css";
+import { db } from "../../firebase";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  doc,
+  updateDoc,
+  onSnapshot,
+} from "@firebase/firestore";
 import ScrollToBottom from "react-scroll-to-bottom";
 function Chat() {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messagesList, setMessagesList] = useState([]);
   const messagesEndRef = useRef(null);
   const ctx = useContext(SocketContext);
-  const sendMessage = () => {
+  const sendMessage = async () => {
     //check if the message is empty
     if (currentMessage !== "") {
-      const messageData = {
-        room: ctx.room,
-        username: ctx.name,
-        message: currentMessage,
-      };
-
-      ctx.socket.emit("sendMessage", messageData);
-      setMessagesList((list) => [...list, messageData]);
       //sending custom message to server
-      if (currentMessage === "hi") {
-        const BotMsg = {
-          room: ctx.room,
-          username: "Bot",
-          message: "Hello",
-        };
-        ctx.socket.emit("sendMessage", BotMsg);
-        setMessagesList((list) => [...list, BotMsg]);
-      }
-      setCurrentMessage("");
+      const roomRef = collection(db, "rooms");
+      const roomQuery = await query(roomRef, where("roomId", "==", ctx.RoomId));
+      const data = await getDocs(roomQuery);
+      const userRef = doc(db, "rooms", data.docs[0].id);
+
+      await updateDoc(userRef, {
+        messages: [
+          ...data.docs[0].data().messages,
+          { username: ctx.name, message: currentMessage },
+        ],
+      });
     }
+    setCurrentMessage("");
   };
   //update the message list when the server sends a message
   useEffect(() => {
-    ctx.socket.on("reciveMessage", (data) => {
-      setMessagesList((list) => [...list, data]);
+    const roomRef = collection(db, "rooms");
+    const roomQuery = query(roomRef, where("roomId", "==", ctx.RoomId));
+    onSnapshot(roomQuery, (snapshot) => {
+      snapshot.forEach((doc) => {
+        setMessagesList(doc.data().messages);
+      });
     });
-    ctx.socket.on("botMessage", (data) => {
-      setMessagesList((list) => [...list, data]);
-    });
-  }, [ctx.socket]);
+  }, [ctx.RoomId]);
 
   return (
     <div className="col-3  gameChat">

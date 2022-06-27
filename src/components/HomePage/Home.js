@@ -4,15 +4,16 @@ import UserImage from "../../assets/user-img.jpeg";
 import { Link } from "react-router-dom";
 import GameChat from "../gameChat/GameChat";
 import SocketContext from "../../context/socketContext";
+// import { db } from "../../firebase";
+// import { addDoc, collection } from "@firebase/firestore";
 const Home = () => {
   const [showGameChat, setShowGameChat] = useState(false);
   const ctx = useContext(SocketContext);
   // console.log("nae", ctx);
-  const ShowGc = () => {
+
+  const ShowGc = async () => {
     setShowGameChat(true);
 
-    ctx.socket.emit("joinRoom", { room: ctx.RoomId, username: ctx.name });
-    ctx.socket.emit("startGame");
     setShowGameChat(true);
   };
 

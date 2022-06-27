@@ -49,23 +49,26 @@ function Canvas() {
 
     ctxRef.current.stroke();
   };
-  const gameOver = () => {
-    var base64ImageData = canvasRef.current.toDataURL("image/png");
-    ctx.socket.emit("canvasData", base64ImageData);
-    //console.log(base64ImageData);
-  };
-  useEffect(() => {
-    ctx.socket.on("canvasDraw", (imageData) => {
-      var image = new Image();
-      image.src = imageData;
-      console.log("image1");
-      setLineOpacity(100);
-      image.onload = function () {
-        console.log("image2");
-        ctxRef.current.drawImage(image, 0, 0);
-      };
-    });
-  }, [ctx.socket]);
+  // const gameOver = () => {
+  //   var base64ImageData = canvasRef.current.toDataURL("image/png");
+  // ctx.socket.emit("canvasData", base64ImageData);
+  //console.log(base64ImageData);
+  // };
+  // useEffect(() => {
+  //   ctx.socket.on("canvasDraw", (imageData) => {
+  //     var image = new Image();
+  //     image.src = imageData;
+  //     console.log("image1");
+  //     setLineOpacity(100);
+
+  //     image.onload = function () {
+  //       for (let i = 0; i <= 10; i++) {
+  //         console.log("image2");
+  //         ctxRef.current.drawImage(image, 0, 0);
+  //       }
+  //     };
+  //   });
+  // }, [ctx.socket]);
   return (
     <div className="container-fluid">
       <div className="App row " onTouchEnd={endDrawing} onMouseUp={endDrawing}>
@@ -77,7 +80,7 @@ function Canvas() {
             onTouchStart={startDrawing}
             onMouseDown={startDrawing}
           >
-            <Timer sec={15} gameOver={gameOver} />
+            <Timer sec={15} gameOver={() => {}} />
             <canvas
               ref={canvasRef}
               width={window.innerWidth * 0.582}
