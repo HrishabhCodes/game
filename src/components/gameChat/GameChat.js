@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "./gameChat.css";
 import Canvas from "../Canvas/Canvas";
 import { Link } from "react-router-dom";
@@ -7,32 +7,63 @@ import Lobby from "./Lobby";
 import { blue } from "@mui/material/colors";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import SocketContext from "../../context/socketContext";
+import {
+  collection,
+  getDocs,
+  query,
+  deleteDoc,
+  where,
+  doc,
+  updateDoc,
+} from "@firebase/firestore";
+import { db } from "../../firebase";
 var word = "";
-function GameChat({ showGC, modal }) {
+function GameChat({ showGC }) {
   const ctx = useContext(SocketContext);
   const [show, setShow] = useState(false);
   const [showLobby, setShowLobby] = useState(true);
+
   // console.log(ctx.RoomId, ctx.name, ctx.active);
   //check if the user details are entered
 
-  const leaveroom = () => {
-    ctx.socket.emit("leave", { room: ctx.RoomId, username: ctx.name });
+  const leaveroom = async () => {
     setShow(false);
     setShowLobby(false);
     showGC(false);
-    modal(false);
+    const roomRef = collection(db, "rooms");
+    const roomQuery = await query(roomRef, where("roomId", "==", ctx.RoomId));
+    const data = await getDocs(roomQuery);
+    const index = data.docs[0].data().users.filter((obj) => obj.id !== ctx.id);
+
+    const userRef = doc(db, "rooms", data.docs[0].id);
+
+    await updateDoc(userRef, {
+      users: index,
+    });
+    // console.log(data.docs[0].data().users);
+    if (data.docs[0].data().users.length === 1) {
+      console.log("delete room");
+      const userDoc = doc(db, "rooms", data.docs[0].id);
+      await deleteDoc(userDoc);
+    }
+    ctx.setStart(false);
   };
-  ctx.socket.on("start", (data) => {
+  const startGame = () => {
     setShow(true);
-  });
-  const StartGame = () => {
-    setShow(true);
-    console.log("start game");
-    ctx.socket.emit("startGame");
-    console.log("start game");
   };
-  const changeName = () => {
-    ctx.socket.emit("changeName", { username: ctx.name });
+  useEffect(() => {
+    if (ctx.start === true) {
+      startGame();
+    }
+  }, [ctx.start]);
+
+  const Game = async () => {
+    const roomRef = collection(db, "rooms");
+    const roomQuery = await query(roomRef, where("roomId", "==", ctx.RoomId));
+    const data = await getDocs(roomQuery);
+    const userRef = doc(db, "rooms", data.docs[0].id);
+    await updateDoc(userRef, { start: true });
+    // setShow(true);
   };
   return (
     <div
@@ -44,11 +75,7 @@ function GameChat({ showGC, modal }) {
       }}
     >
       {!show ? (
-        <Lobby
-          changeName={changeName}
-          showLobby={showLobby}
-          StartGame={StartGame}
-        />
+        <Lobby showLobby={showLobby} StartGame={Game} />
       ) : (
         <Canvas username={ctx.name} word={word} />
       )}

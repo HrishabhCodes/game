@@ -4,21 +4,19 @@ import SocketContext from "../../context/socketContext";
 
 function Timer({ sec, gameOver }) {
   const ctx = useContext(SocketContext);
-  const [secs, setTime] = useState(sec);
-  const [word, setWord] = useState("");
-  ctx.socket.on("word", (data) => {
-    console.log(data);
-    setWord(data);
-  });
-
+  // const [secs, setTime] = useState(sec);
+  // const [word, setWord] = useState("");
+  // setWord("words");
+  const word = "word";
+  const secs = sec;
   const tick = () => {
     if (secs === 0) {
       //reset();
-      //gameOver();
-      ctx.socket.emit("roundOver");
-      setTime(parseInt(60));
+      gameOver();
+
+      // setTime(parseInt(0.5));
     } else {
-      setTime(secs - 1);
+      // setTime(secs - 1);
     }
   };
   // const reset = () => setTime(parseInt(sec));

@@ -1,7 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getFirestore } from "firebase/firestore";
+// import { getAnalytics } from "firebase/analytics";
+import { getFirestore } from "@firebase/firestore";
+import { getStorage } from "@firebase/storage";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -9,20 +10,24 @@ import { getFirestore } from "firebase/firestore";
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: "game-5ea75.firebaseapp.com",
-  projectId: "game-5ea75",
-  storageBucket: "game-5ea75.appspot.com",
-  messagingSenderId: "274615264281",
-  appId: "1:274615264281:web:d64bc392da33545e3e3688",
-  measurementId: "G-PG272CKT2B",
+  authDomain: "game-7da42.firebaseapp.com",
+  projectId: "game-7da42",
+  storageBucket: "game-7da42.appspot.com",
+  messagingSenderId: "1003196212575",
+  appId: "1:1003196212575:web:3a90aed82634f2281002ea",
+  measurementId: "G-11WK6XJJZW",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
 // Initialize Services
-const db = getFirestore();
+const db = getFirestore(app);
 
-const analytics = getAnalytics(app);
+// Analytics
+// const analytics = getAnalytics(app);
 
-export default db;
+// Storage
+const storage = getStorage(app);
+
+export { db, storage };
