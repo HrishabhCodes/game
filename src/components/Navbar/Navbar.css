@@ -12,15 +12,17 @@
   color: rgba(255, 242, 199, 0.829);
 }
 
-.logo {
+.nav-logo {
+  border-right: 1px solid rgba(255, 251, 214, 0.39);
   width: 5rem;
   display: flex;
   align-items: center;
+  margin-left: 1.2rem;
   /* background-color: rgb(102, 102, 102); */
 }
 
 .logo-img {
-  width: 4.5rem;
+  width: 3.5rem;
 }
 
 .navbar-items > div {

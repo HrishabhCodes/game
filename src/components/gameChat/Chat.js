@@ -3,7 +3,7 @@ import { TextField, Box, Tooltip, Zoom } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { blue } from "@mui/material/colors";
 import SocketContext from "../../context/socketContext";
-import "./gameChat.css";
+import "./GameChat.css";
 import { db } from "../../firebase";
 import {
   collection,
@@ -20,12 +20,15 @@ function Chat() {
   const [messagesList, setMessagesList] = useState([]);
   const messagesEndRef = useRef(null);
   const ctx = useContext(SocketContext);
+  const [time, setTime] = useState(0);
+  const WORD = "coder";
+
   const sendMessage = async () => {
     //check if the message is empty
     if (currentMessage !== "") {
       //sending custom message to server
       const roomRef = collection(db, "rooms");
-      const roomQuery = await query(roomRef, where("roomId", "==", ctx.RoomId));
+      const roomQuery = query(roomRef, where("roomId", "==", ctx.RoomId));
       const data = await getDocs(roomQuery);
       const userRef = doc(db, "rooms", data.docs[0].id);
 
@@ -36,8 +39,31 @@ function Chat() {
         ],
       });
     }
+
+    if (currentMessage === WORD) {
+      console.log(ctx.score, time);
+      ctx.setScore((prev) => prev + (600 - time * 10));
+      console.log(ctx.score);
+    }
     setCurrentMessage("");
   };
+
+  useEffect(() => {
+    const test = () => {
+      setTime((prev) => prev + 1);
+      console.log(time);
+    };
+
+    setTimeout(() => {
+      test();
+    }, 1000);
+
+    // return () => {
+    //   clearInterval(id);
+    //   console.log("return", ctx.turn);
+    // };
+  }, [time]);
+
   //update the message list when the server sends a message
   useEffect(() => {
     const roomRef = collection(db, "rooms");

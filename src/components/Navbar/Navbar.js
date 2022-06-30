@@ -1,8 +1,10 @@
 import { Box, Modal, Slider, Typography } from "@mui/material";
 import React, { useState, useContext } from "react";
 import "./Navbar.css";
-import { Link } from "react-router-dom";
 import SocketContext from "../../context/socketContext";
+import { NavLink } from "react-router-dom";
+import Logo from "../../assets/nav_logo.png";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -34,34 +36,34 @@ const Navbar = ({ active, setActive }) => {
   return (
     <div className="navbar-container">
       <div className="navbar-items">
-        <div className="logo">
-          {/* <img className="logo-img" src={Logo} alt="" /> */}
+        <div className="nav-logo">
+          <img className="logo-img" src={Logo} alt="" />
         </div>
         {ctx.start ? (
           ""
         ) : (
           <div className="nav-pages">
-            <Link
+            <NavLink
               onClick={() => setActive("home")}
               className={`${active === "home" ? "active" : ""} home-page`}
               to="/"
             >
               <div>HOME</div>
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               onClick={() => setActive("play")}
               className={`${active === "play" ? "active" : ""} play-page`}
               to="/play"
             >
               <div>PLAY</div>
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               onClick={() => setActive("profile")}
               className={`${active === "profile" ? "active" : ""} profile-page`}
               to="/profile"
             >
               <div>PROFILE</div>
-            </Link>
+            </NavLink>
           </div>
         )}
         <div onClick={handleOpen} className="volume-container">
