@@ -11,12 +11,47 @@
   background-color: rgb(196, 196, 196);
 } */
 
+.logo {
+  transform: rotate(-10deg);
+  margin: 6.5rem 0 0 1.5rem;
+  display: flex;
+  align-items: center;
+  width: 5rem;
+}
+
+img.vert-move {
+  -webkit-animation: mover 1s infinite alternate;
+  animation: mover 1s infinite alternate;
+  width: 900px;
+}
+
+/* @-webkit-keyframes mover {
+  0% {
+    /* transform: translateY(0); */
+/* transform: none; */
+/* } */
+/* 100% { */
+/* transform: translateY(-10px); */
+/* transform: rotate(random($i) * (-1) * 1 + deg) scale(0.3 + $i * 0.1)
+      translateY((random(20)) + px) translateX(random(20) + px); */
+/* } */
+/* } */
+
+@keyframes mover {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(-3px, -3px);
+  }
+}
+
 .user-cont {
   height: 80%;
   width: 27%;
   position: absolute;
   top: 7rem;
-  right: 13rem;
+  right: 7rem;
   display: flex;
   flex-direction: column;
   align-items: center;

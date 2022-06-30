@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import "./gameChat.css";
+import "./GameChat.css";
 import Canvas from "../Canvas/Canvas";
 import { Link } from "react-router-dom";
 import { Tooltip, Zoom } from "@mui/material";
@@ -31,7 +31,7 @@ function GameChat({ showGC }) {
     setShowLobby(false);
     showGC(false);
     const roomRef = collection(db, "rooms");
-    const roomQuery = await query(roomRef, where("roomId", "==", ctx.RoomId));
+    const roomQuery = query(roomRef, where("roomId", "==", ctx.RoomId));
     const data = await getDocs(roomQuery);
     const index = data.docs[0].data().users.filter((obj) => obj.id !== ctx.id);
 
@@ -48,9 +48,11 @@ function GameChat({ showGC }) {
     }
     ctx.setStart(false);
   };
+
   const startGame = () => {
     setShow(true);
   };
+
   useEffect(() => {
     if (ctx.start === true) {
       startGame();
@@ -81,7 +83,7 @@ function GameChat({ showGC }) {
       )}
       <Link to="/play" onClick={() => ctx.setActive("play")}>
         <Tooltip
-          className="leaveButton "
+          className="leaveButton"
           title="Leave"
           TransitionComponent={Zoom}
           TransitionProps={{ timeout: 300 }}

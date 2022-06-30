@@ -14,6 +14,7 @@ function Canvas() {
   const [lineWidth, setLineWidth] = useState(5);
   const [lineColor, setLineColor] = useState("black");
   const [lineOpacity, setLineOpacity] = useState(0.5);
+  const [chance, setChance] = useState(0);
   //const classname="col-2 users";
   // Initialization when the component
   // mounts for the first time
@@ -49,6 +50,26 @@ function Canvas() {
 
     ctxRef.current.stroke();
   };
+
+  useEffect(() => {
+    const test = () => {
+      ctx.setTurn(ctx.turn++);
+      setChance((prev) => prev + 1);
+      // console.log("hi", ctx.turn, chance);
+    };
+
+    setTimeout(() => {
+      test();
+    }, 3000);
+
+    // return () => {
+    //   clearInterval(id);
+    //   console.log("return", ctx.turn);
+    // };
+  }, [chance]);
+
+  // console.log("hi canvas");
+
   // const gameOver = () => {
   //   var base64ImageData = canvasRef.current.toDataURL("image/png");
   // ctx.socket.emit("canvasData", base64ImageData);

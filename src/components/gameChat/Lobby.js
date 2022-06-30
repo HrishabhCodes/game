@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import "./gameChat.css";
+import "./GameChat.css";
 import UserData from "./UserData";
 import { TextField, Box } from "@mui/material";
 import socketContext from "../../context/socketContext";
@@ -95,13 +95,9 @@ function Lobby({ showLobby, StartGame }) {
             >
               Start Game
             </button>
-          ) : (
-            <div></div>
-          )}
+          ) : null}
         </div>
-      ) : (
-        <div></div>
-      )}
+      ) : null}
     </div>
   );
 }
