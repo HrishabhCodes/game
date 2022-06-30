@@ -19,6 +19,8 @@ const SocketContext = React.createContext({
   setHost: () => {},
   start: "",
   setStart: () => {},
+  user: [],
+  setUser: () => {},
 });
 const uuid = uuidv4();
 export const SocketContextProvider = (props) => {
@@ -29,6 +31,7 @@ export const SocketContextProvider = (props) => {
   const [users, setUsers] = useState([]);
   const [host, setHost] = useState();
   const [start, setStart] = useState(false);
+  const [user, setUser] = useState([]);
   useEffect(() => {
     axios.get("http://localhost:4000/").then(function (response) {
       let id = String(response.data.roomid);
@@ -56,6 +59,8 @@ export const SocketContextProvider = (props) => {
         setHost: setHost,
         start: start,
         setStart: setStart,
+        user: user,
+        setUser: setUser,
       }}
     >
       {props.children}

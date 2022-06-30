@@ -17,7 +17,7 @@ import {
   updateDoc,
 } from "@firebase/firestore";
 import { db } from "../../firebase";
-var word = "";
+// var word = "";
 function GameChat({ showGC }) {
   const ctx = useContext(SocketContext);
   const [show, setShow] = useState(false);
@@ -31,7 +31,7 @@ function GameChat({ showGC }) {
     setShowLobby(false);
     showGC(false);
     const roomRef = collection(db, "rooms");
-    const roomQuery = await query(roomRef, where("roomId", "==", ctx.RoomId));
+    const roomQuery = query(roomRef, where("roomId", "==", ctx.RoomId));
     const data = await getDocs(roomQuery);
     const index = data.docs[0].data().users.filter((obj) => obj.id !== ctx.id);
 
@@ -77,7 +77,7 @@ function GameChat({ showGC }) {
       {!show ? (
         <Lobby showLobby={showLobby} StartGame={Game} />
       ) : (
-        <Canvas username={ctx.name} word={word} />
+        <Canvas username={ctx.name} />
       )}
       <Link to="/play" onClick={() => ctx.setActive("play")}>
         <Tooltip

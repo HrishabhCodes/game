@@ -15,7 +15,7 @@ const colors1 = [
   "#FF9F45",
   "#F3C5C5",
 ];
-function UserData({ classname }) {
+function UserData({ classname, id }) {
   const ctx = useContext(SocketContext);
   // const [userList, setUserList] = useState([]);
   const [userList, setUserList] = useState([]);
@@ -26,11 +26,12 @@ function UserData({ classname }) {
     onSnapshot(roomQuery, (snapshot) => {
       snapshot.forEach((doc) => {
         setUserList(doc.data().users);
+        ctx.setUser(doc.data().users);
       });
       ctx.setStart(snapshot.docs[0].data().start);
     });
   }, [ctx.RoomId]);
-
+  // console.log(userList);
   return (
     <div className={classname}>
       <h2 className="mt-2">Players</h2>
@@ -38,11 +39,12 @@ function UserData({ classname }) {
       <ul className="p-0">
         {userList.map((Data, index) => (
           <li
-            className="userData col-11 m-1 me-2 mb-2"
+            className="userData col-11 m-1 me-2 mb-2 d-flex justify-content-between align-items-center"
             style={{ backgroundColor: colors1[index], color: "black" }}
             key={index}
           >
-            {Data.name}
+            <div className="fw-bold ms-2">{Data.name}</div>
+            {Data.id === id ? <div className="fs-3 me-2">✎</div> : <></>}
           </li>
         ))}
       </ul>

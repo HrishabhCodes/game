@@ -26,10 +26,14 @@ export default function Modals(props) {
       ctx.setHost(true);
       await addDoc(roomRef, {
         roomId: ctx.RoomId,
-
         users: [{ name: ctx.name, avatar: ctx.avatar, id: ctx.id }],
         messages: [],
         start: false,
+      });
+      const wordsRef = collection(db, "words");
+      await addDoc(wordsRef, {
+        roomId: ctx.RoomId,
+        words: "",
       });
     }
   };
