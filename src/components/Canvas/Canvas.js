@@ -1,11 +1,37 @@
-import React, { useEffect, useRef, useState, useContext } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useContext,
+  useLayoutEffect,
+} from "react";
 import Menu from "./menu";
 import "./Canvas.css";
 import Chat from "../gameChat/Chat";
 import UserData from "../gameChat/UserData";
 import Timer from "../Timer/Timer";
 import SocketContext from "../../context/socketContext";
-
+import {
+  collection,
+  getDocs,
+  query,
+  onSnapshot,
+  where,
+  doc,
+  updateDoc,
+} from "@firebase/firestore";
+import { db } from "../../firebase";
+const words = [
+  "Argentina",
+  "Asia",
+  "Asterix",
+  "Atlantis",
+  "Audi",
+  "Australia",
+  "BMW",
+  "BMX",
+  "Bambi",
+];
 function Canvas() {
   const ctx = useContext(SocketContext);
   const canvasRef = useRef(null);
@@ -14,7 +40,9 @@ function Canvas() {
   const [lineWidth, setLineWidth] = useState(5);
   const [lineColor, setLineColor] = useState("black");
   const [lineOpacity, setLineOpacity] = useState(0.5);
-  const [chance, setChance] = useState(0);
+  const [turn, setTurn] = useState(0);
+  const [current, setCurrent] = useState("");
+  const [word, setWord] = useState("");
   //const classname="col-2 users";
   // Initialization when the component
   // mounts for the first time
@@ -50,26 +78,49 @@ function Canvas() {
 
     ctxRef.current.stroke();
   };
+  // console.log("canvas");
+  const gameOver = async () => {
+    if (turn < ctx.user.length - 1) {
+      setTurn((prev) => prev + 1);
+    } else {
+      setTurn(0);
+    }
+    setCurrent(ctx.user[turn].id);
+    console.log(
+      "game over",
+      word,
+      turn,
+      ctx.id === current,
+      words[Math.floor(Math.random() * words.length)]
+    );
+    if (ctx.id === current) {
+      setWord(words[Math.floor(Math.random() * words.length)]);
+      console.log(word);
+      // const roomRef = collection(db, "words");
+      // const roomQuery = query(roomRef, where("roomId", "==", ctx.RoomId));
+      // const data = await getDocs(roomQuery);
 
+      // const userRef = doc(db, "words", data.docs[0].id);
+
+      // await updateDoc(userRef, {
+      //   words: word,
+      // });
+    }
+  };
   useEffect(() => {
-    const test = () => {
-      ctx.setTurn(ctx.turn++);
-      setChance((prev) => prev + 1);
-      // console.log("hi", ctx.turn, chance);
-    };
-
+    gameOver();
+  }, []);
+  useEffect(() => {
+    // const roomRef = collection(db, "words");
+    // const roomQuery = query(roomRef, where("roomId", "==", ctx.RoomId));
+    // onSnapshot(roomQuery, (snapshot) => {
+    //   setWord(snapshot.docs[0].data().words);
+    //   console.log(snapshot.docs[0].data().words, "words");
+    // });
     setTimeout(() => {
-      test();
-    }, 3000);
-
-    // return () => {
-    //   clearInterval(id);
-    //   console.log("return", ctx.turn);
-    // };
-  }, [chance]);
-
-  // console.log("hi canvas");
-
+      gameOver();
+    }, 5000);
+  }, [turn]);
   // const gameOver = () => {
   //   var base64ImageData = canvasRef.current.toDataURL("image/png");
   // ctx.socket.emit("canvasData", base64ImageData);
@@ -90,11 +141,16 @@ function Canvas() {
   //     };
   //   });
   // }, [ctx.socket]);
+  // console.log(ctx.id === current);
   return (
     <div className="container-fluid">
       <div className="App row " onTouchEnd={endDrawing} onMouseUp={endDrawing}>
-        <UserData classname={"col-2 users"} />
-        <div className="draw-area col-7">
+        <UserData classname={"col-2 users"} id={current} />
+        <div
+          className="draw-area col-7"
+          style={{ pointerEvents: ctx.id === current ? "" : "none" }}
+          // style={{ pointerEvents: "none" }}
+        >
           <div
             onMouseMove={draw}
             onTouchMove={draw}

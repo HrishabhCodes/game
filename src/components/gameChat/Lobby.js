@@ -84,7 +84,7 @@ function Lobby({ showLobby, StartGame }) {
               overflow: "hidden",
             }}
           >
-            <UserData classname={"col-12 users"} />
+            <UserData classname={"col-12 users"} id={""} />
           </div>
           <div className="col-2"></div>
           {ctx.host ? (

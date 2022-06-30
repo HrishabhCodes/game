@@ -1,6 +1,7 @@
 import { Box, Modal, Slider, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./Navbar.css";
+import SocketContext from "../../context/socketContext";
 import { NavLink } from "react-router-dom";
 import Logo from "../../assets/nav_logo.png";
 
@@ -24,6 +25,7 @@ function valuetext(value) {
 }
 
 const Navbar = ({ active, setActive }) => {
+  const ctx = useContext(SocketContext);
   const [openModal, setOpenModal] = useState(false);
   const [vol, setVol] = useState(100);
   const handleOpen = () => setOpenModal(true);
@@ -37,29 +39,33 @@ const Navbar = ({ active, setActive }) => {
         <div className="nav-logo">
           <img className="logo-img" src={Logo} alt="" />
         </div>
-        <div className="nav-pages">
-          <NavLink
-            onClick={() => setActive("home")}
-            className={`${active === "home" ? "active" : ""} home-page`}
-            to="/"
-          >
-            <div>HOME</div>
-          </NavLink>
-          <NavLink
-            onClick={() => setActive("play")}
-            className={`${active === "play" ? "active" : ""} play-page`}
-            to="/play"
-          >
-            <div>PLAY</div>
-          </NavLink>
-          <NavLink
-            onClick={() => setActive("profile")}
-            className={`${active === "profile" ? "active" : ""} profile-page`}
-            to="/profile"
-          >
-            <div>PROFILE</div>
-          </NavLink>
-        </div>
+        {ctx.start ? (
+          ""
+        ) : (
+          <div className="nav-pages">
+            <NavLink
+              onClick={() => setActive("home")}
+              className={`${active === "home" ? "active" : ""} home-page`}
+              to="/"
+            >
+              <div>HOME</div>
+            </NavLink>
+            <NavLink
+              onClick={() => setActive("play")}
+              className={`${active === "play" ? "active" : ""} play-page`}
+              to="/play"
+            >
+              <div>PLAY</div>
+            </NavLink>
+            <NavLink
+              onClick={() => setActive("profile")}
+              className={`${active === "profile" ? "active" : ""} profile-page`}
+              to="/profile"
+            >
+              <div>PROFILE</div>
+            </NavLink>
+          </div>
+        )}
         <div onClick={handleOpen} className="volume-container">
           <div className="volume">
             {vol >= 50 ? (

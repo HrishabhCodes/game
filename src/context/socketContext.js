@@ -30,6 +30,8 @@ const SocketContext = React.createContext({
   setHost: () => {},
   start: "",
   setStart: () => {},
+  user: [],
+  setUser: () => {},
   turn: 0,
   setTurn: () => {},
   score: 0,
@@ -46,6 +48,7 @@ export const SocketContextProvider = (props) => {
   const [users, setUsers] = useState([]);
   const [host, setHost] = useState();
   const [start, setStart] = useState(false);
+  const [user, setUser] = useState([]);
   const [turn, setTurn] = useState(0);
   const [score, setScore] = useState(0);
   // const [image, setImage] = useState(URL);
@@ -76,6 +79,8 @@ export const SocketContextProvider = (props) => {
         setHost: setHost,
         start: start,
         setStart: setStart,
+        user: user,
+        setUser: setUser,
         turn: turn,
         setTurn: setTurn,
         score: score,

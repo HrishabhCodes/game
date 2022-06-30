@@ -17,7 +17,7 @@ import {
   updateDoc,
 } from "@firebase/firestore";
 import { db } from "../../firebase";
-var word = "";
+// var word = "";
 function GameChat({ showGC }) {
   const ctx = useContext(SocketContext);
   const [show, setShow] = useState(false);
@@ -79,7 +79,7 @@ function GameChat({ showGC }) {
       {!show ? (
         <Lobby showLobby={showLobby} StartGame={Game} />
       ) : (
-        <Canvas username={ctx.name} word={word} />
+        <Canvas username={ctx.name} />
       )}
       <Link to="/play" onClick={() => ctx.setActive("play")}>
         <Tooltip
