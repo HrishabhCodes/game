@@ -24,7 +24,7 @@ function valuetext(value) {
   return `${value}°C`;
 }
 
-const Navbar = ({ active, setActive }) => {
+const Navbar = () => {
   const ctx = useContext(SocketContext);
   const [openModal, setOpenModal] = useState(false);
   const [vol, setVol] = useState(100);
@@ -43,25 +43,13 @@ const Navbar = ({ active, setActive }) => {
           ""
         ) : (
           <div className="nav-pages">
-            <NavLink
-              onClick={() => setActive("home")}
-              className={`${active === "home" ? "active" : ""} home-page`}
-              to="/"
-            >
+            <NavLink className="home-page" to="/">
               <div>HOME</div>
             </NavLink>
-            <NavLink
-              onClick={() => setActive("play")}
-              className={`${active === "play" ? "active" : ""} play-page`}
-              to="/play"
-            >
+            <NavLink className="home-page" to="/play">
               <div>PLAY</div>
             </NavLink>
-            <NavLink
-              onClick={() => setActive("profile")}
-              className={`${active === "profile" ? "active" : ""} profile-page`}
-              to="/profile"
-            >
+            <NavLink className="home-page" to="/profile">
               <div>PROFILE</div>
             </NavLink>
           </div>
