@@ -18,8 +18,6 @@ const avatarRef = ref(storage, `avatars/${2}.png`);
 const SocketContext = React.createContext({
   name: "",
   setName: () => {},
-  active: "",
-  setActive: () => {},
   RoomId: "",
   setRoom: () => {},
   avatar: 1,
@@ -44,7 +42,6 @@ export const SocketContextProvider = (props) => {
   // const [name, setName] = useState(localStorage.getItem("name"));
   const [name, setName] = useState("blue");
   const [roomId, setRoomId] = useState("");
-  const [active, setActive] = useState("home");
   const [users, setUsers] = useState([]);
   const [host, setHost] = useState();
   const [start, setStart] = useState(false);
@@ -67,8 +64,10 @@ export const SocketContextProvider = (props) => {
       value={{
         name: name,
         setName: setName,
-        active: active,
-        setActive: setActive,
+        active: "",
+        setActive: () => {
+          console.log("setActive");
+        },
         RoomId: roomId,
         setRoom: setRoomId,
         avatar: 1,

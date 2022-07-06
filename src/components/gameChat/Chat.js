@@ -3,7 +3,7 @@ import { TextField, Box, Tooltip, Zoom } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { blue } from "@mui/material/colors";
 import SocketContext from "../../context/socketContext";
-import "./GameChat.css";
+import "./gameChat.css";
 import { db } from "../../firebase";
 import {
   collection,
@@ -21,7 +21,7 @@ function Chat() {
   const messagesEndRef = useRef(null);
   const ctx = useContext(SocketContext);
   const [time, setTime] = useState(0);
-  const WORD = "coder";
+  const WORD = "a";
 
   const sendMessage = async () => {
     //check if the message is empty
@@ -41,9 +41,9 @@ function Chat() {
     }
 
     if (currentMessage === WORD) {
-      console.log(ctx.score, time);
+      // console.log(ctx.score, time);
       ctx.setScore((prev) => prev + (600 - time * 10));
-      console.log(ctx.score);
+      // console.log(ctx.score);
     }
     setCurrentMessage("");
   };
@@ -51,7 +51,7 @@ function Chat() {
   useEffect(() => {
     const test = () => {
       setTime((prev) => prev + 1);
-      console.log(time);
+      // console.log(time);
     };
 
     setTimeout(() => {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import "./GameChat.css";
+import "./gameChat.css";
 import SocketContext from "../../context/socketContext";
 import { db } from "../../firebase";
 import { collection, where, query, onSnapshot } from "@firebase/firestore";

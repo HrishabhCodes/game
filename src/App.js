@@ -17,7 +17,7 @@ function App() {
     <div className="app-container ">
       <ul className="circles">{shape}</ul>
       <BrowserRouter>
-        <Navbar active={ctx.active} setActive={ctx.setActive} />
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="profile" element={<Profile />} />

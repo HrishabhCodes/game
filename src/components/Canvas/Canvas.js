@@ -1,26 +1,11 @@
-import React, {
-  useEffect,
-  useRef,
-  useState,
-  useContext,
-  useLayoutEffect,
-} from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
+import { Typography, Box, Modal } from "@mui/material";
 import Menu from "./menu";
 import "./Canvas.css";
 import Chat from "../gameChat/Chat";
 import UserData from "../gameChat/UserData";
 import Timer from "../Timer/Timer";
 import SocketContext from "../../context/socketContext";
-import {
-  collection,
-  getDocs,
-  query,
-  onSnapshot,
-  where,
-  doc,
-  updateDoc,
-} from "@firebase/firestore";
-import { db } from "../../firebase";
 const words = [
   "Argentina",
   "Asia",
@@ -43,6 +28,11 @@ function Canvas() {
   const [turn, setTurn] = useState(0);
   const [current, setCurrent] = useState("");
   const [word, setWord] = useState("");
+  const [round, setRound] = useState(0);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   //const classname="col-2 users";
   // Initialization when the component
   // mounts for the first time
@@ -80,70 +70,74 @@ function Canvas() {
   };
   // console.log("canvas");
   const gameOver = async () => {
-    if (turn < ctx.user.length - 1) {
+    if (turn < ctx.user.length - 1 && round < 3) {
+      console.log("next round");
       setTurn((prev) => prev + 1);
     } else {
       setTurn(0);
     }
+    if (turn === 0 && round < 3) {
+      // console.log("open");
+      handleOpen();
+      setTimeout(() => {
+        handleClose();
+        // console.log("close");
+      }, 1000);
+      setRound((prev) => prev + 1);
+    }
     setCurrent(ctx.user[turn].id);
-    console.log(
-      "game over",
-      word,
-      turn,
-      ctx.id === current,
-      words[Math.floor(Math.random() * words.length)]
-    );
-    if (ctx.id === current) {
-      setWord(words[Math.floor(Math.random() * words.length)]);
-      console.log(word);
-      // const roomRef = collection(db, "words");
-      // const roomQuery = query(roomRef, where("roomId", "==", ctx.RoomId));
-      // const data = await getDocs(roomQuery);
-
-      // const userRef = doc(db, "words", data.docs[0].id);
-
-      // await updateDoc(userRef, {
-      //   words: word,
-      // });
+    console.log(turn, ctx.id === current, round, ctx.user, ctx.id, current);
+    // if (ctx.id === current) {
+    //   setWord(words[Math.floor(Math.random() * words.length)]);
+    //   // console.log(word);
+    // }
+    if (round === 3) {
+      console.log("game over");
     }
   };
-  useEffect(() => {
-    gameOver();
-  }, []);
-  useEffect(() => {
-    // const roomRef = collection(db, "words");
-    // const roomQuery = query(roomRef, where("roomId", "==", ctx.RoomId));
-    // onSnapshot(roomQuery, (snapshot) => {
-    //   setWord(snapshot.docs[0].data().words);
-    //   console.log(snapshot.docs[0].data().words, "words");
-    // });
-    setTimeout(() => {
-      gameOver();
-    }, 5000);
-  }, [turn]);
-  // const gameOver = () => {
-  //   var base64ImageData = canvasRef.current.toDataURL("image/png");
-  // ctx.socket.emit("canvasData", base64ImageData);
-  //console.log(base64ImageData);
-  // };
   // useEffect(() => {
-  //   ctx.socket.on("canvasDraw", (imageData) => {
-  //     var image = new Image();
-  //     image.src = imageData;
-  //     console.log("image1");
-  //     setLineOpacity(100);
+  //   // console.log("canvas");
+  //   gameOver();
+  // }, []);
+  useEffect(() => {
+    if (round <= 3) {
+      // if (round <= 3 && turn !== 0) {
+      // console.log("round", round);
+      console.log("turn " + turn);
+      setTimeout(() => {
+        gameOver();
+      }, 10000);
+    }
+    // else {
+    //   console.log("game over");
+    //   gameOver();
+    // }
+  }, [turn, round]);
 
-  //     image.onload = function () {
-  //       for (let i = 0; i <= 10; i++) {
-  //         console.log("image2");
-  //         ctxRef.current.drawImage(image, 0, 0);
-  //       }
-  //     };
-  //   });
-  // }, [ctx.socket]);
-  // console.log(ctx.id === current);
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    // border: "2px solid #000",
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    p: 4,
+  };
   return (
     <div className="container-fluid">
+      <Modal
+        open={open}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Your score: score
+          </Typography>
+        </Box>
+      </Modal>
       <div className="App row " onTouchEnd={endDrawing} onMouseUp={endDrawing}>
         <UserData classname={"col-2 users"} id={current} />
         <div
@@ -157,7 +151,7 @@ function Canvas() {
             onTouchStart={startDrawing}
             onMouseDown={startDrawing}
           >
-            <Timer sec={15} gameOver={() => {}} />
+            <Timer sec={15} round={round} />
             <canvas
               ref={canvasRef}
               width={window.innerWidth * 0.582}
