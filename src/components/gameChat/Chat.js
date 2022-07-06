@@ -24,9 +24,9 @@ function Chat() {
   const WORD = "a";
 
   const sendMessage = async () => {
-    //check if the message is empty
+    // Check if the message is empty
     if (currentMessage !== "") {
-      //sending custom message to server
+      // Sending custom message to server
       const roomRef = collection(db, "rooms");
       const roomQuery = query(roomRef, where("roomId", "==", ctx.RoomId));
       const data = await getDocs(roomQuery);

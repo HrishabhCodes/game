@@ -24,7 +24,7 @@ const Home = () => {
 
     setShowGameChat(true);
   };
-  console.log(URL);
+  // console.log(URL);
 
   return (
     <>

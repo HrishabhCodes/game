@@ -6,6 +6,9 @@ import Chat from "../gameChat/Chat";
 import UserData from "../gameChat/UserData";
 import Timer from "../Timer/Timer";
 import SocketContext from "../../context/socketContext";
+import io from "socket.io-client";
+const socket = io.connect("http://localhost:4000");
+
 const words = [
   "Argentina",
   "Asia",
@@ -17,6 +20,18 @@ const words = [
   "BMX",
   "Bambi",
 ];
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  boxShadow: 24,
+  p: 4,
+};
+
 function Canvas() {
   const ctx = useContext(SocketContext);
   const canvasRef = useRef(null);
@@ -29,11 +44,16 @@ function Canvas() {
   const [current, setCurrent] = useState("");
   const [word, setWord] = useState("");
   const [round, setRound] = useState(0);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  //const classname="col-2 users";
+  const joinRoom = () => {
+    if (ctx.RoomId !== "") {
+      socket.emit("join_room", ctx.RoomId);
+    }
+  };
+
   // Initialization when the component
   // mounts for the first time
   useEffect(() => {
@@ -47,8 +67,14 @@ function Canvas() {
     ctx.lineWidth = lineWidth;
     ctxRef.current = ctx;
   }, [lineColor, lineOpacity, lineWidth]);
-  //console.log(word);
+
   // Function for starting the drawing
+  useEffect(() => {
+    joinRoom();
+  }, []);
+
+  // console.log(word);
+
   const startDrawing = (e) => {
     ctxRef.current.beginPath();
     ctxRef.current.moveTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
@@ -68,45 +94,65 @@ function Canvas() {
 
     ctxRef.current.stroke();
   };
-  // console.log("canvas");
   const gameOver = async () => {
     if (turn < ctx.user.length - 1 && round < 3) {
-      console.log("next round");
       setTurn((prev) => prev + 1);
     } else {
       setTurn(0);
     }
+    setCurrent(ctx.user[turn].id);
+    if (ctx.host === true) {
+      const Word = words[Math.floor(Math.random() * words.length)];
+      socket.emit("word", { Word, room: ctx.RoomId });
+      console.log(Word);
+    }
     if (turn === 0 && round < 3) {
-      // console.log("open");
       handleOpen();
       setTimeout(() => {
         handleClose();
-        // console.log("close");
       }, 1000);
       setRound((prev) => prev + 1);
     }
-    setCurrent(ctx.user[turn].id);
-    console.log(turn, ctx.id === current, round, ctx.user, ctx.id, current);
-    // if (ctx.id === current) {
-    //   setWord(words[Math.floor(Math.random() * words.length)]);
-    //   // console.log(word);
-    // }
+    console.log(ctx.user, current);
     if (round === 3) {
       console.log("game over");
     }
   };
-  // useEffect(() => {
-  //   // console.log("canvas");
-  //   gameOver();
-  // }, []);
+
   useEffect(() => {
-    if (round <= 3) {
+    // console.log(current, ctx.id);
+    // if (current === ctx.id) {
+
+    // }
+    socket.on("receive_word", (data) => {
+      console.log("receive", data);
+      setWord(data.Word);
+    });
+
+    // socket.on("draw_image", (data) => {
+    //   console.log("data");
+    // });
+
+    socket.on("time", () => {
+      gameOver();
+      console.log("time");
+    });
+  }, [socket]);
+
+  // setTimeout(() => {
+  //   var base64ImageData = canvasRef.current.toDataURL("image/png");
+  //   socket.emit("image", { image_data: base64ImageData, room: ctx.RoomId });
+  // }, 500);
+
+  useEffect(() => {
+    if (round <= 3 && ctx.host === true) {
       // if (round <= 3 && turn !== 0) {
       // console.log("round", round);
-      console.log("turn " + turn);
+      // console.log("turn " + turn);
       setTimeout(() => {
-        gameOver();
-      }, 10000);
+        socket.emit("game_over", { room: ctx.RoomId });
+        // gameOver();
+      }, 5000);
     }
     // else {
     //   console.log("game over");
@@ -114,17 +160,6 @@ function Canvas() {
     // }
   }, [turn, round]);
 
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    // border: "2px solid #000",
-    bgcolor: "background.paper",
-    boxShadow: 24,
-    p: 4,
-  };
   return (
     <div className="container-fluid">
       <Modal
@@ -143,7 +178,6 @@ function Canvas() {
         <div
           className="draw-area col-7"
           style={{ pointerEvents: ctx.id === current ? "" : "none" }}
-          // style={{ pointerEvents: "none" }}
         >
           <div
             onMouseMove={draw}
@@ -151,7 +185,7 @@ function Canvas() {
             onTouchStart={startDrawing}
             onMouseDown={startDrawing}
           >
-            <Timer sec={15} round={round} />
+            <Timer sec={15} round={round} word={word} />
             <canvas
               ref={canvasRef}
               width={window.innerWidth * 0.582}

@@ -43,11 +43,11 @@ export const SocketContextProvider = (props) => {
   const [name, setName] = useState("blue");
   const [roomId, setRoomId] = useState("");
   const [users, setUsers] = useState([]);
-  const [host, setHost] = useState();
   const [start, setStart] = useState(false);
   const [user, setUser] = useState([]);
   const [turn, setTurn] = useState(0);
   const [score, setScore] = useState(0);
+  const [host, setHost] = useState(false);
   // const [image, setImage] = useState(URL);
   useEffect(() => {
     axios.get("http://localhost:4000/").then(function (response) {

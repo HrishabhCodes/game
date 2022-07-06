@@ -1,13 +1,13 @@
 import React, { useState, useContext } from "react";
-import "./timer.css";
+import "./Timer.css";
 import SocketContext from "../../context/socketContext";
 
-function Timer({ sec, round }) {
+function Timer({ sec, round, word }) {
   const ctx = useContext(SocketContext);
   // const [secs, setTime] = useState(sec);
   // const [word, setWord] = useState("");
   // setWord("words");
-  const word = "word";
+  // const word = "word";
   const secs = sec;
   const tick = () => {
     if (secs === 0) {
