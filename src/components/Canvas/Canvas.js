@@ -94,6 +94,7 @@ function Canvas() {
 
     ctxRef.current.stroke();
   };
+
   const gameOver = async () => {
     if (turn < ctx.user.length - 1 && round < 3) {
       setTurn((prev) => prev + 1);
@@ -104,7 +105,7 @@ function Canvas() {
     if (ctx.host === true) {
       const Word = words[Math.floor(Math.random() * words.length)];
       socket.emit("word", { Word, room: ctx.RoomId });
-      console.log(Word);
+      // console.log(Word);
     }
     if (turn === 0 && round < 3) {
       handleOpen();
@@ -113,7 +114,7 @@ function Canvas() {
       }, 1000);
       setRound((prev) => prev + 1);
     }
-    console.log(ctx.user, current);
+    // console.log(ctx.user, current);
     if (round === 3) {
       console.log("game over");
     }
@@ -125,33 +126,38 @@ function Canvas() {
 
     // }
     socket.on("receive_word", (data) => {
-      console.log("receive", data);
+      // console.log("receive", data);
       setWord(data.Word);
     });
 
-    // socket.on("draw_image", (data) => {
-    //   console.log("data");
-    // });
+    socket.on("draw_image", (data) => {
+      var image = new Image();
+      image.src = data;
+      image.onload = function () {
+        console.log("image loaded");
+        ctxRef.current.drawImage(image, 0, 0);
+      };
+    });
 
     socket.on("time", () => {
       gameOver();
-      console.log("time");
+      // console.log("time");
     });
   }, [socket]);
 
-  // setTimeout(() => {
-  //   var base64ImageData = canvasRef.current.toDataURL("image/png");
-  //   socket.emit("image", { image_data: base64ImageData, room: ctx.RoomId });
-  // }, 500);
+  setTimeout(() => {
+    var base64ImageData = canvasRef.current.toDataURL("image/png");
+    socket.emit("image", { image_data: base64ImageData, room: ctx.RoomId });
+  }, 500);
 
   useEffect(() => {
-    if (round <= 3 && ctx.host === true) {
+    if (round <= 3) {
       // if (round <= 3 && turn !== 0) {
       // console.log("round", round);
       // console.log("turn " + turn);
       setTimeout(() => {
-        socket.emit("game_over", { room: ctx.RoomId });
-        // gameOver();
+        // socket.emit("game_over", { room: ctx.RoomId });
+        gameOver();
       }, 5000);
     }
     // else {

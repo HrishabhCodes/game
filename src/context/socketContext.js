@@ -47,7 +47,7 @@ export const SocketContextProvider = (props) => {
   const [user, setUser] = useState([]);
   const [turn, setTurn] = useState(0);
   const [score, setScore] = useState(0);
-  const [host, setHost] = useState(false);
+  const [host, setHost] = useState("");
   // const [image, setImage] = useState(URL);
   useEffect(() => {
     axios.get("http://localhost:4000/").then(function (response) {
