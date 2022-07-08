@@ -28,9 +28,9 @@ io.on("connection", (socket) => {
     console.log(data);
   });
 
-  // socket.on("image", (data) => {
-  //   io.in(data.room).emit("draw_image", data.image_data);
-  // });
+  socket.on("image", (data) => {
+    io.in(data.room).emit("draw_image", data.image_data);
+  });
 });
 
 app.get("/", (req, res) => {

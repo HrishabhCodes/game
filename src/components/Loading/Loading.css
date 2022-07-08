@@ -1,0 +1,11 @@
+.loading-container {
+  height: 100vh;
+  background-color: #060971;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.loader {
+  width: 600px;
+}

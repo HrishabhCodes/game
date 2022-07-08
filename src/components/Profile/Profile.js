@@ -26,6 +26,7 @@ import Avatar21 from "../../assets/avatars/21.png";
 import Avatar22 from "../../assets/avatars/22.png";
 import Avatar23 from "../../assets/avatars/23.png";
 import Avatar24 from "../../assets/avatars/24.png";
+import { motion } from "framer-motion";
 
 const Profile = () => {
   //const [name, setName] = useState("Blue");
@@ -68,7 +69,12 @@ const Profile = () => {
   };
 
   return (
-    <div className="profile-page-cont">
+    <motion.div
+      className="profile-page-cont"
+      initial={{ scaleY: 0 }}
+      animate={{ scaleY: 1 }}
+      exit={{ scaleY: 0 }}
+    >
       <div className="avatar-cont">
         <img src={Avatar1} className="avatar-img" alt="Avatar" />
         <div onClick={handleOpen} className="change-avatar">
@@ -319,7 +325,7 @@ const Profile = () => {
           </div>
         ) : null}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

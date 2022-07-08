@@ -1,5 +1,6 @@
 import Play from "./components/PlayPage/Play";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 import Navbar from "./components/Navbar/Navbar";
 import React, { useContext } from "react";
 import Home from "./components/HomePage/Home";
@@ -18,11 +19,13 @@ function App() {
       <ul className="circles">{shape}</ul>
       <BrowserRouter>
         <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="play" element={<Play />} />
-        </Routes>
+        <AnimatePresence>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="play" element={<Play />} />
+            <Route path="profile" element={<Profile />} />
+          </Routes>
+        </AnimatePresence>
       </BrowserRouter>
     </div>
   );

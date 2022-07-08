@@ -6,6 +6,8 @@ import SocketContext from "../../context/socketContext";
 import { storage } from "../../firebase";
 import { ref, getDownloadURL } from "firebase/storage";
 import Logo from "../../assets/logo_doodle.png";
+import Loading from "../Loading/Loading";
+import { motion } from "framer-motion";
 
 // import { db } from "../../firebase";
 // import { addDoc, collection } from "@firebase/firestore";
@@ -29,9 +31,16 @@ const Home = () => {
   return (
     <>
       {URL === "" ? (
-        <div>Loading...</div>
+        <div>
+          <Loading />
+        </div>
       ) : (
-        <div className="home-page-cont">
+        <motion.div
+          className="home-page-cont"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
           <div className="logo">
             <img className="vert-move" src={Logo} alt="" />
           </div>
@@ -61,16 +70,12 @@ const Home = () => {
                     Game Mode: <strong className="any-word">ANY</strong>
                   </div>
                 </Link>
-
-                <div className="play-btn" onClick={ShowGc}>
-                  QUICK PLAY
-                </div>
               </div>
             </div>
           ) : (
             <GameChat showGC={setShowGameChat} modal={setShowGameChat} />
           )}
-        </div>
+        </motion.div>
       )}
     </>
   );

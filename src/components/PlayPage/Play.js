@@ -2,11 +2,18 @@ import React, { useState } from "react";
 import GameChat from "../gameChat/GameChat";
 import "./Play.css";
 import Modals from "./Modal";
+import { motion } from "framer-motion";
+
 const Play = () => {
   const [showGameChat, setShowGameChat] = useState(false);
 
   return (
-    <div>
+    <motion.div
+      initial={{ scaleY: 0 }}
+      animate={{ scaleY: 1 }}
+      exit={{ scaleY: 0 }}
+      transition={{ duration: 0.2 }}
+    >
       {!showGameChat ? (
         <div className="play-container">
           <div className="modes">
@@ -35,7 +42,7 @@ const Play = () => {
       ) : (
         <GameChat showGC={setShowGameChat} />
       )}
-    </div>
+    </motion.div>
   );
 };
 
