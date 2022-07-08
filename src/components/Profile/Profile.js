@@ -296,6 +296,7 @@ const Profile = () => {
         <div className="user-name-cont">
           {disable ? (
             <input
+              maxLength={15}
               ref={inputRef}
               disabled
               type="text"
@@ -307,6 +308,7 @@ const Profile = () => {
             />
           ) : (
             <input
+              maxLength={15}
               ref={inputRef}
               onChange={(e) => ctx.setName(e.target.value)}
               type="text"
@@ -314,11 +316,11 @@ const Profile = () => {
               value={ctx.name}
             />
           )}
-
           <div className={`${disable ? "" : "change-active"} change-icon`}>
             <i onClick={handleChange} className="fa-solid fa-pen-to-square"></i>
           </div>
         </div>
+        {disable ? null : <em>Max. 15 characters are allowed!</em>}
         {change ? (
           <div onClick={handleSubmit} className="change-name">
             Change Name

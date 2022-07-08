@@ -41,6 +41,10 @@
   border-radius: 10px 10px 0px 0px;
 }
 
+.guess {
+  background-image: url("../../assets/guess.png");
+}
+
 .modes-title {
   background-color: #1f84c7;
   height: 20%;

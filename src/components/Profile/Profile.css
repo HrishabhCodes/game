@@ -151,3 +151,8 @@
   cursor: pointer;
   background-color: rgb(84, 168, 247);
 }
+
+em {
+  color: white;
+  font-size: 12px;
+}

@@ -79,3 +79,8 @@
   color: #fff;
   text-decoration: none;
 }
+
+.correct {
+  color: rgb(117, 193, 255);
+  font-weight: 600;
+}

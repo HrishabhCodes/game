@@ -74,9 +74,12 @@ img.vert-move {
 }
 
 .username {
-  font-size: 2rem;
+  font-size: 1.7rem;
   font-weight: bold;
   color: #e9e3e3;
+  width: 94%;
+  text-align: center;
+  overflow: hidden;
 }
 
 .any-word {

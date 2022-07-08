@@ -15,17 +15,31 @@ import {
   onSnapshot,
 } from "@firebase/firestore";
 import ScrollToBottom from "react-scroll-to-bottom";
-function Chat() {
+function Chat(props) {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messagesList, setMessagesList] = useState([]);
   const messagesEndRef = useRef(null);
   const ctx = useContext(SocketContext);
   const [time, setTime] = useState(0);
-  const WORD = "a";
+  const WORD = props.word;
 
   const sendMessage = async () => {
-    // Check if the message is empty
-    if (currentMessage !== "") {
+    console.log("sendMessage", WORD, currentMessage);
+    if (currentMessage.toLowerCase() === WORD.toLowerCase()) {
+      ctx.setScore((prev) => prev + (600 - time * 10));
+      console.log(ctx.score);
+      const roomRef = collection(db, "rooms");
+      const roomQuery = query(roomRef, where("roomId", "==", ctx.RoomId));
+      const data = await getDocs(roomQuery);
+      const userRef = doc(db, "rooms", data.docs[0].id);
+
+      await updateDoc(userRef, {
+        messages: [
+          ...data.docs[0].data().messages,
+          { username: ctx.name, message: "Guessed the word! 🎉🎉" },
+        ],
+      });
+    } else {
       // Sending custom message to server
       const roomRef = collection(db, "rooms");
       const roomQuery = query(roomRef, where("roomId", "==", ctx.RoomId));
@@ -40,18 +54,12 @@ function Chat() {
       });
     }
 
-    if (currentMessage === WORD) {
-      // console.log(ctx.score, time);
-      ctx.setScore((prev) => prev + (600 - time * 10));
-      // console.log(ctx.score);
-    }
     setCurrentMessage("");
   };
 
   useEffect(() => {
     const test = () => {
       setTime((prev) => prev + 1);
-      // console.log(time);
     };
 
     setTimeout(() => {
@@ -76,7 +84,7 @@ function Chat() {
   }, [ctx.RoomId]);
 
   return (
-    <div className="col-3  gameChat">
+    <div className="col-3 gameChat">
       <div className="mt-2">
         <h2>GameChat</h2>
       </div>
@@ -84,7 +92,14 @@ function Chat() {
         <ScrollToBottom className="render-chat">
           {messagesList.map((messageData, index) => {
             return (
-              <p key={index}>
+              <p
+                className={
+                  messageData.message === "Guessed the word! 🎉🎉"
+                    ? "correct"
+                    : null
+                }
+                key={index}
+              >
                 {messageData.username}: {messageData.message}
               </p>
             );
@@ -92,7 +107,6 @@ function Chat() {
         </ScrollToBottom>
       </div>
       <div ref={messagesEndRef} className="message col-11">
-        {/* <div  style={{ backgroundColor: "#edebeb" }}> */}
         <Box
           className="col-9"
           sx={{

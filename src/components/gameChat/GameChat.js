@@ -61,11 +61,10 @@ function GameChat({ showGC }) {
 
   const Game = async () => {
     const roomRef = collection(db, "rooms");
-    const roomQuery = await query(roomRef, where("roomId", "==", ctx.RoomId));
+    const roomQuery = query(roomRef, where("roomId", "==", ctx.RoomId));
     const data = await getDocs(roomQuery);
     const userRef = doc(db, "rooms", data.docs[0].id);
     await updateDoc(userRef, { start: true });
-    // setShow(true);
   };
   return (
     <div
@@ -81,7 +80,7 @@ function GameChat({ showGC }) {
       ) : (
         <Canvas username={ctx.name} />
       )}
-      <Link to="/play" onClick={() => ctx.setActive("play")}>
+      <Link to="/">
         <Tooltip
           className="leaveButton"
           title="Leave"

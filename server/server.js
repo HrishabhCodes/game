@@ -3,6 +3,7 @@ const app = express();
 const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
+const port = process.env.PORT || 4000;
 
 app.use(cors());
 const server = http.createServer(app);
@@ -25,7 +26,6 @@ io.on("connection", (socket) => {
 
   socket.on("word", (data) => {
     io.in(data.room).emit("receive_word", data);
-    console.log(data);
   });
 
   socket.on("image", (data) => {
@@ -33,10 +33,6 @@ io.on("connection", (socket) => {
   });
 });
 
-app.get("/", (req, res) => {
-  res.send({ roomid: Math.floor(Math.random() * 1000000) });
-});
-
-server.listen(4000, () => {
+server.listen(port, () => {
   console.log("listening on port 4000");
 });

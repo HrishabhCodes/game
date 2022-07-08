@@ -46,22 +46,14 @@ const Home = () => {
           </div>
           {!showGameChat ? (
             <div className="user-cont">
-              <Link
-                to="/profile"
-                className="user-info"
-                onClick={() => ctx.setActive("profile")}
-              >
+              <Link to="/profile" className="user-info">
                 <div className="user-img-cont">
                   <img className="user-img" src={URL} alt="" />
                 </div>
                 <div className="username">{ctx.name}</div>
               </Link>
               <div className="quick-play-cont">
-                <Link
-                  to="/play"
-                  className="game-info"
-                  onClick={() => ctx.setActive("play")}
-                >
+                <Link to="/play" className="game-info">
                   <div className="play-icon">
                     <i className="fa-solid fa-play"></i>
                   </div>

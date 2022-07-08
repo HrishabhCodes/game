@@ -1,5 +1,5 @@
 import { TextField, Box, Modal } from "@mui/material";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import SocketContext from "../../context/socketContext";
 import {
   addDoc,
@@ -18,7 +18,13 @@ export default function Modals(props) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [room, setRoom] = useState("");
-
+  useEffect(() => {
+    let id = String(Math.floor(Math.random() * 1000000));
+    if (id.length < 6) {
+      id = "0".repeat(6 - id.length) + id;
+    }
+    ctx.setRoom(id);
+  }, []);
   const createRoom = async () => {
     if (ctx.name !== "" && ctx.RoomId !== "") {
       props.setShowGameChat(true);
@@ -59,7 +65,6 @@ export default function Modals(props) {
       } catch (error) {
         console.log(error);
       }
-      console.log(ctx.RoomId);
       props.setShowGameChat(true);
     }
   };
