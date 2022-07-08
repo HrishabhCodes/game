@@ -48,11 +48,7 @@ const Home = () => {
                 <div className="username">{ctx.name}</div>
               </Link>
               <div className="quick-play-cont">
-                <Link
-                  to="/play"
-                  className="game-info"
-                  onClick={() => ctx.setActive("play")}
-                >
+                <Link to="/play" className="game-info">
                   <div className="play-icon">
                     <i className="fa-solid fa-play"></i>
                   </div>
@@ -61,10 +57,6 @@ const Home = () => {
                     Game Mode: <strong className="any-word">ANY</strong>
                   </div>
                 </Link>
-
-                <div className="play-btn" onClick={ShowGc}>
-                  QUICK PLAY
-                </div>
               </div>
             </div>
           ) : (

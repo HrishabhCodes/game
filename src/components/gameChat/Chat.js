@@ -15,17 +15,32 @@ import {
   onSnapshot,
 } from "@firebase/firestore";
 import ScrollToBottom from "react-scroll-to-bottom";
-function Chat() {
+function Chat(props) {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messagesList, setMessagesList] = useState([]);
   const messagesEndRef = useRef(null);
   const ctx = useContext(SocketContext);
   const [time, setTime] = useState(0);
-  const WORD = "a";
+  const WORD = props.word;
 
   const sendMessage = async () => {
-    // Check if the message is empty
-    if (currentMessage !== "") {
+    console.log("sendMessage", WORD, currentMessage);
+    if (currentMessage === WORD) {
+      // console.log(ctx.score, time);
+      ctx.setScore((prev) => prev + (600 - time * 10));
+      console.log(ctx.score);
+      const roomRef = collection(db, "rooms");
+      const roomQuery = query(roomRef, where("roomId", "==", ctx.RoomId));
+      const data = await getDocs(roomQuery);
+      const userRef = doc(db, "rooms", data.docs[0].id);
+
+      await updateDoc(userRef, {
+        messages: [
+          ...data.docs[0].data().messages,
+          { username: ctx.name, message: "selected correct word" },
+        ],
+      });
+    } else {
       // Sending custom message to server
       const roomRef = collection(db, "rooms");
       const roomQuery = query(roomRef, where("roomId", "==", ctx.RoomId));
@@ -40,11 +55,6 @@ function Chat() {
       });
     }
 
-    if (currentMessage === WORD) {
-      // console.log(ctx.score, time);
-      ctx.setScore((prev) => prev + (600 - time * 10));
-      // console.log(ctx.score);
-    }
     setCurrentMessage("");
   };
 

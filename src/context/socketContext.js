@@ -49,15 +49,7 @@ export const SocketContextProvider = (props) => {
   const [score, setScore] = useState(0);
   const [host, setHost] = useState("");
   // const [image, setImage] = useState(URL);
-  useEffect(() => {
-    axios.get("http://localhost:4000/").then(function (response) {
-      let id = String(response.data.roomid);
-      if (id.length < 6) {
-        id = "0".repeat(6 - id.length) + id;
-      }
-      setRoomId(id);
-    });
-  }, []);
+
   // console.log(roomId);
   return (
     <SocketContext.Provider
