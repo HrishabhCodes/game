@@ -1,39 +1,24 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "./Timer.css";
 import SocketContext from "../../context/socketContext";
 
-function Timer({ sec, round, word }) {
+function Timer({ round, word, id, secs, setSecs }) {
   const ctx = useContext(SocketContext);
-  // const [secs, setTime] = useState(sec);
-  // const [word, setWord] = useState("");
-  // setWord("words");
-  // const word = "word";
-  const secs = sec;
-  const tick = () => {
-    if (secs === 0) {
-      //reset();
-      // gameOver();
-      // setTime(parseInt(0.5));
-    } else {
-      // setTime(secs - 1);
-    }
-  };
-  // const reset = () => setTime(parseInt(sec));
 
-  React.useEffect(() => {
-    const timerId = setInterval(() => tick(), 1000);
-    return () => clearInterval(timerId);
-  });
-  //   setInterval(function () {
-  //     setTime(seconds++);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setSecs((prev) => prev - 1);
   //   }, 1000);
+  // }, [secs]);
+  if (id !== ctx.id) {
+    word = "-".repeat(word.length);
+    word = word + ` (${word.length})`;
+  }
   return (
     <React.Fragment>
       <div className="round text-center fs-4 text">{round}/3</div>
       <div className="drawingObj text-center fs-4 text">{word}</div>
-      <div className="timer text-center fs-4 text">{`${secs
-        .toString()
-        .padStart(2, "0")}`}</div>
+      <div className="timer text-center fs-4 text">{secs}</div>
     </React.Fragment>
   );
 }

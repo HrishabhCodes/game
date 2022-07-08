@@ -81,7 +81,7 @@ function GameChat({ showGC }) {
       ) : (
         <Canvas username={ctx.name} />
       )}
-      <Link to="/play" onClick={() => ctx.setActive("play")}>
+      <Link to="/">
         <Tooltip
           className="leaveButton"
           title="Leave"

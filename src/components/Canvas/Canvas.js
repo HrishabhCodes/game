@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useContext } from "react";
 import { Typography, Box, Modal } from "@mui/material";
+import { Link } from "react-router-dom";
 import Menu from "./menu";
 import "./Canvas.css";
 import Chat from "../gameChat/Chat";
@@ -7,19 +8,8 @@ import UserData from "../gameChat/UserData";
 import Timer from "../Timer/Timer";
 import SocketContext from "../../context/socketContext";
 import io from "socket.io-client";
+import { words } from "./word";
 const socket = io.connect("http://localhost:4000");
-
-const words = [
-  "Argentina",
-  "Asia",
-  "Asterix",
-  "Atlantis",
-  "Audi",
-  "Australia",
-  "BMW",
-  "BMX",
-  "Bambi",
-];
 
 const style = {
   position: "absolute",
@@ -45,6 +35,7 @@ function Canvas() {
   const [word, setWord] = useState("");
   const [round, setRound] = useState(0);
   const [open, setOpen] = useState(false);
+  const [secs, setSecs] = useState(0);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -73,8 +64,6 @@ function Canvas() {
     joinRoom();
   }, []);
 
-  // console.log(word);
-
   const startDrawing = (e) => {
     ctxRef.current.beginPath();
     ctxRef.current.moveTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
@@ -101,69 +90,70 @@ function Canvas() {
     } else {
       setTurn(0);
     }
+
     setCurrent(ctx.user[turn].id);
+    setSecs(60);
     if (ctx.host === true) {
       const Word = words[Math.floor(Math.random() * words.length)];
-      socket.emit("word", { Word, room: ctx.RoomId });
-      // console.log(Word);
+      setTimeout(() => {
+        socket.emit("word", { Word, room: ctx.RoomId });
+      }, 800);
     }
-    if (turn === 0 && round < 3) {
+    if (turn === 0 && round < 3 && round !== "0") {
       handleOpen();
       setTimeout(() => {
         handleClose();
       }, 1000);
       setRound((prev) => prev + 1);
     }
-    // console.log(ctx.user, current);
-    if (round === 3) {
+    if (round === 3 && turn === 0) {
       console.log("game over");
+      setRound("0");
+      handleOpen();
+      ctx.setStart(false);
     }
+    setTimeout(() => {
+      ctxRef.current.clearRect(
+        0,
+        0,
+        canvasRef.current.width,
+        canvasRef.current.height
+      );
+    }, 900);
   };
 
   useEffect(() => {
-    // console.log(current, ctx.id);
-    // if (current === ctx.id) {
-
-    // }
     socket.on("receive_word", (data) => {
-      // console.log("receive", data);
-      setWord(data.Word);
+      setWord(data.Word.toLowerCase());
     });
 
     socket.on("draw_image", (data) => {
       var image = new Image();
       image.src = data;
       image.onload = function () {
-        console.log("image loaded");
-        ctxRef.current.drawImage(image, 0, 0);
+        for (let i = 0; i < 2; i++) {
+          ctxRef.current.drawImage(image, 0, 0);
+        }
       };
     });
-
-    socket.on("time", () => {
-      gameOver();
-      // console.log("time");
-    });
   }, [socket]);
-
-  setTimeout(() => {
-    var base64ImageData = canvasRef.current.toDataURL("image/png");
-    socket.emit("image", { image_data: base64ImageData, room: ctx.RoomId });
-  }, 500);
+  if (ctx.id === current) {
+    setTimeout(() => {
+      var base64ImageData = canvasRef.current.toDataURL("image/png");
+      socket.emit("image", { image_data: base64ImageData, room: ctx.RoomId });
+    }, 100);
+  }
 
   useEffect(() => {
-    if (round <= 3) {
-      // if (round <= 3 && turn !== 0) {
-      // console.log("round", round);
-      // console.log("turn " + turn);
-      setTimeout(() => {
-        // socket.emit("game_over", { room: ctx.RoomId });
+    if (round !== "0") {
+      if (round <= 3 && !(turn === 0 && round === 0)) {
+        setTimeout(() => {
+          gameOver();
+        }, 10000);
+      } else {
         gameOver();
-      }, 5000);
+      }
     }
-    // else {
-    //   console.log("game over");
-    //   gameOver();
-    // }
   }, [turn, round]);
 
   return (
@@ -174,9 +164,15 @@ function Canvas() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
+          {round === "0" && <div className="fs-1 fw-bold">Game Over</div>}
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Your score: score
+            Your score: {ctx.score}
           </Typography>
+          {round === "0" && (
+            <Link to="/" className="create-game">
+              Home
+            </Link>
+          )}
         </Box>
       </Modal>
       <div className="App row " onTouchEnd={endDrawing} onMouseUp={endDrawing}>
@@ -191,7 +187,13 @@ function Canvas() {
             onTouchStart={startDrawing}
             onMouseDown={startDrawing}
           >
-            <Timer sec={15} round={round} word={word} />
+            <Timer
+              round={round}
+              word={word}
+              id={current}
+              secs={secs}
+              setSecs={setSecs}
+            />
             <canvas
               ref={canvasRef}
               width={window.innerWidth * 0.582}
@@ -206,7 +208,7 @@ function Canvas() {
             canvas={canvasRef.current}
           />
         </div>
-        <Chat />
+        <Chat word={word} />
       </div>
     </div>
   );
