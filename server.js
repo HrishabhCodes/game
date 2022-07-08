@@ -1,11 +1,20 @@
 const express = require("express");
 const app = express();
+const path = require("path");
 const http = require("http");
 const { Server } = require("socket.io");
-const cors = require("cors");
+// const cors = require("cors");
 const port = process.env.PORT || 4000;
 
-app.use(cors());
+// if (process.env.NODE_ENV === "production") {
+app.use(express.static("client/build"));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+});
+// }
+// } else {
+//   app.use(cors());
+// }
 const server = http.createServer(app);
 
 const io = new Server(server, {
@@ -33,6 +42,7 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(port, () => {
-  console.log("listening on port 4000");
+server.listen(port, (err) => {
+  if (err) return console.log(err);
+  console.log("listening on port ", port);
 });
