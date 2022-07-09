@@ -9,8 +9,7 @@ import Timer from "../Timer/Timer";
 import SocketContext from "../../context/socketContext";
 import io from "socket.io-client";
 import { words } from "./word";
-const socket = io.connect("https://doodlesy-server.herokuapp.com");
-// const socket = io.connect("https://localhost:4000");
+const socket = io.connect("https://doodlesy.herokuapp.com");
 
 const style = {
   position: "absolute",
@@ -85,8 +84,13 @@ function Canvas() {
     ctxRef.current.stroke();
   };
 
+  const timeOut = (ms) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
+
   const gameOver = async () => {
     if (turn < ctx.user.length - 1 && round < 3) {
+      await timeOut(1000);
       setTurn((prev) => prev + 1);
     } else {
       setTurn(0);
@@ -104,7 +108,7 @@ function Canvas() {
       handleOpen();
       setTimeout(() => {
         handleClose();
-      }, 1000);
+      }, 3000);
       setRound((prev) => prev + 1);
     }
     if (round === 3 && turn === 0) {
@@ -113,14 +117,16 @@ function Canvas() {
       handleOpen();
       ctx.setStart(false);
     }
-    setTimeout(() => {
-      ctxRef.current.clearRect(
-        0,
-        0,
-        canvasRef.current.width,
-        canvasRef.current.height
-      );
-    }, 900);
+    for (let i = 0; i < 10; i++) {
+      setTimeout(() => {
+        ctxRef.current.clearRect(
+          0,
+          0,
+          canvasRef.current.width,
+          canvasRef.current.height
+        );
+      }, 100 * i);
+    }
   };
 
   useEffect(() => {
@@ -150,7 +156,7 @@ function Canvas() {
       if (round <= 3 && !(turn === 0 && round === 0)) {
         setTimeout(() => {
           gameOver();
-        }, 10000);
+        }, 60000);
       } else {
         gameOver();
       }

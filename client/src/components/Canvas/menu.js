@@ -28,8 +28,8 @@ const colors2 = [
 const Menu = ({ setLineColor, setLineWidth, setLineOpacity, ctx, canvas }) => {
   const [inputColor, setInputColor] = useState("#000000");
   return (
-    <div className="Menu col-8">
-      <div className="Small-display">
+    <div className="menu col-8">
+      <div className="small-display">
         <div>
           <input
             className="color-picker m-2"

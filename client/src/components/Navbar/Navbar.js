@@ -72,10 +72,10 @@ const Navbar = () => {
             <NavLink className="home-page" to="/">
               <div>HOME</div>
             </NavLink>
-            <NavLink className="home-page" to="/play">
+            <NavLink className="play-page" to="/play">
               <div>PLAY</div>
             </NavLink>
-            <NavLink className="home-page" to="/profile">
+            <NavLink className="profile-page" to="/profile">
               <div>PROFILE</div>
             </NavLink>
           </div>

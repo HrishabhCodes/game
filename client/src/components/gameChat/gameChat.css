@@ -1,30 +1,41 @@
 .gameChat {
   backdrop-filter: brightness(60%) blur(5px);
   color: rgb(255, 255, 255);
-  height: 85vh;
-  /* overflow-x: hidden;
-  overflow-y: scroll; */
+  height: 100vh;
 }
+
 .render-chat {
   height: 70vh;
   overflow-x: hidden;
 }
+
 .message {
   position: fixed;
   bottom: 5;
   display: flex;
 }
+
 .users {
+  scroll-behavior: smooth;
+  overflow: scroll;
   color: rgb(255, 255, 255);
-  /* background-color: rgb(51, 50, 50); */
-  height: 85vh;
+  height: 100vh;
   backdrop-filter: brightness(50%) blur(5px);
 }
+
+.users ul {
+  scroll-behavior: smooth;
+  overflow: scroll;
+  height: 750px;
+}
+
 .userData {
   display: block;
+  height: 35px;
   text-indent: 5px;
   border-radius: 10px;
 }
+
 .leaveButton {
   position: absolute;
   right: 20px;
@@ -35,24 +46,27 @@
   border-radius: 50%;
   border: 0;
 }
+
 .sendButton {
   position: absolute;
   right: 10px;
-
   width: 50px;
   height: 50px;
   background-color: transparent;
   border-radius: 50%;
   border: 0;
 }
+
 .list-group-item {
   background-color: transparent;
   color: white;
   border: 5px solid transparent;
 }
+
 .info {
   backdrop-filter: brightness(50%) blur(5px);
 }
+
 .start-game {
   background-image: linear-gradient(
     to right,
@@ -61,6 +75,7 @@
     #da22ff 100%
   );
 }
+
 .start-game {
   margin: 10px;
   padding: 15px 45px;

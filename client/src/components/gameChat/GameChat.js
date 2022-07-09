@@ -17,13 +17,11 @@ import {
   updateDoc,
 } from "@firebase/firestore";
 import { db } from "../../firebase";
-// var word = "";
 function GameChat({ showGC }) {
   const ctx = useContext(SocketContext);
   const [show, setShow] = useState(false);
   const [showLobby, setShowLobby] = useState(true);
 
-  // console.log(ctx.RoomId, ctx.name, ctx.active);
   //check if the user details are entered
 
   const leaveroom = async () => {

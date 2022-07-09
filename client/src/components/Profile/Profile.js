@@ -1,4 +1,6 @@
 import React, { useState, useRef, useContext } from "react";
+import { storage } from "../../firebase";
+import { ref, getDownloadURL } from "firebase/storage";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import "./Profile.css";
@@ -34,12 +36,17 @@ const Profile = () => {
   //const [name, setName] = useState("Blue");
   const ctx = useContext(SocketContext);
   const [open, setOpen] = useState(false);
-  const [selAvatar, setSelAvatar] = useState(1);
+  const [selAvatar, setSelAvatar] = useState("");
+  const [url, setUrl] = useState();
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [disable, setDisable] = useState(true);
   const [change, setChange] = useState(false);
-  const inputRef = useRef();
+  const avatarRef = ref(storage, `avatars/${ctx.avatar}.png`);
+
+  getDownloadURL(avatarRef).then((URL) => {
+    setUrl(URL);
+  });
 
   const style = {
     position: "absolute",
@@ -55,11 +62,10 @@ const Profile = () => {
 
   const handleAvatar = (selectedAvatar) => {
     setSelAvatar(selectedAvatar);
+    localStorage.setItem("avatar", selectedAvatar);
   };
 
   const handleChange = () => {
-    inputRef.current.focus();
-    console.log(inputRef.current);
     setDisable(false);
     setChange(true);
   };
@@ -80,7 +86,7 @@ const Profile = () => {
       <div className="avatar-cont">
         <LazyLoadImage
           effect="blur"
-          src={Avatar1}
+          src={url}
           className="avatar-img"
           alt="Avatar"
         />
@@ -425,7 +431,6 @@ const Profile = () => {
           {disable ? (
             <input
               maxLength={15}
-              ref={inputRef}
               disabled
               type="text"
               className="user-name"
@@ -437,7 +442,6 @@ const Profile = () => {
           ) : (
             <input
               maxLength={15}
-              ref={inputRef}
               onChange={(e) => ctx.setName(e.target.value)}
               type="text"
               className="change-active user-name"

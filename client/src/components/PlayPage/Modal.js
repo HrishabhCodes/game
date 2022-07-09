@@ -44,10 +44,12 @@ export default function Modals(props) {
     }
   };
   const joinRoom = async () => {
+    console.log("Heya!", ctx.name, room);
+
     if (ctx.name !== "" && room !== "") {
       const roomRef = collection(db, "rooms");
       try {
-        const roomQuery = await query(roomRef, where("roomId", "==", room));
+        const roomQuery = query(roomRef, where("roomId", "==", room));
         const data = await getDocs(roomQuery);
         if (data.docs[0].data().users.length <= 10) {
           const userRef = doc(db, "rooms", data.docs[0].id);
@@ -92,45 +94,31 @@ export default function Modals(props) {
           className="d-flex flex-column position-absolute top-50 start-50 translate-middle"
           sx={{
             "& > :not(style)": {
-              m: 1,
-              width: "25ch",
+              width: "30ch",
             },
           }}
         >
-          <TextField
+          <label htmlFor="filled-read-only-input">Nick Name</label>
+          <input
             id="filled-basic"
-            label="Nick Name"
-            variant="filled"
-            type="text"
+            maxLength={15}
+            className="name-textfield"
             value={ctx.name}
-            placeholder="Enter nick name"
-            sx={{
-              input: { backgroundColor: "#edebeb", color: "#000000" },
-            }}
+            placeholder="Nick Name"
+            type="text"
             onChange={(event) => {
               ctx.setName(event.target.value);
             }}
           />
           {props.btn === "search" ? (
             <div>
-              <TextField
-                id="filled-basic"
-                label="Room ID"
-                variant="filled"
-                type="text"
+              <label htmlFor="filled-read-only-input">Room ID</label>
+              <input
+                id="filled-read-only-input"
                 className="room-textfield"
-                value={room}
-                onChange={(event) => {
-                  setRoom(event.target.value);
-                }}
+                type="number"
                 placeholder="Room ID"
-                sx={{
-                  input: {
-                    backgroundColor: "#edebeb",
-                    color: "#000000",
-                    fontWeight: "bold",
-                  },
-                }}
+                onChange={(e) => setRoom(e.target.value)}
               />
               <button className="joinGame" onClick={joinRoom}>
                 Join
@@ -138,21 +126,14 @@ export default function Modals(props) {
             </div>
           ) : (
             <div>
-              <TextField
+              <label htmlFor="filled-read-only-input">Room ID</label>
+              <input
                 id="filled-read-only-input"
-                label="Room ID"
                 className="room-textfield"
                 value={ctx.RoomId}
-                variant="filled"
                 type="text"
                 placeholder="Room ID"
-                sx={{
-                  input: {
-                    backgroundColor: "#edebeb",
-                    color: "#000000",
-                    fontWeight: "bold",
-                  },
-                }}
+                readOnly
               />
               <button className="joinGame" onClick={createRoom}>
                 Create

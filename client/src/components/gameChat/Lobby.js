@@ -60,7 +60,9 @@ function Lobby({ showLobby, StartGame }) {
                 overflow: "hidden",
               }}
             >
-              <h5 className="m-1">Setting</h5>
+              <h5 style={{ fontWeight: 800 }} className="m-1">
+                Settings
+              </h5>
               <ul className="list-group list-group-flush">
                 <li className="list-group-item list-group-item-action">
                   Round: 3
@@ -69,7 +71,7 @@ function Lobby({ showLobby, StartGame }) {
                   Draw time: 60
                 </li>
                 <li className="list-group-item list-group-item-action">
-                  language: English
+                  Language: English
                 </li>
                 <li className="list-group-item list-group-item-action">
                   Room Id: {ctx.RoomId}

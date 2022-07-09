@@ -17,6 +17,7 @@ const Home = () => {
   const [showGameChat, setShowGameChat] = useState(false);
   const [URL, setURL] = useState("");
   const ctx = useContext(SocketContext);
+  ctx.setStart(false);
 
   const avatarRef = ref(storage, `avatars/${1}.png`);
   getDownloadURL(avatarRef)

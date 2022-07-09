@@ -17,7 +17,6 @@ const colors1 = [
 ];
 function UserData({ classname, id }) {
   const ctx = useContext(SocketContext);
-  // const [userList, setUserList] = useState([]);
   const [userList, setUserList] = useState([]);
 
   useEffect(() => {
@@ -36,7 +35,7 @@ function UserData({ classname, id }) {
     <div className={classname}>
       <h2 className="mt-2">Players</h2>
       <h5>Room ID: {ctx.RoomId}</h5>
-      <ul className="p-0">
+      <ul className="users-list p-0">
         {userList.map((Data, index) => (
           <li
             className="userData col-11 m-1 me-2 mb-2 d-flex justify-content-between align-items-center"

@@ -1,10 +1,12 @@
-// import io from "socket.io-client";
 import React, { useState } from "react";
 // import { storage } from "../firebase";
 // import { ref, getDownloadURL } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
-// import axios from "axios";
-// const socket = io.connect("http://localhost:4000");
+let firstName = `Player${Math.floor(Math.random() * 10000)}`;
+if (firstName.length < 4) {
+  firstName = "0".repeat(4 - firstName.length) + firstName;
+}
+
 // const avatarRef = ref(storage, `bgmusic.mp3`);
 // const URL = "";
 // getDownloadURL(avatarRef)
@@ -20,7 +22,6 @@ const SocketContext = React.createContext({
   setName: () => {},
   RoomId: "",
   setRoom: () => {},
-  avatar: 1,
   id: "",
   host: "",
   setHost: () => {},
@@ -32,12 +33,12 @@ const SocketContext = React.createContext({
   setTurn: () => {},
   score: 0,
   setScore: () => {},
-  image: "",
-  setImage: () => {},
+  avatar: 1,
+  setAvatar: () => {},
 });
 const uuid = uuidv4();
 export const SocketContextProvider = (props) => {
-  const [name, setName] = useState(localStorage.getItem("name"));
+  const [name, setName] = useState(localStorage.getItem("name") || firstName);
   const [roomId, setRoomId] = useState("");
   // const [users, setUsers] = useState([]);
   const [start, setStart] = useState(false);
@@ -45,7 +46,7 @@ export const SocketContextProvider = (props) => {
   const [turn, setTurn] = useState(0);
   const [score, setScore] = useState(0);
   const [host, setHost] = useState("");
-  // const [image, setImage] = useState(URL);
+  const [avatar, setAvatar] = useState(localStorage.getItem("avatar") || 1);
 
   return (
     <SocketContext.Provider
@@ -54,7 +55,6 @@ export const SocketContextProvider = (props) => {
         setName: setName,
         RoomId: roomId,
         setRoom: setRoomId,
-        avatar: 1,
         id: uuid,
         host: host,
         setHost: setHost,
@@ -66,8 +66,8 @@ export const SocketContextProvider = (props) => {
         setTurn: setTurn,
         score: score,
         setScore: setScore,
-        // image: image,
-        // setImage: setImage,
+        avatar: avatar,
+        setAvatar: setAvatar,
       }}
     >
       {props.children}
