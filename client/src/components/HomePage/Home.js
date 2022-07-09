@@ -8,6 +8,8 @@ import { ref, getDownloadURL } from "firebase/storage";
 import Logo from "../../assets/logo_doodle.png";
 import Loading from "../Loading/Loading";
 import { motion } from "framer-motion";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 // import { db } from "../../firebase";
 // import { addDoc, collection } from "@firebase/firestore";
@@ -20,13 +22,6 @@ const Home = () => {
   getDownloadURL(avatarRef)
     .then((url) => setURL(url))
     .catch((err) => console.log(err));
-
-  const ShowGc = async () => {
-    setShowGameChat(true);
-
-    setShowGameChat(true);
-  };
-  // console.log(URL);
 
   return (
     <>
@@ -42,13 +37,23 @@ const Home = () => {
           exit={{ opacity: 0 }}
         >
           <div className="logo">
-            <img className="vert-move" src={Logo} alt="" />
+            <LazyLoadImage
+              effect="blur"
+              className="vert-move"
+              src={Logo}
+              alt=""
+            />
           </div>
           {!showGameChat ? (
             <div className="user-cont">
               <Link to="/profile" className="user-info">
                 <div className="user-img-cont">
-                  <img className="user-img" src={URL} alt="" />
+                  <LazyLoadImage
+                    effect="blur"
+                    className="user-img"
+                    src={URL}
+                    alt=""
+                  />
                 </div>
                 <div className="username">{ctx.name}</div>
               </Link>

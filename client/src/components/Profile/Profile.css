@@ -50,14 +50,12 @@
   flex-direction: column;
   justify-content: center;
   height: 100%;
-  /* background-color: aliceblue; */
   width: 30%;
 }
 
 .img-options {
   padding: 2rem;
   height: 100%;
-  /* background-color: lightcyan; */
   width: 70%;
   display: flex;
   justify-content: space-evenly;
@@ -65,14 +63,14 @@
   overflow: scroll;
 }
 
-.img-options > img {
+.img-options .avatar-opt {
   width: 8rem;
   height: 8rem;
   margin: 1rem 1rem;
   transition-duration: 300ms;
 }
 
-.img-options > img:hover {
+.img-options .avatar-opt:hover {
   transform: scale(1.1);
   cursor: pointer;
 }

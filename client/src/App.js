@@ -2,7 +2,7 @@ import Play from "./components/PlayPage/Play";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import Navbar from "./components/Navbar/Navbar";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Home from "./components/HomePage/Home";
 import Profile from "./components/Profile/Profile";
 import "./App.css";
@@ -14,6 +14,7 @@ for (let i = 1; i <= 10; i++) {
 
 function App() {
   const ctx = useContext(SocketContext);
+
   return (
     <div className="app-container ">
       <ul className="circles">{shape}</ul>

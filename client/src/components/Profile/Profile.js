@@ -1,4 +1,6 @@
 import React, { useState, useRef, useContext } from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 import "./Profile.css";
 import SocketContext from "../../context/socketContext";
 import { Box, Modal } from "@mui/material";
@@ -76,7 +78,12 @@ const Profile = () => {
       exit={{ scaleY: 0 }}
     >
       <div className="avatar-cont">
-        <img src={Avatar1} className="avatar-img" alt="Avatar" />
+        <LazyLoadImage
+          effect="blur"
+          src={Avatar1}
+          className="avatar-img"
+          alt="Avatar"
+        />
         <div onClick={handleOpen} className="change-avatar">
           <i className="fa-solid fa-arrows-rotate"></i>
         </div>
@@ -88,7 +95,8 @@ const Profile = () => {
         >
           <Box className="avatar-options" sx={style}>
             <div className="display-cont">
-              <img
+              <LazyLoadImage
+                effect="blur"
                 className="display"
                 src={
                   selAvatar === 2
@@ -144,149 +152,269 @@ const Profile = () => {
               />
             </div>
             <div className="img-options">
-              <img
+              <LazyLoadImage
+                effect="blur"
                 src={Avatar1}
                 onClick={() => handleAvatar(1)}
                 alt=""
-                className={selAvatar === 1 ? `selected avatar1` : `avatar1`}
+                className={
+                  selAvatar === 1
+                    ? `selected avatar1 avatar-opt`
+                    : `avatar-opt avatar1`
+                }
               />
-              <img
+              <LazyLoadImage
+                effect="blur"
                 src={Avatar2}
                 onClick={() => handleAvatar(2)}
                 alt=""
-                className={selAvatar === 2 ? `selected avatar2` : `avatar2`}
+                className={
+                  selAvatar === 2
+                    ? `selected avatar2 avatar-opt`
+                    : `avatar-opt avatar2`
+                }
               />
-              <img
+              <LazyLoadImage
+                effect="blur"
                 src={Avatar3}
                 onClick={() => handleAvatar(3)}
                 alt=""
-                className={selAvatar === 3 ? `selected avatar3` : `avatar3`}
+                className={
+                  selAvatar === 3
+                    ? `selected avatar3 avatar-opt`
+                    : `avatar-opt avatar3`
+                }
               />
-              <img
+              <LazyLoadImage
+                effect="blur"
                 src={Avatar4}
                 onClick={() => handleAvatar(4)}
                 alt=""
-                className={selAvatar === 4 ? `selected avatar4` : `avatar4`}
+                className={
+                  selAvatar === 4
+                    ? `selected avatar6 avatar-opt`
+                    : `avatar-opt avatar6`
+                }
               />
-              <img
+              <LazyLoadImage
+                effect="blur"
                 src={Avatar5}
                 onClick={() => handleAvatar(5)}
                 alt=""
-                className={selAvatar === 5 ? `selected avatar5` : `avatar5`}
+                className={
+                  selAvatar === 5
+                    ? `selected avatar6 avatar-opt`
+                    : `avatar-opt avatar6`
+                }
               />
-              <img
+              <LazyLoadImage
+                effect="blur"
                 src={Avatar6}
                 onClick={() => handleAvatar(6)}
                 alt=""
-                className={selAvatar === 6 ? `selected avatar6` : `avatar6`}
+                className={
+                  selAvatar === 6
+                    ? `selected avatar6 avatar-opt`
+                    : `avatar-opt avatar6`
+                }
               />
-              <img
+              <LazyLoadImage
+                effect="blur"
                 src={Avatar7}
                 onClick={() => handleAvatar(7)}
                 alt=""
-                className={selAvatar === 7 ? `selected avatar7` : `avatar7`}
+                className={
+                  selAvatar === 7
+                    ? `selected avatar7 avatar-opt`
+                    : `avatar-opt avatar7`
+                }
               />
-              <img
+              <LazyLoadImage
+                effect="blur"
                 src={Avatar8}
                 onClick={() => handleAvatar(8)}
                 alt=""
-                className={selAvatar === 8 ? `selected avatar8` : `avatar8`}
+                className={
+                  selAvatar === 8
+                    ? `selected avatar8 avatar-opt`
+                    : `avatar-opt avatar8`
+                }
               />
-              <img
+              <LazyLoadImage
+                effect="blur"
                 src={Avatar9}
                 onClick={() => handleAvatar(9)}
                 alt=""
-                className={selAvatar === 9 ? `selected avatar9` : `avatar9`}
+                className={
+                  selAvatar === 9
+                    ? `selected avatar9 avatar-opt`
+                    : `avatar-opt avatar9`
+                }
               />
-              <img
+              <LazyLoadImage
+                effect="blur"
                 src={Avatar10}
                 onClick={() => handleAvatar(10)}
                 alt=""
-                className={selAvatar === 10 ? `selected avatar10` : `avatar10`}
+                className={
+                  selAvatar === 10
+                    ? `selected avatar10 avatar-opt`
+                    : `avatar-opt avatar10`
+                }
               />
-              <img
+              <LazyLoadImage
+                effect="blur"
                 src={Avatar11}
                 onClick={() => handleAvatar(11)}
                 alt=""
-                className={selAvatar === 11 ? `selected avatar11` : `avatar11`}
+                className={
+                  selAvatar === 11
+                    ? `selected avatar11 avatar-opt`
+                    : `avatar-opt avatar11`
+                }
               />
-              <img
+              <LazyLoadImage
+                effect="blur"
                 src={Avatar12}
                 onClick={() => handleAvatar(12)}
                 alt=""
-                className={selAvatar === 12 ? `selected avatar12` : `avatar12`}
+                className={
+                  selAvatar === 12
+                    ? `selected avatar12 avatar-opt`
+                    : `avatar-opt avatar12`
+                }
               />
-              <img
+              <LazyLoadImage
+                effect="blur"
                 src={Avatar13}
                 onClick={() => handleAvatar(13)}
                 alt=""
-                className={selAvatar === 13 ? `selected avatar13` : `avatar13`}
+                className={
+                  selAvatar === 13
+                    ? `selected avatar13 avatar-opt`
+                    : `avatar-opt avatar13`
+                }
               />
-              <img
+              <LazyLoadImage
+                effect="blur"
                 src={Avatar14}
                 onClick={() => handleAvatar(14)}
                 alt=""
-                className={selAvatar === 14 ? `selected avatar14` : `avatar14`}
+                className={
+                  selAvatar === 14
+                    ? `selected avatar14 avatar-opt`
+                    : `avatar-opt avatar14`
+                }
               />
-              <img
+              <LazyLoadImage
+                effect="blur"
                 src={Avatar15}
                 onClick={() => handleAvatar(15)}
                 alt=""
-                className={selAvatar === 15 ? `selected avatar15` : `avatar15`}
+                className={
+                  selAvatar === 15
+                    ? `selected avatar15 avatar-opt`
+                    : `avatar-opt avatar15`
+                }
               />
-              <img
+              <LazyLoadImage
+                effect="blur"
                 src={Avatar16}
                 onClick={() => handleAvatar(16)}
                 alt=""
-                className={selAvatar === 16 ? `selected avatar16` : `avatar16`}
+                className={
+                  selAvatar === 16
+                    ? `selected avatar16 avatar-opt`
+                    : `avatar-opt avatar16`
+                }
               />
-              <img
+              <LazyLoadImage
+                effect="blur"
                 src={Avatar17}
                 onClick={() => handleAvatar(17)}
                 alt=""
-                className={selAvatar === 17 ? `selected avatar17` : `avatar17`}
+                className={
+                  selAvatar === 17
+                    ? `selected avatar17 avatar-opt`
+                    : `avatar-opt avatar17`
+                }
               />
-              <img
+              <LazyLoadImage
+                effect="blur"
                 src={Avatar18}
                 onClick={() => handleAvatar(18)}
                 alt=""
-                className={selAvatar === 18 ? `selected avatar18` : `avatar18`}
+                className={
+                  selAvatar === 18
+                    ? `selected avatar18 avatar-opt`
+                    : `avatar-opt avatar18`
+                }
               />
-              <img
+              <LazyLoadImage
+                effect="blur"
                 src={Avatar19}
                 onClick={() => handleAvatar(19)}
                 alt=""
-                className={selAvatar === 19 ? `selected avatar19` : `avatar19`}
+                className={
+                  selAvatar === 19
+                    ? `selected avatar19 avatar-opt`
+                    : `avatar-opt avatar19`
+                }
               />
-              <img
+              <LazyLoadImage
+                effect="blur"
                 src={Avatar20}
                 onClick={() => handleAvatar(20)}
                 alt=""
-                className={selAvatar === 20 ? `selected avatar20` : `avatar20`}
+                className={
+                  selAvatar === 20
+                    ? `selected avatar20 avatar-opt`
+                    : `avatar-opt avatar20`
+                }
               />
-              <img
+              <LazyLoadImage
+                effect="blur"
                 src={Avatar21}
                 onClick={() => handleAvatar(21)}
                 alt=""
-                className={selAvatar === 21 ? `selected avatar21` : `avatar21`}
+                className={
+                  selAvatar === 21
+                    ? `selected avatar21 avatar-opt`
+                    : `avatar-opt avatar21`
+                }
               />
-              <img
+              <LazyLoadImage
+                effect="blur"
                 src={Avatar22}
                 onClick={() => handleAvatar(22)}
                 alt=""
-                className={selAvatar === 22 ? `selected avatar22` : `avatar22`}
+                className={
+                  selAvatar === 22
+                    ? `selected avatar22 avatar-opt`
+                    : `avatar-opt avatar22`
+                }
               />
-              <img
+              <LazyLoadImage
+                effect="blur"
                 src={Avatar23}
                 onClick={() => handleAvatar(23)}
                 alt=""
-                className={selAvatar === 23 ? `selected avatar23` : `avatar23`}
+                className={
+                  selAvatar === 23
+                    ? `selected avatar23 avatar-opt`
+                    : `avatar-opt avatar23`
+                }
               />
-              <img
+              <LazyLoadImage
+                effect="blur"
                 src={Avatar24}
                 onClick={() => handleAvatar(24)}
                 alt=""
-                className={selAvatar === 24 ? `selected avatar24` : `avatar24`}
+                className={
+                  selAvatar === 24
+                    ? `selected avatar24 avatar-opt`
+                    : `avatar-opt avatar24`
+                }
               />
             </div>
           </Box>
