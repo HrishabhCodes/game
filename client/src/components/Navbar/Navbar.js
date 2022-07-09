@@ -1,5 +1,6 @@
 import { Box, Modal, Slider, Typography } from "@mui/material";
 import React, { useState, useContext } from "react";
+import { Howl, Howler } from "howler";
 import "./Navbar.css";
 import SocketContext from "../../context/socketContext";
 import { NavLink } from "react-router-dom";
@@ -27,11 +28,36 @@ function valuetext(value) {
 const Navbar = () => {
   const ctx = useContext(SocketContext);
   const [openModal, setOpenModal] = useState(false);
-  const [vol, setVol] = useState(100);
-  const handleOpen = () => setOpenModal(true);
+  const [vol, setVol] = useState(0);
+  const [playing, setPlaying] = useState(false);
+
+  var sound = new Howl({
+    src: [
+      "https://firebasestorage.googleapis.com/v0/b/game-7da42.appspot.com/o/bgmusic.mp3?alt=media&token=a86c4a1b-a09d-4bc4-a60c-9b6287022c3a",
+    ],
+    loop: true,
+    volume: 0.3,
+    html5: true,
+  });
+
+  const handleOpen = () => {
+    if (!playing) {
+      setVol(100);
+      sound.play();
+      setPlaying(true);
+    }
+    setOpenModal(true);
+  };
+
   const handleVolume = (event) => {
     setVol(event.target.value);
+    console.log(vol);
+    Howler.volume(event.target.value / 100);
   };
+
+  // const handleFirst = () => {};
+
+  // console.log(sound);
 
   return (
     <div className="navbar-container">
@@ -89,7 +115,7 @@ const Navbar = () => {
 
             <Slider
               aria-label="Temperature"
-              defaultValue={vol}
+              value={vol}
               getAriaValueText={valuetext}
               onChange={handleVolume}
               sx={{ color: "#1dd6f2;" }}

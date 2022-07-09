@@ -1,15 +1,15 @@
 // import io from "socket.io-client";
-import React, { useState, useEffect } from "react";
-import { storage } from "../firebase";
-import { ref } from "firebase/storage";
+import React, { useState } from "react";
+// import { storage } from "../firebase";
+// import { ref, getDownloadURL } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 // import axios from "axios";
 // const socket = io.connect("http://localhost:4000");
-const avatarRef = ref(storage, `avatars/${2}.png`);
+// const avatarRef = ref(storage, `bgmusic.mp3`);
 // const URL = "";
 // getDownloadURL(avatarRef)
 //   .then((url) => {
-//     URL = url;
+//     console.log(url);
 //   })
 //   .catch((error) => {
 //     console.log(error);
@@ -47,7 +47,6 @@ export const SocketContextProvider = (props) => {
   const [host, setHost] = useState("");
   // const [image, setImage] = useState(URL);
 
-  // console.log(roomId);
   return (
     <SocketContext.Provider
       value={{

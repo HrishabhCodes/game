@@ -1,14 +1,19 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "./Timer.css";
 import SocketContext from "../../context/socketContext";
 
 const Timer = ({ round, word, id, secs, setSecs }) => {
   const ctx = useContext(SocketContext);
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setSecs((prev) => prev - 1);
-  //   }, 1000);
-  // }, [secs]);
+
+  let timer;
+
+  useEffect(() => {
+    timer = setInterval(() => {
+      setSecs((prev) => prev - 1);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [secs]);
+
   if (id !== ctx.id) {
     console.log(word);
     const arr = word.split(" ");

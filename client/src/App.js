@@ -2,7 +2,7 @@ import Play from "./components/PlayPage/Play";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import Navbar from "./components/Navbar/Navbar";
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import Home from "./components/HomePage/Home";
 import Profile from "./components/Profile/Profile";
 import "./App.css";
