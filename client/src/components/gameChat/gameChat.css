@@ -23,6 +23,15 @@
   backdrop-filter: brightness(50%) blur(5px);
 }
 
+.users::-webkit-scrollbar {
+  display: none;
+}
+
+.users {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 .users ul {
   scroll-behavior: smooth;
   overflow: scroll;

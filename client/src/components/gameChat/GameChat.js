@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import "./gameChat.css";
+import "./GameChat.css";
 import Canvas from "../Canvas/Canvas";
 import { Link } from "react-router-dom";
 import { Tooltip, Zoom } from "@mui/material";
@@ -17,12 +17,11 @@ import {
   updateDoc,
 } from "@firebase/firestore";
 import { db } from "../../firebase";
-function GameChat({ showGC }) {
+
+const GameChat = ({ showGC }) => {
   const ctx = useContext(SocketContext);
   const [show, setShow] = useState(false);
   const [showLobby, setShowLobby] = useState(true);
-
-  //check if the user details are entered
 
   const leaveroom = async () => {
     setShow(false);
@@ -38,9 +37,8 @@ function GameChat({ showGC }) {
     await updateDoc(userRef, {
       users: index,
     });
-    // console.log(data.docs[0].data().users);
+
     if (data.docs[0].data().users.length === 1) {
-      console.log("delete room");
       const userDoc = doc(db, "rooms", data.docs[0].id);
       await deleteDoc(userDoc);
     }
@@ -93,5 +91,5 @@ function GameChat({ showGC }) {
       </Link>
     </div>
   );
-}
+};
 export default GameChat;

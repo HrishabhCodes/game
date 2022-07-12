@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState, useContext } from "react";
 import { Typography, Box, Modal } from "@mui/material";
 import { Link } from "react-router-dom";
-import Menu from "./menu";
+import Menu from "./Menu";
 import "./Canvas.css";
-import Chat from "../gameChat/Chat";
-import UserData from "../gameChat/UserData";
+import Chat from "../GameChat/Chat";
+import UserData from "../GameChat/UserData";
 import Timer from "../Timer/Timer";
 import SocketContext from "../../context/socketContext";
 import io from "socket.io-client";
@@ -59,21 +59,23 @@ function Canvas() {
     ctxRef.current = ctx;
   }, [lineColor, lineOpacity, lineWidth]);
 
-  // Function for starting the drawing
   useEffect(() => {
     joinRoom();
   }, []);
 
+  // Function for starting the drawing
   const startDrawing = (e) => {
     ctxRef.current.beginPath();
     ctxRef.current.moveTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
     setIsDrawing(true);
   };
-  // Function for end the drawing
+
+  // Function for ending the drawing
   const endDrawing = () => {
     ctxRef.current.closePath();
     setIsDrawing(false);
   };
+
   // Function for drawing
   const draw = (e) => {
     if (!isDrawing) {
@@ -112,7 +114,6 @@ function Canvas() {
       setRound((prev) => prev + 1);
     }
     if (round === 3 && turn === 0) {
-      console.log("game over");
       setRound("0");
       handleOpen();
       ctx.setStart(false);
@@ -215,7 +216,7 @@ function Canvas() {
             canvas={canvasRef.current}
           />
         </div>
-        <Chat word={word} />
+        <Chat current={current} word={word} />
       </div>
     </div>
   );

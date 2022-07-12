@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
-import "./gameChat.css";
+import "./GameChat.css";
 import UserData from "./UserData";
 import { TextField, Box } from "@mui/material";
 import socketContext from "../../context/socketContext";
-function Lobby({ showLobby, StartGame }) {
+
+const Lobby = ({ showLobby, StartGame }) => {
   const ctx = useContext(socketContext);
   return (
     <div className="joinArea row" style={{ width: "100vw" }}>
@@ -15,7 +16,6 @@ function Lobby({ showLobby, StartGame }) {
         sx={{
           "& > :not(style)": {
             width: "25ch",
-            // backgroundColor: "#edebeb",
           },
         }}
       >
@@ -102,5 +102,5 @@ function Lobby({ showLobby, StartGame }) {
       ) : null}
     </div>
   );
-}
+};
 export default Lobby;

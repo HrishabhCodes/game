@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import "./Home.css";
 import { Link } from "react-router-dom";
-import GameChat from "../gameChat/GameChat";
+import GameChat from "../GameChat/GameChat";
 import SocketContext from "../../context/socketContext";
 import { storage } from "../../firebase";
 import { ref, getDownloadURL } from "firebase/storage";
@@ -11,8 +11,6 @@ import { motion } from "framer-motion";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
-// import { db } from "../../firebase";
-// import { addDoc, collection } from "@firebase/firestore";
 const Home = () => {
   const [showGameChat, setShowGameChat] = useState(false);
   const [URL, setURL] = useState("");

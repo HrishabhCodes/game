@@ -1,4 +1,4 @@
-import { TextField, Box, Modal } from "@mui/material";
+import { Box, Modal } from "@mui/material";
 import React, { useState, useContext, useEffect } from "react";
 import SocketContext from "../../context/socketContext";
 import {
@@ -12,7 +12,7 @@ import {
 } from "@firebase/firestore";
 import { db } from "../../firebase";
 import "./Play.css";
-export default function Modals(props) {
+export default function ModalComp(props) {
   const ctx = useContext(SocketContext);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -44,8 +44,6 @@ export default function Modals(props) {
     }
   };
   const joinRoom = async () => {
-    console.log("Heya!", ctx.name, room);
-
     if (ctx.name !== "" && room !== "") {
       const roomRef = collection(db, "rooms");
       try {

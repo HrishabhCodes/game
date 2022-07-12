@@ -51,13 +51,8 @@ const Navbar = () => {
 
   const handleVolume = (event) => {
     setVol(event.target.value);
-    console.log(vol);
     Howler.volume(event.target.value / 100);
   };
-
-  // const handleFirst = () => {};
-
-  // console.log(sound);
 
   return (
     <div className="navbar-container">

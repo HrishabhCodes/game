@@ -33,7 +33,6 @@ import Avatar24 from "../../assets/avatars/24.png";
 import { motion } from "framer-motion";
 
 const Profile = () => {
-  //const [name, setName] = useState("Blue");
   const ctx = useContext(SocketContext);
   const [open, setOpen] = useState(false);
   const [selAvatar, setSelAvatar] = useState("");
@@ -164,9 +163,7 @@ const Profile = () => {
                 onClick={() => handleAvatar(1)}
                 alt=""
                 className={
-                  selAvatar === 1
-                    ? `selected avatar1 avatar-opt`
-                    : `avatar-opt avatar1`
+                  selAvatar === 1 ? `selected avatar1 avatar` : `avatar avatar1`
                 }
               />
               <LazyLoadImage
@@ -175,9 +172,7 @@ const Profile = () => {
                 onClick={() => handleAvatar(2)}
                 alt=""
                 className={
-                  selAvatar === 2
-                    ? `selected avatar2 avatar-opt`
-                    : `avatar-opt avatar2`
+                  selAvatar === 2 ? `selected avatar2 avatar` : `avatar avatar2`
                 }
               />
               <LazyLoadImage
@@ -186,9 +181,7 @@ const Profile = () => {
                 onClick={() => handleAvatar(3)}
                 alt=""
                 className={
-                  selAvatar === 3
-                    ? `selected avatar3 avatar-opt`
-                    : `avatar-opt avatar3`
+                  selAvatar === 3 ? `selected avatar3 avatar` : `avatar avatar3`
                 }
               />
               <LazyLoadImage
@@ -197,9 +190,7 @@ const Profile = () => {
                 onClick={() => handleAvatar(4)}
                 alt=""
                 className={
-                  selAvatar === 4
-                    ? `selected avatar6 avatar-opt`
-                    : `avatar-opt avatar6`
+                  selAvatar === 4 ? `selected avatar6 avatar` : `avatar avatar6`
                 }
               />
               <LazyLoadImage
@@ -208,9 +199,7 @@ const Profile = () => {
                 onClick={() => handleAvatar(5)}
                 alt=""
                 className={
-                  selAvatar === 5
-                    ? `selected avatar6 avatar-opt`
-                    : `avatar-opt avatar6`
+                  selAvatar === 5 ? `selected avatar6 avatar` : `avatar avatar6`
                 }
               />
               <LazyLoadImage
@@ -219,9 +208,7 @@ const Profile = () => {
                 onClick={() => handleAvatar(6)}
                 alt=""
                 className={
-                  selAvatar === 6
-                    ? `selected avatar6 avatar-opt`
-                    : `avatar-opt avatar6`
+                  selAvatar === 6 ? `selected avatar6 avatar` : `avatar avatar6`
                 }
               />
               <LazyLoadImage
@@ -230,9 +217,7 @@ const Profile = () => {
                 onClick={() => handleAvatar(7)}
                 alt=""
                 className={
-                  selAvatar === 7
-                    ? `selected avatar7 avatar-opt`
-                    : `avatar-opt avatar7`
+                  selAvatar === 7 ? `selected avatar7 avatar` : `avatar avatar7`
                 }
               />
               <LazyLoadImage
@@ -241,9 +226,7 @@ const Profile = () => {
                 onClick={() => handleAvatar(8)}
                 alt=""
                 className={
-                  selAvatar === 8
-                    ? `selected avatar8 avatar-opt`
-                    : `avatar-opt avatar8`
+                  selAvatar === 8 ? `selected avatar8 avatar` : `avatar avatar8`
                 }
               />
               <LazyLoadImage
@@ -252,9 +235,7 @@ const Profile = () => {
                 onClick={() => handleAvatar(9)}
                 alt=""
                 className={
-                  selAvatar === 9
-                    ? `selected avatar9 avatar-opt`
-                    : `avatar-opt avatar9`
+                  selAvatar === 9 ? `selected avatar9 avatar` : `avatar avatar9`
                 }
               />
               <LazyLoadImage
@@ -264,8 +245,8 @@ const Profile = () => {
                 alt=""
                 className={
                   selAvatar === 10
-                    ? `selected avatar10 avatar-opt`
-                    : `avatar-opt avatar10`
+                    ? `selected avatar10 avatar`
+                    : `avatar avatar10`
                 }
               />
               <LazyLoadImage
@@ -275,8 +256,8 @@ const Profile = () => {
                 alt=""
                 className={
                   selAvatar === 11
-                    ? `selected avatar11 avatar-opt`
-                    : `avatar-opt avatar11`
+                    ? `selected avatar11 avatar`
+                    : `avatar avatar11`
                 }
               />
               <LazyLoadImage
@@ -286,8 +267,8 @@ const Profile = () => {
                 alt=""
                 className={
                   selAvatar === 12
-                    ? `selected avatar12 avatar-opt`
-                    : `avatar-opt avatar12`
+                    ? `selected avatar12 avatar`
+                    : `avatar avatar12`
                 }
               />
               <LazyLoadImage
@@ -297,8 +278,8 @@ const Profile = () => {
                 alt=""
                 className={
                   selAvatar === 13
-                    ? `selected avatar13 avatar-opt`
-                    : `avatar-opt avatar13`
+                    ? `selected avatar13 avatar`
+                    : `avatar avatar13`
                 }
               />
               <LazyLoadImage
@@ -308,8 +289,8 @@ const Profile = () => {
                 alt=""
                 className={
                   selAvatar === 14
-                    ? `selected avatar14 avatar-opt`
-                    : `avatar-opt avatar14`
+                    ? `selected avatar14 avatar`
+                    : `avatar avatar14`
                 }
               />
               <LazyLoadImage
@@ -319,8 +300,8 @@ const Profile = () => {
                 alt=""
                 className={
                   selAvatar === 15
-                    ? `selected avatar15 avatar-opt`
-                    : `avatar-opt avatar15`
+                    ? `selected avatar15 avatar`
+                    : `avatar avatar15`
                 }
               />
               <LazyLoadImage
@@ -330,8 +311,8 @@ const Profile = () => {
                 alt=""
                 className={
                   selAvatar === 16
-                    ? `selected avatar16 avatar-opt`
-                    : `avatar-opt avatar16`
+                    ? `selected avatar16 avatar`
+                    : `avatar avatar16`
                 }
               />
               <LazyLoadImage
@@ -341,8 +322,8 @@ const Profile = () => {
                 alt=""
                 className={
                   selAvatar === 17
-                    ? `selected avatar17 avatar-opt`
-                    : `avatar-opt avatar17`
+                    ? `selected avatar17 avatar`
+                    : `avatar avatar17`
                 }
               />
               <LazyLoadImage
@@ -352,8 +333,8 @@ const Profile = () => {
                 alt=""
                 className={
                   selAvatar === 18
-                    ? `selected avatar18 avatar-opt`
-                    : `avatar-opt avatar18`
+                    ? `selected avatar18 avatar`
+                    : `avatar avatar18`
                 }
               />
               <LazyLoadImage
@@ -363,8 +344,8 @@ const Profile = () => {
                 alt=""
                 className={
                   selAvatar === 19
-                    ? `selected avatar19 avatar-opt`
-                    : `avatar-opt avatar19`
+                    ? `selected avatar19 avatar`
+                    : `avatar avatar19`
                 }
               />
               <LazyLoadImage
@@ -374,8 +355,8 @@ const Profile = () => {
                 alt=""
                 className={
                   selAvatar === 20
-                    ? `selected avatar20 avatar-opt`
-                    : `avatar-opt avatar20`
+                    ? `selected avatar20 avatar`
+                    : `avatar avatar20`
                 }
               />
               <LazyLoadImage
@@ -385,8 +366,8 @@ const Profile = () => {
                 alt=""
                 className={
                   selAvatar === 21
-                    ? `selected avatar21 avatar-opt`
-                    : `avatar-opt avatar21`
+                    ? `selected avatar21 avatar`
+                    : `avatar avatar21`
                 }
               />
               <LazyLoadImage
@@ -396,8 +377,8 @@ const Profile = () => {
                 alt=""
                 className={
                   selAvatar === 22
-                    ? `selected avatar22 avatar-opt`
-                    : `avatar-opt avatar22`
+                    ? `selected avatar22 avatar`
+                    : `avatar avatar22`
                 }
               />
               <LazyLoadImage
@@ -407,8 +388,8 @@ const Profile = () => {
                 alt=""
                 className={
                   selAvatar === 23
-                    ? `selected avatar23 avatar-opt`
-                    : `avatar-opt avatar23`
+                    ? `selected avatar23 avatar`
+                    : `avatar avatar23`
                 }
               />
               <LazyLoadImage
@@ -418,8 +399,8 @@ const Profile = () => {
                 alt=""
                 className={
                   selAvatar === 24
-                    ? `selected avatar24 avatar-opt`
-                    : `avatar-opt avatar24`
+                    ? `selected avatar24 avatar`
+                    : `avatar avatar24`
                 }
               />
             </div>

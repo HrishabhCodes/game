@@ -61,16 +61,21 @@
   justify-content: space-evenly;
   flex-wrap: wrap;
   overflow: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-.img-options .avatar-opt {
+.img-options::-webkit-scrollbar {
+  display: none;
+}
+
+.img-options .avatar {
   width: 8rem;
   height: 8rem;
   margin: 1rem 1rem;
-  transition-duration: 300ms;
 }
 
-.img-options .avatar-opt:hover {
+.img-options .avatar:hover {
   transform: scale(1.1);
   cursor: pointer;
 }

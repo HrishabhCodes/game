@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import "./gameChat.css";
+import "./GameChat.css";
 import SocketContext from "../../context/socketContext";
 import { db } from "../../firebase";
 import { collection, where, query, onSnapshot } from "@firebase/firestore";
@@ -15,7 +15,8 @@ const colors1 = [
   "#FF9F45",
   "#F3C5C5",
 ];
-function UserData({ classname, id }) {
+
+const UserData = ({ classname, id }) => {
   const ctx = useContext(SocketContext);
   const [userList, setUserList] = useState([]);
 
@@ -30,7 +31,7 @@ function UserData({ classname, id }) {
       ctx.setStart(snapshot.docs[0].data().start);
     });
   }, [ctx.RoomId]);
-  // console.log(userList);
+
   return (
     <div className={classname}>
       <h2 className="mt-2">Players</h2>
@@ -49,5 +50,5 @@ function UserData({ classname, id }) {
       </ul>
     </div>
   );
-}
+};
 export default UserData;

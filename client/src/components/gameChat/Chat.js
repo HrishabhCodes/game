@@ -3,7 +3,7 @@ import { TextField, Box, Tooltip, Zoom } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { blue } from "@mui/material/colors";
 import SocketContext from "../../context/socketContext";
-import "./gameChat.css";
+import "./GameChat.css";
 import { db } from "../../firebase";
 import {
   collection,
@@ -15,7 +15,8 @@ import {
   onSnapshot,
 } from "@firebase/firestore";
 import ScrollToBottom from "react-scroll-to-bottom";
-function Chat(props) {
+
+const Chat = (props) => {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messagesList, setMessagesList] = useState([]);
   const messagesEndRef = useRef(null);
@@ -24,10 +25,8 @@ function Chat(props) {
   const WORD = props.word;
 
   const sendMessage = async () => {
-    console.log("sendMessage", WORD, currentMessage);
     if (currentMessage.toLowerCase() === WORD.toLowerCase()) {
       ctx.setScore((prev) => prev + (600 - time * 10));
-      console.log(ctx.score);
       const roomRef = collection(db, "rooms");
       const roomQuery = query(roomRef, where("roomId", "==", ctx.RoomId));
       const data = await getDocs(roomQuery);
@@ -40,7 +39,6 @@ function Chat(props) {
         ],
       });
     } else {
-      // Sending custom message to server
       const roomRef = collection(db, "rooms");
       const roomQuery = query(roomRef, where("roomId", "==", ctx.RoomId));
       const data = await getDocs(roomQuery);
@@ -65,14 +63,8 @@ function Chat(props) {
     setTimeout(() => {
       test();
     }, 1000);
-
-    // return () => {
-    //   clearInterval(id);
-    //   console.log("return", ctx.turn);
-    // };
   }, [time]);
 
-  //update the message list when the server sends a message
   useEffect(() => {
     const roomRef = collection(db, "rooms");
     const roomQuery = query(roomRef, where("roomId", "==", ctx.RoomId));
@@ -116,6 +108,7 @@ function Chat(props) {
           }}
         >
           <TextField
+            disabled={props.current === ctx.id ? true : false}
             id="standard-basic"
             className="col-12"
             label="Message"
@@ -147,5 +140,5 @@ function Chat(props) {
       </div>
     </div>
   );
-}
+};
 export default Chat;

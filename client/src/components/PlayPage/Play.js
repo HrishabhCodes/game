@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import GameChat from "../gameChat/GameChat";
-import Modals from "./Modal";
+import GameChat from "../GameChat/GameChat";
+import ModalComp from "./Modal";
 import { motion } from "framer-motion";
 import Guess from "../../assets/guess.png";
 import Coming from "../../assets/coming-soon.png";
@@ -49,8 +49,8 @@ const Play = () => {
               <div className="modes-title">Grand Reveal</div>
             </div>
           </div>
-          <Modals setShowGameChat={setShowGameChat} btn="create" />
-          <Modals setShowGameChat={setShowGameChat} btn="search" />
+          <ModalComp setShowGameChat={setShowGameChat} btn="create" />
+          <ModalComp setShowGameChat={setShowGameChat} btn="search" />
         </div>
       ) : (
         <GameChat showGC={setShowGameChat} />

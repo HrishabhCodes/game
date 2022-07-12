@@ -4,7 +4,6 @@ import SocketContext from "../../context/socketContext";
 
 const Timer = ({ round, word, id, secs, setSecs }) => {
   const ctx = useContext(SocketContext);
-
   let timer;
 
   useEffect(() => {
@@ -15,7 +14,6 @@ const Timer = ({ round, word, id, secs, setSecs }) => {
   }, [secs]);
 
   if (id !== ctx.id) {
-    console.log(word);
     const arr = word.split(" ");
     let charCounter = 0;
     let temp = "";
@@ -24,7 +22,6 @@ const Timer = ({ round, word, id, secs, setSecs }) => {
       charCounter += arr[i].length;
     }
     word = `${temp}(${charCounter})`;
-    console.log(word);
   }
 
   return (

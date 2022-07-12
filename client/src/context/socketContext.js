@@ -1,21 +1,9 @@
 import React, { useState } from "react";
-// import { storage } from "../firebase";
-// import { ref, getDownloadURL } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 let firstName = `Player${Math.floor(Math.random() * 10000)}`;
 if (firstName.length < 4) {
   firstName = "0".repeat(4 - firstName.length) + firstName;
 }
-
-// const avatarRef = ref(storage, `bgmusic.mp3`);
-// const URL = "";
-// getDownloadURL(avatarRef)
-//   .then((url) => {
-//     console.log(url);
-//   })
-//   .catch((error) => {
-//     console.log(error);
-//   });
 
 const SocketContext = React.createContext({
   name: "",
@@ -40,7 +28,6 @@ const uuid = uuidv4();
 export const SocketContextProvider = (props) => {
   const [name, setName] = useState(localStorage.getItem("name") || firstName);
   const [roomId, setRoomId] = useState("");
-  // const [users, setUsers] = useState([]);
   const [start, setStart] = useState(false);
   const [user, setUser] = useState([]);
   const [turn, setTurn] = useState(0);
