@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState, useContext } from "react";
 import { Typography, Box, Modal } from "@mui/material";
 import { Link } from "react-router-dom";
-import Menu from "./Menu";
+import Menu from "./menu";
 import "./Canvas.css";
-import Chat from "../GameChat/Chat";
-import UserData from "../GameChat/UserData";
+import Chat from "../Gameplay/Chat";
+import UserData from "../Gameplay/UserData";
 import Timer from "../Timer/Timer";
 import SocketContext from "../../context/socketContext";
 import io from "socket.io-client";

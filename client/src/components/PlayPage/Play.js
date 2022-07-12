@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import GameChat from "../GameChat/GameChat";
+import GameChat from "../Gameplay/Gamechat";
 import ModalComp from "./Modal";
 import { motion } from "framer-motion";
 import Guess from "../../assets/guess.png";

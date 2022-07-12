@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import "./Home.css";
 import { Link } from "react-router-dom";
-import GameChat from "../GameChat/GameChat";
+import GameChat from "../Gameplay/Gamechat";
 import SocketContext from "../../context/socketContext";
 import Logo from "../../assets/logo_doodle.png";
 import { motion } from "framer-motion";

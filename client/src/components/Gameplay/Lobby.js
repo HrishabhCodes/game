@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import "./GameChat.css";
+import "./Gamechat.css";
 import UserData from "./UserData";
 import { TextField, Box } from "@mui/material";
 import socketContext from "../../context/socketContext";

@@ -3,7 +3,7 @@ import { TextField, Box, Tooltip, Zoom } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { blue } from "@mui/material/colors";
 import SocketContext from "../../context/socketContext";
-import "./GameChat.css";
+import "./Gamechat.css";
 import { db } from "../../firebase";
 import {
   collection,
