@@ -65,10 +65,6 @@
   scrollbar-width: none;
 }
 
-.img-options::-webkit-scrollbar {
-  display: none;
-}
-
 .img-options .avatar {
   width: 8rem;
   height: 8rem;

@@ -22,8 +22,9 @@ const style = {
   p: 4,
 };
 
-function Canvas() {
+const Canvas = () => {
   const ctx = useContext(SocketContext);
+  const [seconds, setSeconds] = useState(0);
   const canvasRef = useRef(null);
   const ctxRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -35,7 +36,7 @@ function Canvas() {
   const [word, setWord] = useState("");
   const [round, setRound] = useState(0);
   const [open, setOpen] = useState(false);
-  const [secs, setSecs] = useState(0);
+  const [guessed, setGuessed] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -44,6 +45,31 @@ function Canvas() {
       socket.emit("join_room", ctx.RoomId);
     }
   };
+
+  useEffect(() => {
+    joinRoom();
+    const day = new Date();
+    ctx.setInitialTime(day.getSeconds());
+  }, []);
+
+  let time;
+  useEffect(() => {
+    const day = new Date();
+    let s;
+    time = setInterval(() => {
+      const realSecs = day.getSeconds();
+      s = realSecs + (60 - ctx.initialTime);
+      if (realSecs >= ctx.initialTime) {
+        setSeconds(s - 60);
+      } else {
+        setSeconds(s);
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(time);
+    };
+  }, [seconds]);
 
   // Initialization when the component
   // mounts for the first time
@@ -58,10 +84,6 @@ function Canvas() {
     ctx.lineWidth = lineWidth;
     ctxRef.current = ctx;
   }, [lineColor, lineOpacity, lineWidth]);
-
-  useEffect(() => {
-    joinRoom();
-  }, []);
 
   // Function for starting the drawing
   const startDrawing = (e) => {
@@ -82,7 +104,6 @@ function Canvas() {
       return;
     }
     ctxRef.current.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
-
     ctxRef.current.stroke();
   };
 
@@ -97,13 +118,13 @@ function Canvas() {
     } else {
       setTurn(0);
     }
+    setGuessed(false);
 
     setCurrent(ctx.user[turn].id);
-    setSecs(60);
     if (ctx.host === true) {
-      const Word = words[Math.floor(Math.random() * words.length)];
+      const WORD = words[Math.floor(Math.random() * words.length)];
       setTimeout(() => {
-        socket.emit("word", { Word, room: ctx.RoomId });
+        socket.emit("word", { WORD, room: ctx.RoomId });
       }, 1100);
     }
     if (turn === 0 && round < 3 && round !== "0") {
@@ -118,7 +139,7 @@ function Canvas() {
       handleOpen();
       ctx.setStart(false);
     }
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i <= 10; i++) {
       setTimeout(() => {
         ctxRef.current.clearRect(
           0,
@@ -132,7 +153,7 @@ function Canvas() {
 
   useEffect(() => {
     socket.on("receive_word", (data) => {
-      setWord(data.Word);
+      setWord(data.WORD);
     });
 
     socket.on("draw_image", (data) => {
@@ -195,13 +216,7 @@ function Canvas() {
             onTouchStart={startDrawing}
             onMouseDown={startDrawing}
           >
-            <Timer
-              round={round}
-              word={word}
-              id={current}
-              secs={secs}
-              setSecs={setSecs}
-            />
+            <Timer round={round} word={word} id={current} secs={seconds} />
             <canvas
               ref={canvasRef}
               width={window.innerWidth * 0.582}
@@ -216,9 +231,15 @@ function Canvas() {
             canvas={canvasRef.current}
           />
         </div>
-        <Chat current={current} word={word} />
+        <Chat
+          guessed={guessed}
+          setGuessed={setGuessed}
+          time={seconds}
+          current={current}
+          word={word}
+        />
       </div>
     </div>
   );
-}
+};
 export default Canvas;

@@ -1,17 +1,9 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import "./Timer.css";
 import SocketContext from "../../context/socketContext";
 
-const Timer = ({ round, word, id, secs, setSecs }) => {
+const Timer = ({ round, word, id, secs }) => {
   const ctx = useContext(SocketContext);
-  let timer;
-
-  useEffect(() => {
-    timer = setInterval(() => {
-      setSecs((prev) => prev - 1);
-    }, 1000);
-    return () => clearInterval(timer);
-  }, [secs]);
 
   if (id !== ctx.id) {
     const arr = word.split(" ");
@@ -28,7 +20,7 @@ const Timer = ({ round, word, id, secs, setSecs }) => {
     <React.Fragment>
       <div className="round text-center fs-4 text">{round}/3</div>
       <div className="drawingObj text-center fs-4 text">{word}</div>
-      <div className="timer text-center fs-4 text">{secs}</div>
+      <div className="timer text-center fs-4 text">{60 - secs}</div>
     </React.Fragment>
   );
 };

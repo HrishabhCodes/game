@@ -18,14 +18,12 @@ const colors1 = [
 
 const UserData = ({ classname, id }) => {
   const ctx = useContext(SocketContext);
-  const [userList, setUserList] = useState([]);
 
   useEffect(() => {
     const roomRef = collection(db, "rooms");
     const roomQuery = query(roomRef, where("roomId", "==", ctx.RoomId));
     onSnapshot(roomQuery, (snapshot) => {
       snapshot.forEach((doc) => {
-        setUserList(doc.data().users);
         ctx.setUser(doc.data().users);
       });
       ctx.setStart(snapshot.docs[0].data().start);
@@ -37,14 +35,14 @@ const UserData = ({ classname, id }) => {
       <h2 className="mt-2">Players</h2>
       <h5>Room ID: {ctx.RoomId}</h5>
       <ul className="users-list p-0">
-        {userList.map((Data, index) => (
+        {ctx.user.map((data, index) => (
           <li
             className="userData col-11 m-1 me-2 mb-2 d-flex justify-content-between align-items-center"
             style={{ backgroundColor: colors1[index], color: "black" }}
             key={index}
           >
-            <div className="fw-bold ms-2">{Data.name}</div>
-            {Data.id === id ? <div className="fs-3 me-2">✎</div> : <></>}
+            <div className="fw-bold ms-2">{data.name}</div>
+            {data.id === id ? <div className="fs-3 me-2">✎</div> : <></>}
           </li>
         ))}
       </ul>

@@ -23,7 +23,10 @@ const SocketContext = React.createContext({
   setScore: () => {},
   avatar: 1,
   setAvatar: () => {},
+  initialTime: 0,
+  setInitialTime: () => {},
 });
+
 const uuid = uuidv4();
 export const SocketContextProvider = (props) => {
   const [name, setName] = useState(localStorage.getItem("name") || firstName);
@@ -34,6 +37,7 @@ export const SocketContextProvider = (props) => {
   const [score, setScore] = useState(0);
   const [host, setHost] = useState("");
   const [avatar, setAvatar] = useState(localStorage.getItem("avatar") || 1);
+  const [initialTime, setInitialTime] = useState(0);
 
   return (
     <SocketContext.Provider
@@ -55,6 +59,8 @@ export const SocketContextProvider = (props) => {
         setScore: setScore,
         avatar: avatar,
         setAvatar: setAvatar,
+        initialTime: initialTime,
+        setInitialTime: setInitialTime,
       }}
     >
       {props.children}

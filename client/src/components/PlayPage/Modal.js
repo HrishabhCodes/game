@@ -36,11 +36,6 @@ export default function ModalComp(props) {
         messages: [],
         start: false,
       });
-      const wordsRef = collection(db, "words");
-      await addDoc(wordsRef, {
-        roomId: ctx.RoomId,
-        words: "",
-      });
     }
   };
   const joinRoom = async () => {

@@ -21,49 +21,34 @@ const Chat = (props) => {
   const [messagesList, setMessagesList] = useState([]);
   const messagesEndRef = useRef(null);
   const ctx = useContext(SocketContext);
-  const [time, setTime] = useState(0);
   const WORD = props.word;
+
+  const addMessage = async (message) => {
+    const roomRef = collection(db, "rooms");
+    const roomQuery = query(roomRef, where("roomId", "==", ctx.RoomId));
+    const data = await getDocs(roomQuery);
+    const userRef = doc(db, "rooms", data.docs[0].id);
+
+    await updateDoc(userRef, {
+      messages: [
+        ...data.docs[0].data().messages,
+        { username: ctx.name, message: message },
+      ],
+    });
+  };
 
   const sendMessage = async () => {
     if (currentMessage.toLowerCase() === WORD.toLowerCase()) {
-      ctx.setScore((prev) => prev + (600 - time * 10));
-      const roomRef = collection(db, "rooms");
-      const roomQuery = query(roomRef, where("roomId", "==", ctx.RoomId));
-      const data = await getDocs(roomQuery);
-      const userRef = doc(db, "rooms", data.docs[0].id);
-
-      await updateDoc(userRef, {
-        messages: [
-          ...data.docs[0].data().messages,
-          { username: ctx.name, message: "Guessed the word! 🎉🎉" },
-        ],
-      });
+      setTimeout(() => {
+        ctx.setScore((prev) => prev + (600 - props.time * 10));
+      }, 200);
+      addMessage("Guessed the word! 🎉🎉");
+      props.setGuessed(true);
     } else {
-      const roomRef = collection(db, "rooms");
-      const roomQuery = query(roomRef, where("roomId", "==", ctx.RoomId));
-      const data = await getDocs(roomQuery);
-      const userRef = doc(db, "rooms", data.docs[0].id);
-
-      await updateDoc(userRef, {
-        messages: [
-          ...data.docs[0].data().messages,
-          { username: ctx.name, message: currentMessage },
-        ],
-      });
+      addMessage(currentMessage);
     }
-
     setCurrentMessage("");
   };
-
-  useEffect(() => {
-    const test = () => {
-      setTime((prev) => prev + 1);
-    };
-
-    setTimeout(() => {
-      test();
-    }, 1000);
-  }, [time]);
 
   useEffect(() => {
     const roomRef = collection(db, "rooms");
@@ -108,7 +93,7 @@ const Chat = (props) => {
           }}
         >
           <TextField
-            disabled={props.current === ctx.id ? true : false}
+            disabled={props.current === ctx.id || props.guessed ? true : false}
             id="standard-basic"
             className="col-12"
             label="Message"

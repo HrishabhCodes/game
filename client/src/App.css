@@ -5,6 +5,10 @@
   padding: 0px;
 }
 
+*::-webkit-scrollbar {
+  display: none;
+}
+
 body {
   font-family: "Exo", sans-serif;
 }
