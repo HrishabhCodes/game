@@ -4,6 +4,8 @@
 
 Doodlesy is a free multiplayer game where you can flaunt your drawing skills. Currently, there is one mode available to play, “Guess It”. It is a drawing and guessing mode. There are multiple rounds in each game. In every round, a word is drawn by one of the players while others try to guess what the word is. Players get points according to the time they take to guess the word. There will be 2 more modes coming out in the near future.
 
+**Note:** The game is only compatible with Google Chrome for now.
+
 # Tools and Libraries Used
 
 - ReactJS
