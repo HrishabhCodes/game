@@ -49,10 +49,21 @@ const GameChat = ({ showGC }) => {
     setShow(true);
   };
 
+  const reload = (e) => {
+    e.preventDefault();
+    leaveroom();
+    return (e.returnValue = "Are you sure you want to exit?");
+  };
+
   useEffect(() => {
     if (ctx.start === true) {
       startGame();
+      window.addEventListener("beforeunload", reload);
     }
+
+    return () => {
+      window.removeEventListener("beforeunload", reload);
+    };
   }, [ctx.start]);
 
   const Game = async () => {

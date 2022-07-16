@@ -31,16 +31,15 @@ const Navbar = () => {
   const [vol, setVol] = useState(0);
   const [playing, setPlaying] = useState(false);
 
-  var sound = new Howl({
-    src: [
-      "https://firebasestorage.googleapis.com/v0/b/game-7da42.appspot.com/o/bgmusic.mp3?alt=media&token=a86c4a1b-a09d-4bc4-a60c-9b6287022c3a",
-    ],
-    loop: true,
-    volume: 0.3,
-    html5: true,
-  });
-
   const handleOpen = () => {
+    var sound = new Howl({
+      src: [
+        "https://firebasestorage.googleapis.com/v0/b/game-7da42.appspot.com/o/bg-music.mp3?alt=media&token=2a992f7d-214c-4cf7-8ca6-695f3b7ae3bd",
+      ],
+      loop: true,
+      volume: 0.3,
+      html5: true,
+    });
     if (!playing) {
       setVol(100);
       sound.play();
