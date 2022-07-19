@@ -194,8 +194,13 @@ const Canvas = () => {
       >
         <Box sx={style}>
           {round === "0" && <div className="fs-1 fw-bold">Game Over</div>}
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Your score: {ctx.score}
+          <Typography
+            style={{ fontWeight: "900" }}
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+          >
+            Round {round}
           </Typography>
           {round === "0" && (
             <Link to="/" className="create-game">

@@ -39,9 +39,22 @@ const Chat = (props) => {
 
   const sendMessage = async () => {
     if (currentMessage.toLowerCase() === WORD.toLowerCase()) {
-      setTimeout(() => {
-        ctx.setScore((prev) => prev + (600 - props.time * 10));
-      }, 200);
+      const roomRef = collection(db, "rooms");
+      const roomQuery = query(roomRef, where("roomId", "==", ctx.RoomId));
+      const data = await getDocs(roomQuery);
+      const userRef = doc(db, "rooms", data.docs[0].id);
+      let userList = data.docs[0].data().users;
+
+      userList.forEach((user) => {
+        if (user.id === ctx.id) {
+          user.score += 600 - props.time * 10;
+        }
+      });
+
+      await updateDoc(userRef, {
+        users: userList,
+      });
+      ctx.setScore((prev) => prev + (600 - props.time * 10));
       addMessage("Guessed the word! 🎉🎉");
       props.setGuessed(true);
     } else {

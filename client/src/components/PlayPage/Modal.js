@@ -32,7 +32,7 @@ export default function ModalComp(props) {
       ctx.setHost(true);
       await addDoc(roomRef, {
         roomId: ctx.RoomId,
-        users: [{ name: ctx.name, avatar: ctx.avatar, id: ctx.id }],
+        users: [{ name: ctx.name, avatar: ctx.avatar, id: ctx.id, score: 0 }],
         messages: [],
         start: false,
       });
@@ -50,7 +50,7 @@ export default function ModalComp(props) {
           await updateDoc(userRef, {
             users: [
               ...data.docs[0].data().users,
-              { name: ctx.name, avatar: ctx.avatar, id: ctx.id },
+              { name: ctx.name, avatar: ctx.avatar, id: ctx.id, score: 0 },
             ],
           });
           ctx.setRoom(room);

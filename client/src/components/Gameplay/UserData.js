@@ -1,8 +1,14 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import "./Gamechat.css";
 import SocketContext from "../../context/socketContext";
 import { db } from "../../firebase";
-import { collection, where, query, onSnapshot } from "@firebase/firestore";
+import {
+  collection,
+  where,
+  query,
+  onSnapshot,
+  getDocs,
+} from "@firebase/firestore";
 const colors1 = [
   "#9ADCFF",
   "#FFF89A",
@@ -30,19 +36,31 @@ const UserData = ({ classname, id }) => {
     });
   }, [ctx.RoomId]);
 
+  useEffect(async () => {
+    const roomRef = collection(db, "rooms");
+    const roomQuery = query(roomRef, where("roomId", "==", ctx.RoomId));
+    const data = await getDocs(roomQuery);
+    ctx.setUser(data.docs[0].data().users);
+  }, [ctx.score]);
+
   return (
     <div className={classname}>
-      <h2 className="mt-2">Players</h2>
-      <h5>Room ID: {ctx.RoomId}</h5>
+      <h2 className="players-heading">Players</h2>
+      <h5 className="room-id">Room ID: {ctx.RoomId}</h5>
       <ul className="users-list p-0">
         {ctx.user.map((data, index) => (
           <li
-            className="userData col-11 m-1 me-2 mb-2 d-flex justify-content-between align-items-center"
+            className="user-data"
             style={{ backgroundColor: colors1[index], color: "black" }}
             key={index}
           >
-            <div className="fw-bold ms-2">{data.name}</div>
-            {data.id === id ? <div className="fs-3 me-2">✎</div> : <></>}
+            <div className="name-container">
+              <div className="name fw-bold">{data.name}</div>
+              {ctx.start ? (
+                <div className="score">Points: {data.score}</div>
+              ) : null}
+            </div>
+            {data.id === id ? <div className="pencil">✎</div> : <></>}
           </li>
         ))}
       </ul>

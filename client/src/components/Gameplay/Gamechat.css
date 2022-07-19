@@ -15,25 +15,57 @@
   display: flex;
 }
 
+.room-id {
+  font-size: 15px;
+}
+
+.players-heading {
+  font-size: 22px;
+}
+
 .users {
-  scroll-behavior: smooth;
   overflow: scroll;
   color: rgb(255, 255, 255);
-  height: 100vh;
+  height: 90vh;
   backdrop-filter: brightness(50%) blur(5px);
 }
 
 .users ul {
   scroll-behavior: smooth;
   overflow: scroll;
-  height: 750px;
+  height: 670px;
 }
 
-.userData {
-  display: block;
-  height: 35px;
-  text-indent: 5px;
+.user-data {
+  height: 34px;
+  display: flex;
+  justify-content: space-between;
   border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.pencil {
+  height: 100%;
+  font-size: 23px;
+  margin-right: 0.6rem;
+}
+
+.name-container {
+  height: 100%;
+  margin-left: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.name {
+  font-size: 13px;
+}
+
+.score {
+  font-size: 10px;
+  margin-top: -2px;
 }
 
 .leaveButton {
@@ -74,9 +106,6 @@
     #86056a 51%,
     #da22ff 100%
   );
-}
-
-.start-game {
   margin: 10px;
   padding: 15px 45px;
   text-align: center;
@@ -87,6 +116,7 @@
   box-shadow: 0 0 20px rgb(0, 0, 0);
   border-radius: 10px;
   display: block;
+  border: none;
 }
 
 .start-game:hover {
