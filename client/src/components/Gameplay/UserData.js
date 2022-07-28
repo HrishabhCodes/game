@@ -36,13 +36,6 @@ const UserData = ({ classname, id }) => {
     });
   }, [ctx.RoomId]);
 
-  useEffect(async () => {
-    const roomRef = collection(db, "rooms");
-    const roomQuery = query(roomRef, where("roomId", "==", ctx.RoomId));
-    const data = await getDocs(roomQuery);
-    ctx.setUser(data.docs[0].data().users);
-  }, [ctx.score]);
-
   return (
     <div className={classname}>
       <h2 className="players-heading">Players</h2>

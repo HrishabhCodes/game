@@ -33,14 +33,12 @@ const Home = () => {
         {!showGameChat ? (
           <div className="user-cont">
             <Link to="/profile" className="user-info">
-              <div className="user-img-cont">
-                <LazyLoadImage
-                  effect="blur"
-                  className="user-img"
-                  src={`avatars/${avatar}.png`}
-                  alt="avatar"
-                />
-              </div>
+              <LazyLoadImage
+                effect="blur"
+                className="user-img"
+                src={`avatars/${avatar}.png`}
+                alt="avatar"
+              />
               <div className="username">{ctx.name}</div>
             </Link>
             <div className="quick-play-cont">

@@ -24,7 +24,7 @@ const style = {
 
 const Canvas = () => {
   const ctx = useContext(SocketContext);
-  const [seconds, setSeconds] = useState(0);
+  const [seconds, setSeconds] = useState(60);
   const canvasRef = useRef(null);
   const ctxRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -54,25 +54,27 @@ const Canvas = () => {
 
   let time;
   useEffect(() => {
-    const day = new Date();
-    let s;
-    time = setInterval(() => {
-      const realSecs = day.getSeconds();
-      s = realSecs + (60 - ctx.initialTime);
-      if (realSecs >= ctx.initialTime) {
-        setSeconds(s - 60);
-      } else {
-        setSeconds(s);
-      }
-    }, 1000);
+    if (round === "3") {
+      setSeconds(0);
+    } else {
+      const day = new Date();
+      let s;
+      time = setInterval(() => {
+        const realSecs = day.getSeconds();
+        s = realSecs + (60 - ctx.initialTime);
+        if (realSecs >= ctx.initialTime) {
+          setSeconds(s - 60);
+        } else {
+          setSeconds(s);
+        }
+      }, 1000);
+    }
 
     return () => {
       clearInterval(time);
     };
   }, [seconds]);
 
-  // Initialization when the component
-  // mounts for the first time
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -92,12 +94,6 @@ const Canvas = () => {
     setIsDrawing(true);
   };
 
-  // Function for ending the drawing
-  const endDrawing = () => {
-    ctxRef.current.closePath();
-    setIsDrawing(false);
-  };
-
   // Function for drawing
   const draw = (e) => {
     if (!isDrawing) {
@@ -106,6 +102,19 @@ const Canvas = () => {
     ctxRef.current.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
     ctxRef.current.stroke();
   };
+
+  // Function for ending the drawing
+  const endDrawing = () => {
+    ctxRef.current.closePath();
+    setIsDrawing(false);
+  };
+
+  if (ctx.id === current) {
+    setTimeout(() => {
+      var imageData = canvasRef.current.toDataURL("image/png");
+      socket.emit("image", { image_data: imageData, room: ctx.RoomId });
+    }, 100);
+  }
 
   const timeOut = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -120,25 +129,28 @@ const Canvas = () => {
     }
     setGuessed(false);
 
+    if (round === 3 && turn === 0) {
+      setRound("3");
+      handleOpen();
+      ctx.setStart(false);
+    }
+
     setCurrent(ctx.user[turn].id);
-    if (ctx.host === true) {
+    if (ctx.host === true && round !== "3") {
       const WORD = words[Math.floor(Math.random() * words.length)];
       setTimeout(() => {
         socket.emit("word", { WORD, room: ctx.RoomId });
       }, 1100);
     }
-    if (turn === 0 && round < 3 && round !== "0") {
+
+    if (turn === 0 && round < 3 && round !== "3") {
       handleOpen();
       setTimeout(() => {
         handleClose();
       }, 3000);
       setRound((prev) => prev + 1);
     }
-    if (round === 3 && turn === 0) {
-      setRound("0");
-      handleOpen();
-      ctx.setStart(false);
-    }
+
     for (let i = 0; i <= 10; i++) {
       setTimeout(() => {
         ctxRef.current.clearRect(
@@ -166,24 +178,14 @@ const Canvas = () => {
       };
     });
   }, [socket]);
-  if (ctx.id === current) {
-    setTimeout(() => {
-      var base64ImageData = canvasRef.current.toDataURL("image/png");
-      socket.emit("image", { image_data: base64ImageData, room: ctx.RoomId });
-    }, 100);
-  }
 
   useEffect(() => {
-    if (round !== "0") {
-      if (round <= 3 && !(turn === 0 && round === 0)) {
-        setTimeout(() => {
-          gameOver();
-        }, 60000);
-      } else {
+    if (round !== "3") {
+      if (seconds === 60 || seconds === 0) {
         gameOver();
       }
     }
-  }, [turn, round]);
+  }, [seconds]);
 
   return (
     <div className="container-fluid">
@@ -192,24 +194,27 @@ const Canvas = () => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          {round === "0" && <div className="fs-1 fw-bold">Game Over</div>}
-          <Typography
-            style={{ fontWeight: "900" }}
-            id="modal-modal-title"
-            variant="h6"
-            component="h2"
-          >
-            Round {round}
-          </Typography>
-          {round === "0" && (
+        {round === "3" ? (
+          <Box sx={style}>
+            <div className="fs-1 fw-bold">Game Over</div>
             <Link to="/" className="create-game">
               Home
             </Link>
-          )}
-        </Box>
+          </Box>
+        ) : (
+          <Box sx={style}>
+            <Typography
+              style={{ fontWeight: "900" }}
+              id="modal-modal-title"
+              variant="h6"
+              component="h2"
+            >
+              Round {round}
+            </Typography>
+          </Box>
+        )}
       </Modal>
-      <div className="App row " onTouchEnd={endDrawing} onMouseUp={endDrawing}>
+      <div className="App row" onTouchEnd={endDrawing} onMouseUp={endDrawing}>
         <UserData classname={"col-2 users"} id={current} />
         <div
           className="draw-area col-7"

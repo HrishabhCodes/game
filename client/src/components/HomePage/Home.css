@@ -29,10 +29,10 @@ img.vert-move {
 }
 
 .user-cont {
-  height: 80%;
-  width: 27%;
+  height: 460px;
+  width: 300px;
   position: absolute;
-  top: 7rem;
+  top: 9rem;
   right: 7rem;
   display: flex;
   flex-direction: column;
@@ -41,8 +41,8 @@ img.vert-move {
 
 .user-info {
   color: #e9e3e3;
-  width: 75%;
-  height: 60%;
+  height: 400px;
+  width: 300px;
   background-color: #1f84c7;
   display: flex;
   flex-direction: column;
@@ -52,16 +52,12 @@ img.vert-move {
   border-radius: 10px;
 }
 
-.user-img-cont {
-  height: 62%;
-  width: 72%;
-  background-color: #b1d7fa;
-  border-radius: 50%;
+.user-info span.blur {
+  width: 70%;
 }
 
 .user-img {
   width: 100%;
-  height: 100%;
   border-radius: 50%;
   border: 0.1rem solid black;
 }
@@ -79,29 +75,21 @@ img.vert-move {
   font-weight: bold;
 }
 
-.quick-play-cont {
-  width: 75%;
-  height: 40%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-}
-
 .game-info {
-  width: 85%;
-  height: 25%;
+  width: 250px;
+  height: 60px;
   background-color: #2788c9;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  margin-top: 4rem;
   color: #e9e3e3;
   border-radius: 10px;
 }
 
 .play-icon {
   font-size: 2rem;
+  margin-right: 1rem;
 }
 
 .quick-play-cont:hover .play-icon {

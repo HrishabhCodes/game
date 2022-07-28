@@ -77,14 +77,14 @@ const Menu = ({ setLineColor, setLineWidth, setLineOpacity, ctx, canvas }) => {
           }}
         ></i>
 
-        <i
+        {/* <i
           className="m-2 menuButton fa-solid fa-trash-can"
           type="button"
           value="Clear"
-          onClick={(e) => {
+          onClick={async (e) => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
           }}
-        />
+        /> */}
       </div>
 
       <label className="menuSilde">
@@ -93,6 +93,7 @@ const Menu = ({ setLineColor, setLineWidth, setLineOpacity, ctx, canvas }) => {
           <input
             type="range"
             min="3"
+            defaultValue="5"
             max="20"
             onChange={(e) => {
               setLineWidth(e.target.value);
@@ -106,6 +107,7 @@ const Menu = ({ setLineColor, setLineWidth, setLineOpacity, ctx, canvas }) => {
           <input
             type="range"
             min="1"
+            defaultValue="100"
             max="100"
             onChange={(e) => {
               setLineOpacity(e.target.value / 100);
