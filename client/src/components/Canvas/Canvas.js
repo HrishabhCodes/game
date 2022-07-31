@@ -48,32 +48,8 @@ const Canvas = () => {
 
   useEffect(() => {
     joinRoom();
-    const day = new Date();
-    ctx.setInitialTime(day.getSeconds());
+    changeInitialTime();
   }, []);
-
-  let time;
-  useEffect(() => {
-    if (round === "3") {
-      setSeconds(0);
-    } else {
-      const day = new Date();
-      let s;
-      time = setInterval(() => {
-        const realSecs = day.getSeconds();
-        s = realSecs + (60 - ctx.initialTime);
-        if (realSecs >= ctx.initialTime) {
-          setSeconds(s - 60);
-        } else {
-          setSeconds(s);
-        }
-      }, 1000);
-    }
-
-    return () => {
-      clearInterval(time);
-    };
-  }, [seconds]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -87,38 +63,46 @@ const Canvas = () => {
     ctxRef.current = ctx;
   }, [lineColor, lineOpacity, lineWidth]);
 
-  // Function for starting the drawing
-  const startDrawing = (e) => {
-    ctxRef.current.beginPath();
-    ctxRef.current.moveTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
-    setIsDrawing(true);
+  const changeInitialTime = () => {
+    const day = new Date();
+    const millisecs = day.getTime();
+    const secs = Math.floor(millisecs / 1000);
+    ctx.setInitialTime(secs);
   };
 
-  // Function for drawing
-  const draw = (e) => {
-    if (!isDrawing) {
-      return;
+  let time;
+  useEffect(() => {
+    if (round === "3") {
+      setSeconds(0);
+    } else {
+      let s;
+      time = setInterval(() => {
+        const day = new Date();
+        const millisecs = day.getTime();
+        const secs = Math.floor(millisecs / 1000);
+        s = secs - ctx.initialTime;
+        console.log(s, ctx.initialTime);
+        if (s === 60) {
+          changeInitialTime();
+          setSeconds(0);
+        } else {
+          setSeconds(s);
+        }
+      }, 1000);
     }
-    ctxRef.current.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
-    ctxRef.current.stroke();
-  };
 
-  // Function for ending the drawing
-  const endDrawing = () => {
-    ctxRef.current.closePath();
-    setIsDrawing(false);
-  };
+    return () => {
+      clearInterval(time);
+    };
+  }, [seconds]);
 
-  if (ctx.id === current) {
-    setTimeout(() => {
-      var imageData = canvasRef.current.toDataURL("image/png");
-      socket.emit("image", { image_data: imageData, room: ctx.RoomId });
-    }, 100);
-  }
-
-  const timeOut = (ms) => {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  };
+  useEffect(() => {
+    if (round !== "3") {
+      if (seconds === 60 || seconds === 0) {
+        gameOver();
+      }
+    }
+  }, [seconds]);
 
   const gameOver = async () => {
     if (turn < ctx.user.length - 1 && round < 3) {
@@ -163,6 +147,39 @@ const Canvas = () => {
     }
   };
 
+  // Function for starting the drawing
+  const startDrawing = (e) => {
+    ctxRef.current.beginPath();
+    ctxRef.current.moveTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+    setIsDrawing(true);
+  };
+
+  // Function for drawing
+  const draw = (e) => {
+    if (!isDrawing) {
+      return;
+    }
+    ctxRef.current.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+    ctxRef.current.stroke();
+  };
+
+  // Function for ending the drawing
+  const endDrawing = () => {
+    ctxRef.current.closePath();
+    setIsDrawing(false);
+  };
+
+  if (ctx.id === current) {
+    setTimeout(() => {
+      var imageData = canvasRef.current.toDataURL("image/png");
+      socket.emit("image", { image_data: imageData, room: ctx.RoomId });
+    }, 100);
+  }
+
+  const timeOut = (ms) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
+
   useEffect(() => {
     socket.on("receive_word", (data) => {
       setWord(data.WORD);
@@ -178,14 +195,6 @@ const Canvas = () => {
       };
     });
   }, [socket]);
-
-  useEffect(() => {
-    if (round !== "3") {
-      if (seconds === 60 || seconds === 0) {
-        gameOver();
-      }
-    }
-  }, [seconds]);
 
   return (
     <div className="container-fluid">
@@ -247,6 +256,7 @@ const Canvas = () => {
           time={seconds}
           current={current}
           word={word}
+          setSeconds={setSeconds}
         />
       </div>
     </div>

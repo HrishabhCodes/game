@@ -22,6 +22,36 @@ const Chat = (props) => {
   const messagesEndRef = useRef(null);
   const ctx = useContext(SocketContext);
   const WORD = props.word;
+  const correctMessage = "Guessed the word! 🎉🎉";
+
+  useEffect(() => {
+    const roomRef = collection(db, "rooms");
+    const roomQuery = query(roomRef, where("roomId", "==", ctx.RoomId));
+    onSnapshot(roomQuery, (snapshot) => {
+      snapshot.forEach((doc) => {
+        setMessagesList(doc.data().messages);
+      });
+    });
+  }, [ctx.RoomId]);
+
+  useEffect(() => {
+    let count = 0;
+
+    messagesList.forEach((message) => {
+      if (message.message === correctMessage) {
+        count++;
+      }
+    });
+
+    if (count - ctx.totalGuesses === ctx.user.length - 1) {
+      const day = new Date();
+      const millisecs = day.getTime();
+      const secs = Math.floor(millisecs / 1000);
+      ctx.setInitialTime(secs);
+      props.setSeconds(0);
+      ctx.setTotalGuesses(messagesList.length);
+    }
+  }, [messagesList]);
 
   const addMessage = async (message) => {
     const roomRef = collection(db, "rooms");
@@ -38,6 +68,11 @@ const Chat = (props) => {
   };
 
   const sendMessage = async () => {
+    if (currentMessage.toLowerCase() === correctMessage.toLowerCase()) {
+      setCurrentMessage("");
+      return;
+    }
+
     if (currentMessage.toLowerCase() === WORD.toLowerCase()) {
       const roomRef = collection(db, "rooms");
       const roomQuery = query(roomRef, where("roomId", "==", ctx.RoomId));
@@ -62,16 +97,6 @@ const Chat = (props) => {
     }
     setCurrentMessage("");
   };
-
-  useEffect(() => {
-    const roomRef = collection(db, "rooms");
-    const roomQuery = query(roomRef, where("roomId", "==", ctx.RoomId));
-    onSnapshot(roomQuery, (snapshot) => {
-      snapshot.forEach((doc) => {
-        setMessagesList(doc.data().messages);
-      });
-    });
-  }, [ctx.RoomId]);
 
   return (
     <div className="col-3 gameChat">
