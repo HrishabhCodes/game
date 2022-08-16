@@ -1,11 +1,29 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Gamechat.css";
 import UserData from "./UserData";
+import Loading from "../Loading/Loading";
 import { TextField, Box } from "@mui/material";
 import socketContext from "../../context/socketContext";
 
 const Lobby = ({ showLobby, StartGame }) => {
   const ctx = useContext(socketContext);
+  const [loading, setLoading] = useState(true);
+
+  let time;
+  useEffect(() => {
+    time = setInterval(() => {
+      setLoading(false);
+    }, 2000);
+
+    return () => {
+      clearInterval(time);
+    };
+  }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <div className="joinArea row" style={{ width: "100vw" }}>
       <h3 className="p-0" style={{ textIndent: "50px" }}>

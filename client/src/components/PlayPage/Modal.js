@@ -39,6 +39,7 @@ export default function ModalComp(props) {
     }
   };
   const joinRoom = async () => {
+    props.setShowGameChat(true);
     if (ctx.name !== "" && room !== "") {
       const roomRef = collection(db, "rooms");
       try {
@@ -60,7 +61,6 @@ export default function ModalComp(props) {
       } catch (error) {
         console.log(error);
       }
-      props.setShowGameChat(true);
     }
   };
   return (
