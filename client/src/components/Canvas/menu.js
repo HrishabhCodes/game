@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import "./Canvas.css";
+import "../Modes/Canvas.css";
 import Button from "./Button";
+
 const colors1 = [
   "#ffffff",
   "#ff0000",
@@ -13,6 +14,7 @@ const colors1 = [
   "#f752dc",
   "#6b441a",
 ];
+
 const colors2 = [
   "#000000",
   "#ad0303",
@@ -25,6 +27,7 @@ const colors2 = [
   "#fc03d7",
   "#36190a",
 ];
+
 const Menu = ({ setLineColor, setLineWidth, setLineOpacity, ctx, canvas }) => {
   const [inputColor, setInputColor] = useState("#000000");
   return (

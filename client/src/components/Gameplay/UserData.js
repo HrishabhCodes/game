@@ -32,6 +32,7 @@ const UserData = ({ classname, id }) => {
       snapshot.forEach((doc) => {
         ctx.setUser(doc.data().users);
       });
+      ctx.setMode(snapshot.docs[0].data().mode)
       ctx.setStart(snapshot.docs[0].data().start);
     });
   }, [ctx.RoomId]);

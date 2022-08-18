@@ -27,7 +27,16 @@
   transition: 0.3s;
 }
 
+.mode-selected {
+  transform: scale(1.05);
+  border-radius: 10px !important;
+  box-shadow: rgb(0 183 255 / 40%) -5px 5px, rgb(46 162 240 / 30%) -10px 10px,
+    rgb(78 194 234 / 20%) -15px 15px, rgb(126 211 243 / 10%) -20px 20px,
+    rgb(167 215 238 / 5%) -25px 25px;
+}
+
 .modes-card:hover {
+  border-radius: 10px !important;
   cursor: pointer;
   transform: scale(1.05);
 }
@@ -96,6 +105,7 @@
     #da22ff 100%
   );
 }
+
 .create-game {
   margin: 20px;
   padding: 15px 45px;
@@ -103,7 +113,8 @@
   text-transform: uppercase;
   transition: 0.5s;
   background-size: 200% auto;
-  color: white;
+  color: white !important;
+  text-decoration: none !important;
   box-shadow: 0 0 20px rgb(0, 0, 0);
   border-radius: 10px;
   display: block;

@@ -27,6 +27,8 @@ const SocketContext = React.createContext({
   setInitialTime: () => {},
   totalGuesses: 0,
   setTotalGuesses: () => {},
+  mode: 0,
+  setMode: () => {},
 });
 
 const uuid = uuidv4();
@@ -41,6 +43,7 @@ export const SocketContextProvider = (props) => {
   const [avatar, setAvatar] = useState(localStorage.getItem("avatar") || 1);
   const [initialTime, setInitialTime] = useState(0);
   const [totalGuesses, setTotalGuesses] = useState(0);
+  const [mode, setMode] = useState(0);
 
   return (
     <SocketContext.Provider
@@ -66,6 +69,8 @@ export const SocketContextProvider = (props) => {
         setInitialTime: setInitialTime,
         totalGuesses: totalGuesses,
         setTotalGuesses: setTotalGuesses,
+        mode: mode,
+        setMode: setMode,
       }}
     >
       {props.children}

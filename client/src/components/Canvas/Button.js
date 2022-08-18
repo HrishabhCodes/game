@@ -1,5 +1,5 @@
 import React from "react";
-import "./Canvas.css";
+import "../Modes/Canvas.css";
 const Button = (props) => {
   return (
     <span

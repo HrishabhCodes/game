@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import "./Gamechat.css";
-import Canvas from "../Canvas/Canvas";
+import Canvas from "../Modes/GuessIt";
 import { Link } from "react-router-dom";
 import { Tooltip, Zoom } from "@mui/material";
 import Lobby from "./Lobby";
@@ -17,6 +17,7 @@ import {
   updateDoc,
 } from "@firebase/firestore";
 import { db } from "../../firebase";
+import RateIt from "../Modes/RateIt";
 
 const GameChat = ({ showGC }) => {
   const ctx = useContext(SocketContext);
@@ -82,11 +83,13 @@ const GameChat = ({ showGC }) => {
         display: "flex",
       }}
     >
-      {!show ? (
+      {!show ? <Lobby showLobby={showLobby} StartGame={Game} /> : <RateIt />}
+      {/* {!show ? (
         <Lobby showLobby={showLobby} StartGame={Game} />
       ) : (
         <Canvas username={ctx.name} />
-      )}
+      )} */}
+
       <Link to="/">
         <Tooltip
           className="leaveButton"

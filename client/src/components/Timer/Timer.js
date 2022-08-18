@@ -20,7 +20,7 @@ const Timer = ({ round, word, id, secs }) => {
     <React.Fragment>
       <div className="round text-center fs-4 text">{round}/3</div>
       <div className="drawingObj text-center fs-4 text">{word}</div>
-      <div className="timer text-center fs-4 text">{60 - secs}</div>
+      <div className="timer text-center fs-4 text">{secs}</div>
     </React.Fragment>
   );
 };

@@ -1,5 +1,5 @@
-import { Box, Modal } from "@mui/material";
 import React, { useState, useContext, useEffect } from "react";
+import { Box, Modal } from "@mui/material";
 import SocketContext from "../../context/socketContext";
 import {
   addDoc,
@@ -12,12 +12,14 @@ import {
 } from "@firebase/firestore";
 import { db } from "../../firebase";
 import "./Play.css";
+
 export default function ModalComp(props) {
   const ctx = useContext(SocketContext);
   const [open, setOpen] = useState(false);
+  const [room, setRoom] = useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [room, setRoom] = useState("");
+
   useEffect(() => {
     let id = String(Math.floor(Math.random() * 1000000));
     if (id.length < 6) {
@@ -25,12 +27,16 @@ export default function ModalComp(props) {
     }
     ctx.setRoom(id);
   }, []);
+
   const createRoom = async () => {
     if (ctx.name !== "" && ctx.RoomId !== "") {
+      let mode;
+      mode = props.selModes[Math.floor(Math.random() * props.selModes.length)];
       props.setShowGameChat(true);
       const roomRef = collection(db, "rooms");
       ctx.setHost(true);
       await addDoc(roomRef, {
+        mode: mode,
         roomId: ctx.RoomId,
         users: [{ name: ctx.name, avatar: ctx.avatar, id: ctx.id, score: 0 }],
         messages: [],
@@ -38,6 +44,7 @@ export default function ModalComp(props) {
       });
     }
   };
+
   const joinRoom = async () => {
     props.setShowGameChat(true);
     if (ctx.name !== "" && room !== "") {
@@ -47,7 +54,6 @@ export default function ModalComp(props) {
         const data = await getDocs(roomQuery);
         if (data.docs[0].data().users.length <= 10) {
           const userRef = doc(db, "rooms", data.docs[0].id);
-
           await updateDoc(userRef, {
             users: [
               ...data.docs[0].data().users,
@@ -63,6 +69,7 @@ export default function ModalComp(props) {
       }
     }
   };
+
   return (
     <div className="btn-container">
       <div>
@@ -107,6 +114,7 @@ export default function ModalComp(props) {
             <div>
               <label htmlFor="filled-read-only-input">Room ID</label>
               <input
+                autoFocus
                 id="filled-read-only-input"
                 className="room-textfield"
                 type="number"
