@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { Box, Modal } from "@mui/material";
 import SocketContext from "../../context/socketContext";
 import {
@@ -16,7 +16,10 @@ import "./Play.css";
 export default function ModalComp(props) {
   const ctx = useContext(SocketContext);
   const [open, setOpen] = useState(false);
+  const [idCopied, setIdCopied] = useState(false);
   const [room, setRoom] = useState("");
+  const roomInput = useRef(null);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -70,6 +73,13 @@ export default function ModalComp(props) {
     }
   };
 
+  const handleCopy = () => {
+    setIdCopied(true);
+    roomInput.current.select();
+    document.execCommand("copy");
+    window.getSelection().removeAllRanges();
+  };
+
   return (
     <div className="btn-container">
       <div>
@@ -121,6 +131,7 @@ export default function ModalComp(props) {
                 placeholder="Room ID"
                 onChange={(e) => setRoom(e.target.value)}
               />
+
               <button className="joinGame" onClick={joinRoom}>
                 Join
               </button>
@@ -128,14 +139,22 @@ export default function ModalComp(props) {
           ) : (
             <div>
               <label htmlFor="filled-read-only-input">Room ID</label>
-              <input
-                id="filled-read-only-input"
-                className="room-textfield"
-                value={ctx.RoomId}
-                type="text"
-                placeholder="Room ID"
-                readOnly
-              />
+              <div className="room-input">
+                <input
+                  ref={roomInput}
+                  id="filled-read-only-input"
+                  className="room-textfield"
+                  value={ctx.RoomId}
+                  type="text"
+                  placeholder="Room ID"
+                  readOnly
+                />
+                {idCopied ? (
+                  <i class="copy copied fa-solid fa-check"></i>
+                ) : (
+                  <i onClick={handleCopy} class="copy fa-solid fa-copy"></i>
+                )}
+              </div>
               <button className="joinGame" onClick={createRoom}>
                 Create
               </button>

@@ -61,10 +61,9 @@ const RateIt = () => {
     if (chance === 1) {
       setTimeout(() => {
         handleClose();
-        // setSeconds(0);
       }, 3000);
-      // setChance((prev) => prev + 1);
     }
+
     if (chance > 0 && chance <= ctx.user.length) {
       const roomRef = collection(db, "rooms");
       const roomQuery = query(roomRef, where("roomId", "==", ctx.RoomId));
@@ -73,13 +72,12 @@ const RateIt = () => {
           const obj = doc.data();
           const id = obj.users[chance - 1].id;
           const url = obj[id].imageData;
-          console.log(obj, url);
           setDrawing(url);
         });
       });
     }
 
-    if (chance < ctx.user.length + 2 && chance !== 0) {
+    if (chance < ctx.user.length + 1 && chance !== 0) {
       handleOpen();
       setTimeout(() => {
         handleClose();
@@ -88,13 +86,15 @@ const RateIt = () => {
   }, [chance]);
 
   useEffect(() => {
+    if (chance !== 0) {
+      displayImage();
+    }
+  }, [drawing]);
+
+  useEffect(() => {
     if (seconds === 0 && chance === 0) {
       const imageData = canvasRef.current.toDataURL("image/png");
       addImage(imageData);
-    }
-
-    if (seconds === 0) {
-      setChance((prev) => prev + 1);
     }
   }, [seconds]);
 
@@ -123,7 +123,7 @@ const RateIt = () => {
 
   let time;
   useEffect(() => {
-    if (ctx.user.length + 2 === chance) {
+    if (ctx.user.length + 1 === chance) {
       setSeconds(0);
       gameOver();
     } else {
@@ -136,12 +136,8 @@ const RateIt = () => {
         if (s === ratingSecs || (ratingSecs - s < 0 && ratingSecs - s > -5)) {
           changeInitialTime();
           setSeconds(0);
-          displayImage();
-          // if (chance === 1) {
-          //   ratingSecs = 3;
-          // } else {
+          setChance((prev) => prev + 1);
           ratingSecs = 20;
-          // }
         } else {
           setSeconds(ratingSecs - s);
         }
@@ -162,6 +158,7 @@ const RateIt = () => {
       canvasRef.current.width,
       canvasRef.current.height
     );
+
     var image = new Image();
     image.src = drawing;
     image.onload = function () {
@@ -175,22 +172,6 @@ const RateIt = () => {
     setGameover(true);
     handleOpen();
   };
-
-  //   useEffect(() => {
-  //     socket.on("receive_word", (data) => {
-  //       setWord(data.WORD);
-  //     });
-
-  //     socket.on("draw_image", (data) => {
-  //       var image = new Image();
-  //       image.src = data;
-  //       image.onload = function () {
-  //         for (let i = 0; i < 2; i++) {
-  //           ctxRef.current.drawImage(image, 0, 0);
-  //         }
-  //       };
-  //     });
-  //   }, [socket]);
 
   return (
     <div className="container-fluid">
@@ -214,7 +195,7 @@ const RateIt = () => {
               variant="h6"
               component="h2"
             >
-              {ctx.user[chance - 2] && ctx.user[chance - 2].name}
+              {ctx.user[chance - 1] && ctx.user[chance - 1].name}
             </Typography>
           </Box>
         )}
