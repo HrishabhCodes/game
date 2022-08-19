@@ -15,6 +15,7 @@ import {
   onSnapshot,
 } from "@firebase/firestore";
 import ScrollToBottom from "react-scroll-to-bottom";
+import Twitch from "../Twitch/Twitch";
 
 const Chat = (props) => {
   const [currentMessage, setCurrentMessage] = useState("");
@@ -103,6 +104,7 @@ const Chat = (props) => {
       <div className="mt-2">
         <h2>GameChat</h2>
       </div>
+      <Twitch />
       <div className="render-chat">
         <ScrollToBottom className="render-chat">
           {messagesList.map((messageData, index) => {

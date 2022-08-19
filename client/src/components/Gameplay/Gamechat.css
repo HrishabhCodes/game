@@ -11,7 +11,7 @@
 
 .message {
   position: fixed;
-  bottom: 5;
+  top: 80vh;
   display: flex;
 }
 
