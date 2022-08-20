@@ -5,9 +5,13 @@ import { useState } from "react";
 const tmi = require("tmi.js");
 let barChart = {};
 
-const Twitch = () => {
+const Twitch = ({chance}) => {
   const [userData, setUserData] = useState({ labels: [], datasets: [] });
-
+  useEffect(() => {
+    setUserData({ labels: [], datasets: [] });
+    barChart={}
+  }, [chance])
+  
   const addScore = (msg) => {
     if (barChart[msg]) {
       barChart[msg] = barChart[msg] + 1;
@@ -26,7 +30,6 @@ const Twitch = () => {
 
     client.on("message", (channel, tags, message, self) => {
       users[tags.username] = true;
-      console.log(`${tags["display-name"]}: ${message}`);
     });
   }, []);
 
@@ -50,7 +53,6 @@ const Twitch = () => {
       return b[1] - a[1];
     });
 
-    console.log(sortable);
     const labels = [];
     const datasets = [];
 

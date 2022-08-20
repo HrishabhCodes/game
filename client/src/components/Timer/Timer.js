@@ -2,10 +2,13 @@ import React, { useContext } from "react";
 import "./Timer.css";
 import SocketContext from "../../context/socketContext";
 
-const Timer = ({ round, word, id, secs }) => {
+const Timer = ({ round, word, id, secs, chance }) => {
   const ctx = useContext(SocketContext);
 
-  if (id !== ctx.id) {
+  if (
+    id !== ctx.id &&
+    (ctx.mode !== "Rate It!" || (ctx.mode === "Grand Reveal" && chance > 0))
+  ) {
     const arr = word.split(" ");
     let charCounter = 0;
     let temp = "";

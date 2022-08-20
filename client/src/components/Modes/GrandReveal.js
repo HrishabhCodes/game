@@ -32,7 +32,7 @@ const style = {
   p: 4,
 };
 
-const RateIt = () => {
+const GrandReveal = () => {
   const ctx = useContext(SocketContext);
   const canvasRef = useRef(null);
   const ctxRef = useRef(null);
@@ -227,4 +227,4 @@ const RateIt = () => {
   );
 };
 
-export default RateIt;
+export default GrandReveal;

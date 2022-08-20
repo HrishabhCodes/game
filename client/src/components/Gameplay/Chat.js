@@ -104,7 +104,7 @@ const Chat = (props) => {
       <div className="mt-2">
         <h2>GameChat</h2>
       </div>
-      <Twitch />
+      {props.chance !== 0 && <Twitch chance={props.chance} />}
       <div className="render-chat">
         <ScrollToBottom className="render-chat">
           {messagesList.map((messageData, index) => {

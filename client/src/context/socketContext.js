@@ -11,6 +11,8 @@ const SocketContext = React.createContext({
   RoomId: "",
   setRoom: () => {},
   id: "",
+  docRef: "",
+  setDocRef: () => {},
   host: "",
   setHost: () => {},
   start: "",
@@ -44,6 +46,7 @@ export const SocketContextProvider = (props) => {
   const [initialTime, setInitialTime] = useState(0);
   const [totalGuesses, setTotalGuesses] = useState(0);
   const [mode, setMode] = useState(0);
+  const [docRef, setDocRef] = useState("");
 
   return (
     <SocketContext.Provider
@@ -71,6 +74,8 @@ export const SocketContextProvider = (props) => {
         setTotalGuesses: setTotalGuesses,
         mode: mode,
         setMode: setMode,
+        docRef: docRef,
+        setDocRef: setDocRef,
       }}
     >
       {props.children}

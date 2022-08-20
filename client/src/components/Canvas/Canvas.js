@@ -2,18 +2,18 @@ import React, { useEffect, useRef, useState, useContext } from "react";
 import Menu from "./menu";
 import SocketContext from "../../context/socketContext";
 import Timer from "../Timer/Timer";
+import Rate from "./Rate";
+
 // import io from "socket.io-client";
 // import Canvas from "../Canvas/Canvas";
 
-const Canvas = ({ seconds, innerRef }) => {
+const Canvas = ({ seconds, innerRef, chance, word }) => {
   const ctx = useContext(SocketContext);
   const ctxRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [lineWidth, setLineWidth] = useState(5);
   const [lineColor, setLineColor] = useState("black");
   const [lineOpacity, setLineOpacity] = useState(0.5);
-
-  //   const [round, setRound] = useState(0);
 
   useEffect(() => {
     const canvas = innerRef.current;
@@ -62,20 +62,38 @@ const Canvas = ({ seconds, innerRef }) => {
         onTouchStart={startDrawing}
         onMouseDown={startDrawing}
       >
-        <Timer round={1} word="word" id="current" secs={seconds} />
+        <Timer
+          round={1}
+          word={word}
+          id="current"
+          secs={seconds}
+          chance={chance}
+        />
         <canvas
           ref={innerRef}
           width={window.innerWidth * 0.582}
           height={window.innerHeight * 0.7}
         />
       </div>
-      <Menu
-        setLineColor={setLineColor}
-        setLineWidth={setLineWidth}
-        setLineOpacity={setLineOpacity}
-        ctx={ctxRef.current}
-        canvas={innerRef.current}
-      />
+      {ctx.mode === "Grand Reveal" ? (
+        <Menu
+          setLineColor={setLineColor}
+          setLineWidth={setLineWidth}
+          setLineOpacity={setLineOpacity}
+          ctx={ctxRef.current}
+          canvas={innerRef.current}
+        />
+      ) : chance === 0 && ctx.mode === "Rate It!" ? (
+        <Menu
+          setLineColor={setLineColor}
+          setLineWidth={setLineWidth}
+          setLineOpacity={setLineOpacity}
+          ctx={ctxRef.current}
+          canvas={innerRef.current}
+        />
+      ) : (
+        <Rate chance={chance} />
+      )}
     </div>
   );
 };

@@ -45,6 +45,9 @@ export default function ModalComp(props) {
         messages: [],
         start: false,
       });
+      const roomQuery = query(roomRef, where("roomId", "==", ctx.RoomId));
+      const data = await getDocs(roomQuery);
+      ctx.setDocRef(data.docs[0].id);
     }
   };
 
@@ -57,6 +60,7 @@ export default function ModalComp(props) {
         const data = await getDocs(roomQuery);
         if (data.docs[0].data().users.length <= 10) {
           const userRef = doc(db, "rooms", data.docs[0].id);
+          ctx.setDocRef(data.docs[0].id);
           await updateDoc(userRef, {
             users: [
               ...data.docs[0].data().users,
@@ -150,9 +154,9 @@ export default function ModalComp(props) {
                   readOnly
                 />
                 {idCopied ? (
-                  <i class="copy copied fa-solid fa-check"></i>
+                  <i className="copy copied fa-solid fa-check"></i>
                 ) : (
-                  <i onClick={handleCopy} class="copy fa-solid fa-copy"></i>
+                  <i onClick={handleCopy} className="copy fa-solid fa-copy"></i>
                 )}
               </div>
               <button className="joinGame" onClick={createRoom}>
