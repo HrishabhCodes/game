@@ -1,4 +1,4 @@
-# [Doodlesy!](http://doodlesy.herokuapp.com)
+# [Doodlesy!](https://doodlesy.onrender.com)
 
 ![logo](https://user-images.githubusercontent.com/71200145/178193224-cf49ff1f-207e-47e7-b8c7-b89f0a304c12.png)
 
@@ -13,10 +13,10 @@ Doodlesy is a free multiplayer game where you can flaunt your drawing skills. Cu
 - Socket.io
 - Material UI
 - NPM Packages
-    - [Framer-motion](https://www.npmjs.com/package/framer-motion)
-    - [Howler](https://www.npmjs.com/package/howler)
-    - [React Lazy Load Image Component](https://www.npmjs.com/package/react-lazy-load-image-component)
-    - [uuid](https://www.npmjs.com/package/uuid)
+  - [Framer-motion](https://www.npmjs.com/package/framer-motion)
+  - [Howler](https://www.npmjs.com/package/howler)
+  - [React Lazy Load Image Component](https://www.npmjs.com/package/react-lazy-load-image-component)
+  - [uuid](https://www.npmjs.com/package/uuid)
 
 # Screenshots
 

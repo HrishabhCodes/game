@@ -9,7 +9,7 @@ import Timer from "../Timer/Timer";
 import SocketContext from "../../context/socketContext";
 import io from "socket.io-client";
 import { words } from "./word";
-const socket = io.connect("https://doodlesy.herokuapp.com");
+const socket = io.connect("https://doodlesy.onrender.com");
 
 const style = {
   position: "absolute",
