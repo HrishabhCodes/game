@@ -18,7 +18,7 @@ import { Typography, Box, Modal } from "@mui/material";
 import { Link } from "react-router-dom";
 import { words } from "./word";
 
-const socket = io.connect("https://doodlesy.herokuapp.com");
+const socket = io.connect("https://doodlesy.onrender.com");
 let ratingSecs = 60;
 
 const style = {
