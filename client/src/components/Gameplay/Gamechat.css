@@ -33,7 +33,7 @@
 .users ul {
   scroll-behavior: smooth;
   overflow: scroll;
-  height: 670px;
+  /* height: 670px; */
 }
 
 .user-data {
@@ -128,4 +128,14 @@
 .correct {
   color: rgb(117, 193, 255);
   font-weight: 600;
+}
+
+.end{
+  background-color: #036499;
+  height: 180px;
+  backdrop-filter: brightness(100%) blur(0px);
+  border-radius: 10px;
+  margin-top: 5px;
+  padding: 5px;
+  overflow: scroll;
 }

@@ -94,6 +94,9 @@ const Lobby = ({ showLobby, StartGame }) => {
                 <li className="list-group-item list-group-item-action">
                   Room Id: {ctx.RoomId}
                 </li>
+                <li className="list-group-item list-group-item-action">
+                  Game Mode: {ctx.mode}
+                </li>
               </ul>
             </div>
           </div>

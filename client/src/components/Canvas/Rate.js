@@ -10,7 +10,8 @@ const Rate = ({ chance }) => {
   const ctx = useContext(SocketContext);
 
   useEffect(() => {
-    setIsRated(false);
+    if (ctx?.user[chance - 1]?.id === ctx?.id) setIsRated(true);
+    else setIsRated(false);
   }, [chance]);
 
   const rateDrawing = async (score) => {
