@@ -18,11 +18,17 @@ import {
 } from "@firebase/firestore";
 import { db } from "../../firebase";
 import RateIt from "../Modes/RateIt";
+import GrandReveal from "../Modes/GrandReveal";
 
 const GameChat = ({ showGC }) => {
   const ctx = useContext(SocketContext);
   const [show, setShow] = useState(false);
   const [showLobby, setShowLobby] = useState(true);
+  const [Mode, setMode] = useState();
+  // useEffect(() => {
+
+  //   }
+  // }, [ctx.mode]);
 
   const leaveroom = async () => {
     setShow(false);
@@ -83,7 +89,15 @@ const GameChat = ({ showGC }) => {
         display: "flex",
       }}
     >
-      {!show ? <Lobby showLobby={showLobby} StartGame={Game} /> : <RateIt />}
+      {!show ? (
+        <Lobby showLobby={showLobby} StartGame={Game} />
+      ) : ctx.mode === "Guess It" ? (
+        <Canvas />
+      ) : ctx.mode === "Rate It" ? (
+        <RateIt />
+      ) : (
+        <GrandReveal />
+      )}
       {/* {!show ? (
         <Lobby showLobby={showLobby} StartGame={Game} />
       ) : (

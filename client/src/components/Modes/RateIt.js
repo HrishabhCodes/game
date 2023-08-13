@@ -18,7 +18,7 @@ import { Typography, Box, Modal } from "@mui/material";
 import { Link } from "react-router-dom";
 import { words } from "./word";
 
-const socket = io.connect("https://doodlesy.onrender.com");
+const socket = io.connect("http://localhost:4000");
 let ratingSecs = 60;
 
 const style = {
@@ -191,6 +191,7 @@ const RateIt = () => {
             <Link to="/" className="create-game">
               Home
             </Link>
+            <UserData classname={"col-12 users end"} id={current} />
           </Box>
         ) : (
           <Box sx={style}>

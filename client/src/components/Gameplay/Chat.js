@@ -24,6 +24,8 @@ const Chat = (props) => {
   const ctx = useContext(SocketContext);
   const WORD = props.word;
   const correctMessage = "Guessed the word! 🎉🎉";
+  // console.log(ctx.user, ctx);
+  console.log(ctx?.user[props.chance - 1]?.id === ctx?.id);
 
   useEffect(() => {
     const roomRef = collection(db, "rooms");
@@ -104,7 +106,7 @@ const Chat = (props) => {
       <div className="mt-2">
         <h2>GameChat</h2>
       </div>
-      {props.chance !== 0 && <Twitch chance={props.chance} />}
+      {/* {props.chance !== 0 && <Twitch chance={props.chance} />} */}
       <div className="render-chat">
         <ScrollToBottom className="render-chat">
           {messagesList.map((messageData, index) => {
@@ -143,7 +145,8 @@ const Chat = (props) => {
             placeholder="Message"
             sx={{ input: { color: "#000000" } }}
             onChange={(event) => {
-              setCurrentMessage(event.target.value);
+              if (!(ctx?.user[props.chance - 1]?.id === ctx?.id))
+                setCurrentMessage(event.target.value);
             }}
             onKeyPress={(event) => {
               event.key === "Enter" && sendMessage();

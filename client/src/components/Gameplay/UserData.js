@@ -32,15 +32,23 @@ const UserData = ({ classname, id }) => {
       snapshot.forEach((doc) => {
         ctx.setUser(doc.data().users);
       });
-      ctx.setMode(snapshot.docs[0].data().mode)
+      ctx.setMode(snapshot.docs[0].data().mode);
       ctx.setStart(snapshot.docs[0].data().start);
+      console.log(snapshot.docs[0].data());
     });
   }, [ctx.RoomId]);
 
   return (
     <div className={classname}>
       <h2 className="players-heading">Players</h2>
-      <h5 className="room-id">Room ID: {ctx.RoomId}</h5>
+      {classname === "col-12 users end" ? (
+        <></>
+      ) : (
+        <>
+          <h5 className="room-id">Room ID: {ctx.RoomId}</h5>
+          <h5 className="room-id">Mode: {ctx.mode}</h5>
+        </>
+      )}
       <ul className="users-list p-0">
         {ctx.user.map((data, index) => (
           <li
