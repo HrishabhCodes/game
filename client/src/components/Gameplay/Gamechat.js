@@ -91,7 +91,7 @@ const GameChat = ({ showGC }) => {
     >
       {!show ? (
         <Lobby showLobby={showLobby} StartGame={Game} />
-      ) : ctx.mode === "Guess It" ? (
+      ) : ctx.mode === "Guess It!" ? (
         <Canvas />
       ) : ctx.mode === "Rate It" ? (
         <RateIt />
