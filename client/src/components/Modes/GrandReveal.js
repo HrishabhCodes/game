@@ -18,7 +18,7 @@ import { Typography, Box, Modal } from "@mui/material";
 import { Link } from "react-router-dom";
 import { words } from "./word";
 
-const socket = io.connect("http://localhost:4000");
+const socket = io.connect("https://doodlesy-production.up.railway.app/play");
 let ratingSecs = 60;
 
 const style = {
